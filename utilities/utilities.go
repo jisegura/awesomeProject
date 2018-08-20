@@ -2,11 +2,11 @@ package utilities
 
 import (
 	"awesomeProject/models"
-	"os"
 	"encoding/json"
+	"os"
 )
 
-func GetConfiguration ()(models.Configuration, error){
+func GetConfiguration() (models.Configuration, error) {
 	config := models.Configuration{}
 	file, err := os.Open("./configuration.json")
 	if err != nil {

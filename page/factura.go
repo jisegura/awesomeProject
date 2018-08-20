@@ -1,20 +1,23 @@
 package page
 
 import (
-	"net/http"
 	"awesomeProject/dao/factory"
-	"log"
-	"encoding/json"
 	"awesomeProject/models"
-	"time"
+	"encoding/json"
+	"github.com/gorilla/mux"
+	"log"
+	"net/http"
+	"strconv"
 )
 
-//SELECT
-func GetFacturas (w http.ResponseWriter, req *http.Request) {
+//SELECT RETIRO
+func GetFacturasRetiro(w http.ResponseWriter, req *http.Request) {
 
 	facturaDAO := factory.FactoryFactura()
+	param := mux.Vars(req)
+	id, _ := strconv.Atoi(param["id"])
 
-	facturas, err := facturaDAO.GetAll()
+	facturas, err := facturaDAO.GetAll(id)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -22,24 +25,127 @@ func GetFacturas (w http.ResponseWriter, req *http.Request) {
 	json.NewEncoder(w).Encode(&facturas)
 }
 
-//INSERT
-func InsertFacturas(w http.ResponseWriter, req *http.Request)  {
+//SELECT CLIENTE
+func GetFacturasCliente(w http.ResponseWriter, req *http.Request) {
+
+	facturaDAO := factory.FactoryFactura()
+	param := mux.Vars(req)
+	id, _ := strconv.Atoi(param["id"])
+
+	facturas, err := facturaDAO.GetFacturasCliente(id)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	json.NewEncoder(w).Encode(&facturas)
+}
+
+//SELECT OTRO
+func GetFacturasOtro(w http.ResponseWriter, req *http.Request) {
+
+	facturaDAO := factory.FactoryFactura()
+	param := mux.Vars(req)
+	id, _ := strconv.Atoi(param["id"])
+
+	facturas, err := facturaDAO.GetFacturasOtro(id)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	json.NewEncoder(w).Encode(&facturas)
+}
+
+//INSERT RETIRO
+func InsertFactura(w http.ResponseWriter, req *http.Request) {
 
 	facturaDAO := factory.FactoryFactura()
 	factura := models.Factura{}
 
 	_ = json.NewDecoder(req.Body).Decode(&factura)
-	factura.Fecha = time.Now()
 	err := facturaDAO.Create(&factura)
 
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	facturas, err := facturaDAO.GetAll()
+	f, err := facturaDAO.GetById(factura.Id_factura)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	json.NewEncoder(w).Encode(&facturas)
+	json.NewEncoder(w).Encode(&f)
+}
+
+//INSERT CLIENTE
+func InsertCliente(w http.ResponseWriter, req *http.Request) {
+
+	facturaDAO := factory.FactoryFactura()
+	factura := models.Factura{}
+
+	_ = json.NewDecoder(req.Body).Decode(&factura)
+
+	err := facturaDAO.CreateCliente(&factura)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	f, err := facturaDAO.GetByIdCliente(factura.Id_factura)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	json.NewEncoder(w).Encode(&f)
+}
+
+//INSERT OTRO
+func InsertOtro(w http.ResponseWriter, req *http.Request) {
+
+	facturaDAO := factory.FactoryFactura()
+	factura := models.Factura{}
+
+	_ = json.NewDecoder(req.Body).Decode(&factura)
+	err := facturaDAO.CreateOtro(&factura)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	f, err := facturaDAO.GetByIdOtros(factura.Id_factura)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	json.NewEncoder(w).Encode(&f)
+}
+
+func UpdateFactura(w http.ResponseWriter, req *http.Request) {
+
+	facturaDAO := factory.FactoryFactura()
+	factura := models.Factura{}
+
+	_ = json.NewDecoder(req.Body).Decode(&factura)
+	err := facturaDAO.Update(&factura)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	f, err := facturaDAO.GetById(factura.Id_factura)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	json.NewEncoder(w).Encode(f)
+}
+
+func GetFacturasEliminadas(w http.ResponseWriter, req *http.Request) {
+
+	facturaDAO := factory.FactoryFactura()
+
+	facturas, err := facturaDAO.GetFacturasEliminadas()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	json.NewEncoder(w).Encode(facturas)
 }

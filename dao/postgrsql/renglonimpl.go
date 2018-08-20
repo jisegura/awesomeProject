@@ -1,13 +1,34 @@
 package postgrsql
 
-import "awesomeProject/models"
+import (
+	"awesomeProject/models"
+	"encoding/json"
+	"fmt"
+)
 
-type RenglonImpl struct {}
+type RenglonImpl struct{}
+
+type Renglones struct {
+}
 
 //INSERT
-func (dao RenglonImpl)Create(renglon *models.Renglon) error {
+func InsertRenglones(renglones []models.Renglon, id int) error {
 
-	query := "INSERT INTO renglon (id_factura, id_producto, cantidad, precio, descuento) VALUES ($1, $2, $3, $4, $5) RETURNING id_renglon"
+	for i := range renglones {
+		renglones[i].Id_factura = id
+		err := create(&renglones[i])
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+//CREATE
+func create(renglon *models.Renglon) error {
+
+	query := "INSERT INTO renglon (id_producto, id_factura, cantidad, precio, descuento) VALUES ($1, $2, $3, $4, $5) RETURNING id_renglon"
 	db := getConnection()
 	defer db.Close()
 
@@ -17,16 +38,17 @@ func (dao RenglonImpl)Create(renglon *models.Renglon) error {
 	}
 	defer stmt.Close()
 
-	row := stmt.QueryRow(renglon.Id_factura, renglon.Id_producto, renglon.Cantidad, renglon.Precio, renglon.Descuento)
+	row := stmt.QueryRow(renglon.Id_producto, renglon.Id_factura, renglon.Cantidad, renglon.Precio, renglon.Descuento)
 	row.Scan(&renglon.Id_renglon)
+
 	return nil
 }
 
 //SELECT ALL
-func (dao RenglonImpl) GetAll()([]models.Renglon, error) {
+func GetAll(id int) ([]models.Renglon, error) {
 
 	renglones := make([]models.Renglon, 0)
-	query := "SELECT * FROM renglon"
+	query := "SELECT * FROM renglon WHERE id_factura = $1"
 	db := getConnection()
 	defer db.Close()
 
@@ -35,19 +57,22 @@ func (dao RenglonImpl) GetAll()([]models.Renglon, error) {
 		return renglones, err
 	}
 
-	rows, err := stmt.Query()
+	rows, err := stmt.Query(id)
 	if err != nil {
 		return renglones, err
 	}
 
 	for rows.Next() {
 		var row models.Renglon
-		err := rows.Scan(&row.Id_factura, &row.Id_producto, &row.Cantidad, &row.Precio, &row.Descuento)
+		fmt.Print(row)
+		err := rows.Scan(&row.Id_factura, &row.Id_renglon, &row.Id_producto, &row.Cantidad, &row.Precio, &row.Descuento)
 		if err != nil {
 			return renglones, err
 		}
+		//		json.Marshal(row)
+
 		renglones = append(renglones, row)
 	}
-
+	json.Marshal(renglones)
 	return renglones, nil
 }

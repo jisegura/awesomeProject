@@ -1,15 +1,15 @@
 package page
 
 import (
-	"net/http"
 	"awesomeProject/dao/factory"
-	"log"
-	"encoding/json"
 	"awesomeProject/models"
+	"encoding/json"
+	"log"
+	"net/http"
 )
 
 //SELECT
-func GetCajas (w http.ResponseWriter, req *http.Request) {
+func GetCajas(w http.ResponseWriter, req *http.Request) {
 
 	cajasDAO := factory.FactoryCaja()
 
@@ -22,7 +22,7 @@ func GetCajas (w http.ResponseWriter, req *http.Request) {
 }
 
 //INSERT
-func InsertCaja(w http.ResponseWriter, req *http.Request)  {
+func InsertCaja(w http.ResponseWriter, req *http.Request) {
 
 	cajasDAO := factory.FactoryCaja()
 	caja := models.Caja{}
@@ -41,3 +41,9 @@ func InsertCaja(w http.ResponseWriter, req *http.Request)  {
 
 	json.NewEncoder(w).Encode(&cajas)
 }
+
+/*
+//UPDATE
+func cerrarCaja (w http.ResponseWriter, req *http.Request) {
+
+}*/

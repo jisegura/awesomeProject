@@ -3,10 +3,14 @@ package models
 import "time"
 
 type Factura struct {
-	Id_factura  int
-	Id_caja     int
-	Precio      float64
-	Fecha       time.Time
-	Descuento   float64
-	Activa      bool
+	Id_factura     int
+	Id_caja        int
+	Id_empleado    int
+	Fecha          time.Time
+	Precio         float64
+	ComentarioBaja string
+	Comentario     string
+	Descuento      float64
+	FormaDePago    int
+	Renglones      []Renglon `json:"Renglones"`
 }

@@ -1,38 +1,55 @@
 package main
 
 import (
-	"net/http"
+	"awesomeProject/page"
+	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 	"log"
-	"awesomeProject/page"
+	"net/http"
 )
 
-func main(){
-/*
-	userDAO := factory.FactoryDAO()
-	user := models.User{}
-
-	fmt.Print("Nombre: ")
-	fmt.Scan(&user.FirstName)
-	fmt.Print("Apellido: ")
-	fmt.Scan(&user.LastName)
-	fmt.Print("Mail: ")
-	fmt.Scan(&user.Email)
-
-	err := userDAO.Create(&user)
-	if err != nil {
-		log.Fatal(err)
-	}
-	fmt.Print(user)*/
+func main() {
 
 	router := mux.NewRouter()
 
+	//EMPLEADO/////
+	router.HandleFunc("/empleado/", page.InsertEmpleado).Methods("POST")
+	//router.HandleFunc("/empleado/", page.UpdateEmpleado).Methods("PUT")
+	//router.HandleFunc("/empleado/{id}", page.DeleteEmpleado).Methods("DELETE")
+	//router.HandleFunc("/empleado/", page.GetEmpleados).Methods("GET")
+
+	//CATEGORIA/////
+	//router.HandleFunc("/categoria/", page.GetCategorias).Methods("GET")
+	//router.HandleFunc("/categoria/{id}", page.GetCategoriaById).Methods("GET")
+	router.HandleFunc("/categoria/", page.InsertCategoria).Methods("POST")
+	//router.HandleFunc("/categoria/{id}", page.DeleteCategoria).Methods("DELETE")
+	//router.HandleFunc("/categoria/", page.UpdateCategoria).Methods("PUT")
+
+	//PRODUCTO/////
 	//router.HandleFunc("/producto/", page.GetProductos).Methods("GET")
 	//router.HandleFunc("/producto/{id}", page.GetProductoById).Methods("GET")
-	//router.HandleFunc("/producto/", page.InsertProducto).Methods("POST")
+	router.HandleFunc("/producto/", page.InsertProducto).Methods("POST")
 	//router.HandleFunc("/producto/{id}", page.DeleteProducto).Methods("DELETE")
 	//router.HandleFunc("/producto/", page.UpdateProducto).Methods("PUT")
-	//router.HandleFunc("/caja/", page.InsertCaja).Methods("POST")
-	router.HandleFunc("/factura/", page.InsertFacturas).Methods("POST")
-	log.Fatal(http.ListenAndServe("192.168.1.35:3000", router))
+
+	//CAJA/////
+	router.HandleFunc("/caja/", page.InsertCaja).Methods("POST")
+
+	//FACTURA/////
+	router.HandleFunc("/factura/retiros/", page.InsertFactura).Methods("POST")
+	router.HandleFunc("/factura/clientes/", page.InsertCliente).Methods("POST")
+	router.HandleFunc("/factura/otros/", page.InsertOtro).Methods("POST")
+
+	//router.HandleFunc("/factura/", page.GetFacturasRetiro).Methods("GET")
+	//router.HandleFunc("/factura/", page.GetFacturasCliente).Methods("GET")
+	//router.HandleFunc("/factura/", page.GetFacturasOtro).Methods("GET")
+	//router.HandleFunc("/factura/", page.GetFacturasEliminadas).Methods("GET")
+
+	//router.HandleFunc("/factura/", page.UpdateFactura).Methods("PUT")
+
+	allowedHeaders := handlers.AllowedHeaders([]string{"X-Requested-With", "Content-Type"})
+	allowedOrigins := handlers.AllowedOrigins([]string{"*"})
+	allowedMethods := handlers.AllowedMethods([]string{"GET", "HEAD", "POST", "PUT", "DELETE", "OPTIONS"})
+
+	log.Fatal(http.ListenAndServe("localhost:3000", handlers.CORS(allowedHeaders, allowedOrigins, allowedMethods)(router)))
 }
