@@ -69,7 +69,6 @@ func GetAll(id int) ([]models.Renglon, error) {
 		if err != nil {
 			return renglones, err
 		}
-		//		json.Marshal(row)
 
 		renglones = append(renglones, row)
 	}

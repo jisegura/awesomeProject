@@ -120,7 +120,9 @@ func InsertCliente(factura *models.Factura) error {
 //INSERT OTRO
 func InsertOtros(factura *models.Factura) error {
 
-	query := "INSERT INTO factura (id_caja, id_empleado, fecha, precio, comentario, comentario) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id_factura"
+	err := InsertFactura(factura)
+
+	query := "INSERT INTO otros (id_factura, comentario) VALUES ($1, $2)"
 	db := getConnection()
 	defer db.Close()
 
@@ -131,7 +133,7 @@ func InsertOtros(factura *models.Factura) error {
 	defer stmt.Close()
 
 	factura.Fecha = time.Now()
-	row := stmt.QueryRow(factura.Id_caja, factura.Id_empleado, factura.Fecha, factura.Precio, factura.ComentarioBaja, factura.Comentario)
+	row := stmt.QueryRow(factura.Id_factura, factura.Comentario)
 	row.Scan(&factura.Id_factura)
 
 	return nil
@@ -172,7 +174,7 @@ func GetAllFacturas(id int) ([]models.Factura, error) {
 func GetAllClientes(id int) ([]models.Factura, error) {
 
 	facturas := make([]models.Factura, 0)
-	query := "SELECT c.id_factura, id_caja, id_empleado, fecha, precio, comentarioBaja, descuento, formaDePago FROM factura f INNER JOIN Cliente c WHERE f.id_factura = c.id_factura"
+	query := "SELECT c.id_factura, id_caja, id_empleado, fecha, precio, comentarioBaja, descuento, formaDePago FROM factura f INNER JOIN Cliente c ON f.id_factura = c.id_factura"
 	db := getConnection()
 	defer db.Close()
 
@@ -207,7 +209,7 @@ func GetAllClientes(id int) ([]models.Factura, error) {
 func GetAllOtros(id int) ([]models.Factura, error) {
 
 	facturas := make([]models.Factura, 0)
-	query := "SELECT * FROM otros WHERE id_caja = $1"
+	query := "SELECT o.id_factura, id_caja, id_empleado, fecha, precio, comentarioBaja, comentario FROM factura f INNER JOIN otros o ON f.id_factura = o.id_factura"
 	db := getConnection()
 	defer db.Close()
 
@@ -293,7 +295,7 @@ func GetOtrosById(id int) (models.Factura, error) {
 
 	var factura models.Factura
 
-	query := "SELECT * FROM otros WHERE id_factura = $1"
+	query := "SELECT o.id_factura, id_caja, id_empleado, fecha, precio, comentarioBaja, comentario FROM factura f INNER JOIN otros o ON f.id_factura = o.id_factura WHERE o.id_factura = $1"
 	db := getConnection()
 	defer db.Close()
 
