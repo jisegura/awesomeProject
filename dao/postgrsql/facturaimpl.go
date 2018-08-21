@@ -73,7 +73,7 @@ func (dao FacturaImpl) GetFacturasEliminadas() ([]models.Factura, error) {
 //INSERT RETIRO
 func InsertFactura(factura *models.Factura) error {
 
-	query := "INSERT INTO factura (id_caja, id_empleado, fecha, precio, comentarioBaja) VALUES ($1, $2, $3, $4, $5) RETURNING id_factura"
+	query := "INSERT INTO factura (id_caja, id_empleado, fecha, precio, comentarioBaja, descuento) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id_factura"
 	db := getConnection()
 	defer db.Close()
 
@@ -85,7 +85,7 @@ func InsertFactura(factura *models.Factura) error {
 
 	factura.Fecha = time.Now()
 	factura.ComentarioBaja = " "
-	row := stmt.QueryRow(factura.Id_caja, factura.Id_empleado, factura.Fecha, factura.Precio, factura.ComentarioBaja)
+	row := stmt.QueryRow(factura.Id_caja, factura.Id_empleado, factura.Fecha, factura.Precio, factura.ComentarioBaja, factura.Descuento)
 	row.Scan(&factura.Id_factura)
 
 	return nil
@@ -106,7 +106,7 @@ func InsertCliente(factura *models.Factura) error {
 	}
 	defer stmt.Close()
 
-	row := stmt.QueryRow(factura.Id_factura, factura.Descuento, factura.FormaDePago)
+	row := stmt.QueryRow(factura.Id_factura, factura.DescuentoCliente, factura.FormaDePago)
 	row.Scan(&factura.Id_factura)
 
 	err = InsertRenglones(factura.Renglones, factura.Id_factura)
@@ -162,7 +162,7 @@ func GetAllFacturas(id int) ([]models.Factura, error) {
 
 	for rows.Next() {
 		var row models.Factura
-		err := rows.Scan(&row.Id_factura, &row.Id_caja, &row.Id_empleado, &row.Fecha, &row.Precio, &row.ComentarioBaja)
+		err := rows.Scan(&row.Id_factura, &row.Id_caja, &row.Id_empleado, &row.Fecha, &row.Precio, &row.ComentarioBaja, &row.Descuento)
 		if err != nil {
 			return facturas, err
 		}
@@ -193,7 +193,7 @@ func GetAllClientes(id int) ([]models.Factura, error) {
 
 	for rows.Next() {
 		var row models.Factura
-		err := rows.Scan(&row.Id_factura, &row.Id_caja, &row.Id_empleado, &row.Fecha, &row.Precio, &row.ComentarioBaja, &row.Descuento, &row.FormaDePago)
+		err := rows.Scan(&row.Id_factura, &row.Id_caja, &row.Id_empleado, &row.Fecha, &row.Precio, &row.ComentarioBaja, &row.DescuentoCliente, &row.FormaDePago)
 		if err != nil {
 			return facturas, err
 		}
@@ -256,7 +256,7 @@ func GetRetiroById(id int) (models.Factura, error) {
 	defer stmt.Close()
 
 	row := stmt.QueryRow(id)
-	err = row.Scan(&factura.Id_factura, &factura.Id_caja, &factura.Id_empleado, &factura.Fecha, &factura.Precio, &factura.ComentarioBaja)
+	err = row.Scan(&factura.Id_factura, &factura.Id_caja, &factura.Id_empleado, &factura.Fecha, &factura.Precio, &factura.ComentarioBaja, &factura.Descuento)
 	if err != nil {
 		return factura, err
 	}
@@ -280,7 +280,7 @@ func GetClienteById(id int) (models.Factura, error) {
 	defer stmt.Close()
 
 	row := stmt.QueryRow(id)
-	err = row.Scan(&factura.Id_factura, &factura.Id_caja, &factura.Id_empleado, &factura.Fecha, &factura.Precio, &factura.ComentarioBaja, &factura.Descuento, &factura.FormaDePago)
+	err = row.Scan(&factura.Id_factura, &factura.Id_caja, &factura.Id_empleado, &factura.Fecha, &factura.Precio, &factura.ComentarioBaja, &factura.DescuentoCliente, &factura.FormaDePago)
 	if err != nil {
 		return factura, err
 	}
@@ -346,7 +346,7 @@ func UpdateComentario(factura *models.Factura) error {
 func GetFacturasEliminadas() ([]models.Factura, error) {
 
 	var facturas []models.Factura
-	query := "SELECT id_factura, id_caja, id_empleado, fecha, precio FROM factura WHERE comentarioBaja IS NULL"
+	query := "SELECT * FROM factura WHERE comentarioBaja IS NOT NULL"
 	db := getConnection()
 	defer db.Close()
 
@@ -363,7 +363,7 @@ func GetFacturasEliminadas() ([]models.Factura, error) {
 
 	for rows.Next() {
 		var row models.Factura
-		err := rows.Scan(&row.Id_factura, &row.Id_caja, &row.Id_empleado, &row.Fecha, &row.Precio)
+		err := rows.Scan(&row.Id_factura, &row.Id_caja, &row.Id_empleado, &row.Fecha, &row.Precio, &row.ComentarioBaja, &row.Descuento)
 		if err != nil {
 			return facturas, err
 		}
