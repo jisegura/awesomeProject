@@ -212,7 +212,7 @@ func GetAllClientes(id int) ([]models.Factura, error) {
 func GetAllOtros(id int) ([]models.Factura, error) {
 
 	facturas := make([]models.Factura, 0)
-	query := "SELECT o.id_factura, id_caja, id_empleado, fecha, precio, comentarioBaja, comentario FROM factura f INNER JOIN otros o ON f.id_factura = o.id_factura WHERE id_caja =$1"
+	query := "SELECT o.id_factura, id_caja, id_empleado, fecha, precio, comentarioBaja FROM factura f INNER JOIN otros o ON f.id_factura = o.id_factura WHERE id_caja =$1"
 	db := getConnection()
 	defer db.Close()
 
@@ -228,7 +228,7 @@ func GetAllOtros(id int) ([]models.Factura, error) {
 
 	for rows.Next() {
 		var row models.Factura
-		err := rows.Scan(&row.Id_factura, &row.Id_caja, &row.Id_empleado, &row.Fecha, &row.Precio, &row.ComentarioBaja, &row.Comentario)
+		err := rows.Scan(&row.Id_factura, &row.Id_caja, &row.Id_empleado, &row.Fecha, &row.Precio, &row.ComentarioBaja)
 		if err != nil {
 			return facturas, err
 		}

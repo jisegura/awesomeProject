@@ -43,9 +43,9 @@ func main() {
 	router.HandleFunc("/factura/clientes/", page.InsertCliente).Methods("POST")
 	router.HandleFunc("/factura/otros/", page.InsertOtro).Methods("POST")
 
-	router.HandleFunc("/factura/", page.GetFacturasRetiro).Methods("GET")
-	router.HandleFunc("/factura/", page.GetFacturasCliente).Methods("GET")
-	router.HandleFunc("/factura/", page.GetFacturasOtro).Methods("GET")
+	router.HandleFunc("/factura/retiros/{id}", page.GetFacturasRetiro).Methods("GET")
+	router.HandleFunc("/factura/clientes/{id}", page.GetFacturasCliente).Methods("GET")
+	router.HandleFunc("/factura/otros/{id}", page.GetFacturasOtro).Methods("GET")
 	router.HandleFunc("/factura/", page.GetFacturasEliminadas).Methods("GET")
 
 	router.HandleFunc("/factura/", page.UpdateFactura).Methods("PUT")
