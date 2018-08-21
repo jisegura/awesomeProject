@@ -6,4 +6,5 @@ type Producto struct {
 	Nombre       string
 	Precio       float64
 	Imagen       string
+	Descuento    float64
 }

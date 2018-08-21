@@ -48,7 +48,7 @@ func main() {
 	router.HandleFunc("/factura/", page.GetFacturasOtro).Methods("GET")
 	router.HandleFunc("/factura/", page.GetFacturasEliminadas).Methods("GET")
 
-	//router.HandleFunc("/factura/", page.UpdateFactura).Methods("PUT")
+	router.HandleFunc("/factura/", page.UpdateFactura).Methods("PUT")
 
 	allowedHeaders := handlers.AllowedHeaders([]string{"X-Requested-With", "Content-Type"})
 	allowedOrigins := handlers.AllowedOrigins([]string{"*"})
