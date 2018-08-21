@@ -27,7 +27,7 @@ func (dao CajaImpl) Create(caja *models.Caja) (models.Caja, error) {
 	row := stmt.QueryRow(caja.Inicio, 0, time.Now(), time.Time{})
 	row.Scan(&caja.Id_caja)
 
-	newCaja, err = GetCajaAbierta()
+	newCaja, err = GetById(caja.Id_caja)
 	if err != nil {
 		return newCaja, err
 	}
@@ -59,6 +59,28 @@ func GetCajaAbierta() (models.Caja, error) {
 	}
 
 	return caja, nil
+}
+
+func GetById(id int) (models.Caja, error) {
+
+	var caja models.Caja
+
+	query := "SELECT * FROM caja WHERE id_caja = $1"
+	db := getConnection()
+	defer db.Close()
+
+	stmt, err := db.Prepare(query)
+	if err != nil {
+		return caja, err
+	}
+
+	row := stmt.QueryRow(id)
+	err = row.Scan(&caja.Id_caja, &caja.Inicio, &caja.Fin, &caja.HoraInicio, &caja.HoraFin)
+	if err != nil && err != sql.ErrNoRows {
+		return caja, err
+	}
+
+	return caja, err
 }
 
 //SELECT ALL
@@ -129,32 +151,39 @@ func totalFacturas(id int) (float64, error) {
 }
 
 //UPADTE CIERRE CAJA
-func (dao CajaImpl) CierreCaja(caja *models.Caja) error {
+func (dao CajaImpl) CierreCaja(caja *models.Caja) (models.Caja, error) {
 
 	query := "UPDATE caja SET fin = $1, horaFin = $2 WHERE id_caja = $3"
 	db := getConnection()
 	defer db.Close()
 
+	var c models.Caja
+
 	stmt, err := db.Prepare(query)
 	if err != nil {
-		return err
+		return c, err
 	}
 	defer stmt.Close()
 
 	totalCaja, err := totalFacturas(caja.Id_caja)
 	if err != nil {
-		return err
+		return c, err
 	}
 
 	row, err := stmt.Exec(totalCaja, time.Now(), caja.Id_caja)
 	if err != nil {
-		return err
+		return c, err
 	}
 
 	i, _ := row.RowsAffected()
 	if i != 1 {
-		return errors.New("Error, se esperaba una fila afectada")
+		return c, errors.New("Error, se esperaba una fila afectada")
 	}
 
-	return nil
+	c, err = GetById(caja.Id_caja)
+	if err != nil {
+		return c, err
+	}
+
+	return c, nil
 }

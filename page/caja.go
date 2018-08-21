@@ -57,8 +57,10 @@ func CerrarCaja(w http.ResponseWriter, req *http.Request) {
 
 	_ = json.NewDecoder(req.Body).Decode(&caja)
 
-	err := cajaDAO.CierreCaja(&caja)
+	c, err := cajaDAO.CierreCaja(&caja)
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	json.NewEncoder(w).Encode(&c)
 }
