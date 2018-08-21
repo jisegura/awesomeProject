@@ -143,7 +143,10 @@ func InsertOtros(factura *models.Factura) error {
 func GetAllFacturas(id int) ([]models.Factura, error) {
 
 	facturas := make([]models.Factura, 0)
-	query := "SELECT * FROM ONLY factura WHERE id_caja = $1"
+	query := "SELECT * FROM factura " +
+		"WHERE id_factura NOT IN (SELECT id_factura FROM cliente) " +
+		"AND id_factura NOT IN (SELECT id_factura FROM otros) " +
+		"AND id_caja = $1"
 	db := getConnection()
 	defer db.Close()
 
@@ -174,7 +177,7 @@ func GetAllFacturas(id int) ([]models.Factura, error) {
 func GetAllClientes(id int) ([]models.Factura, error) {
 
 	facturas := make([]models.Factura, 0)
-	query := "SELECT c.id_factura, id_caja, id_empleado, fecha, precio, comentarioBaja, descuento, formaDePago FROM factura f INNER JOIN Cliente c ON f.id_factura = c.id_factura"
+	query := "SELECT c.id_factura, id_caja, id_empleado, fecha, precio, comentarioBaja, descuento, formaDePago FROM factura f INNER JOIN Cliente c ON f.id_factura = c.id_factura WHERE id_caja = $1"
 	db := getConnection()
 	defer db.Close()
 
@@ -209,7 +212,7 @@ func GetAllClientes(id int) ([]models.Factura, error) {
 func GetAllOtros(id int) ([]models.Factura, error) {
 
 	facturas := make([]models.Factura, 0)
-	query := "SELECT o.id_factura, id_caja, id_empleado, fecha, precio, comentarioBaja, comentario FROM factura f INNER JOIN otros o ON f.id_factura = o.id_factura"
+	query := "SELECT o.id_factura, id_caja, id_empleado, fecha, precio, comentarioBaja, comentario FROM factura f INNER JOIN otros o ON f.id_factura = o.id_factura WHERE id_caja =$1"
 	db := getConnection()
 	defer db.Close()
 

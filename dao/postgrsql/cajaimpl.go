@@ -2,6 +2,7 @@ package postgrsql
 
 import (
 	"awesomeProject/models"
+	"database/sql"
 	"errors"
 	"time"
 )
@@ -9,28 +10,62 @@ import (
 type CajaImpl struct{}
 
 //INSERT
-func (dao CajaImpl) Create(caja *models.Caja) error {
+func (dao CajaImpl) Create(caja *models.Caja) (models.Caja, error) {
 
 	query := "INSERT INTO caja (inicio, fin, horaInicio, horaFin) VALUES ($1, $2, $3, $4) RETURNING id_caja"
 	db := getConnection()
 	defer db.Close()
 
+	var newCaja models.Caja
+
 	stmt, err := db.Prepare(query)
 	if err != nil {
-		return err
+		return newCaja, err
 	}
 	defer stmt.Close()
 
 	row := stmt.QueryRow(caja.Inicio, 0, time.Now(), time.Time{})
 	row.Scan(&caja.Id_caja)
-	return nil
+
+	newCaja, err = GetCajaAbierta()
+	if err != nil {
+		return newCaja, err
+	}
+
+	return newCaja, nil
+}
+
+func (dao CajaImpl) GetCaja() (models.Caja, error) {
+
+	return GetCajaAbierta()
+}
+
+func GetCajaAbierta() (models.Caja, error) {
+
+	var caja models.Caja
+	query := "SELECT * FROM caja WHERE fin = 0"
+	db := getConnection()
+	defer db.Close()
+
+	stmt, err := db.Prepare(query)
+	if err != nil {
+		return caja, err
+	}
+
+	row := stmt.QueryRow()
+	err = row.Scan(&caja.Id_caja, &caja.Inicio, &caja.Fin, &caja.HoraInicio, &caja.HoraFin)
+	if err != nil && err != sql.ErrNoRows {
+		return caja, err
+	}
+
+	return caja, nil
 }
 
 //SELECT ALL
 func (dao CajaImpl) GetAll() ([]models.Caja, error) {
 
 	cajas := make([]models.Caja, 0)
-	query := "SELECT * FROM caja"
+	query := "SELECT * FROM caja WHERE fin != 0"
 	db := getConnection()
 	defer db.Close()
 

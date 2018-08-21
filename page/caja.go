@@ -21,6 +21,18 @@ func GetCajas(w http.ResponseWriter, req *http.Request) {
 	json.NewEncoder(w).Encode(&cajas)
 }
 
+func GetCaja(w http.ResponseWriter, req *http.Request) {
+
+	cajaDAO := factory.FactoryCaja()
+
+	caja, err := cajaDAO.GetCaja()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	json.NewEncoder(w).Encode(&caja)
+}
+
 //INSERT
 func InsertCaja(w http.ResponseWriter, req *http.Request) {
 
@@ -28,22 +40,25 @@ func InsertCaja(w http.ResponseWriter, req *http.Request) {
 	caja := models.Caja{}
 
 	_ = json.NewDecoder(req.Body).Decode(&caja)
-	err := cajasDAO.Create(&caja)
+	c, err := cajasDAO.Create(&caja)
 
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	cajas, err := cajasDAO.GetAll()
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	json.NewEncoder(w).Encode(&cajas)
+	json.NewEncoder(w).Encode(&c)
 }
 
-/*
 //UPDATE
-func cerrarCaja (w http.ResponseWriter, req *http.Request) {
+func CerrarCaja(w http.ResponseWriter, req *http.Request) {
 
-}*/
+	cajaDAO := factory.FactoryCaja()
+	caja := models.Caja{}
+
+	_ = json.NewDecoder(req.Body).Decode(&caja)
+
+	err := cajaDAO.CierreCaja(&caja)
+	if err != nil {
+		log.Fatal(err)
+	}
+}
