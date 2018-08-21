@@ -12,11 +12,17 @@ type CajaImpl struct{}
 //INSERT
 func (dao CajaImpl) Create(caja *models.Caja) (models.Caja, error) {
 
+	var newCaja models.Caja
+
+	cAbierta, err := GetCajaAbierta()
+
+	if cAbierta.Id_caja != 0 {
+		return cAbierta, nil
+	}
+
 	query := "INSERT INTO caja (inicio, fin, horaInicio, horaFin) VALUES ($1, $2, $3, $4) RETURNING id_caja"
 	db := getConnection()
 	defer db.Close()
-
-	var newCaja models.Caja
 
 	stmt, err := db.Prepare(query)
 	if err != nil {
