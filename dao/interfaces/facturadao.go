@@ -12,6 +12,7 @@ type FacturaDAO interface {
 	Update(factura *models.Factura) error
 
 	GetFacturasEliminadas() ([]models.Factura, error)
+	GetFacturasById(id int) ([]int, error)
 
 	GetAll(id int) ([]models.Factura, error)
 	GetById(id int) (models.Factura, error)

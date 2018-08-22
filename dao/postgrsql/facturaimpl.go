@@ -67,6 +67,39 @@ func (dao FacturaImpl) GetFacturasEliminadas() ([]models.Factura, error) {
 	return facturas, err
 }
 
+func (dao FacturaImpl) GetFacturasById(id int) ([]int, error) {
+
+	var ids []int
+
+	query := "SELECT id_factura FROM factura WHERE id_caja = $1"
+	db := getConnection()
+	defer db.Close()
+
+	stmt, err := db.Prepare(query)
+	if err != nil {
+		return ids, err
+	}
+	defer stmt.Close()
+
+	rows, err := stmt.Query(id)
+	if err != nil {
+		return ids, err
+	}
+
+	for rows.Next() {
+		var row models.Factura
+
+		err = rows.Scan(&row.Id_factura)
+		if err != nil {
+			return ids, err
+		}
+
+		ids = append(ids, row.Id_factura)
+	}
+
+	return ids, nil
+}
+
 ////////////////////////////////////////////////////////////
 //PRIVATE
 
@@ -84,7 +117,6 @@ func InsertFactura(factura *models.Factura) error {
 	defer stmt.Close()
 
 	factura.Fecha = time.Now()
-	factura.ComentarioBaja = " "
 	row := stmt.QueryRow(factura.Id_caja, factura.Id_empleado, factura.Fecha, factura.Precio, factura.ComentarioBaja)
 	row.Scan(&factura.Id_factura)
 
@@ -154,6 +186,7 @@ func GetAllFacturas(id int) ([]models.Factura, error) {
 	if err != nil {
 		return facturas, err
 	}
+	defer stmt.Close()
 
 	rows, err := stmt.Query(id)
 	if err != nil {
@@ -367,11 +400,12 @@ func GetFacturasEliminadas() ([]models.Factura, error) {
 		if err != nil {
 			return facturas, err
 		}
-		/*
-			row.Renglones, err = GetAll(row.Id_factura)
-			if err != nil {
-				return facturas, err
-			}*/
+
+		row.Renglones, err = GetAll(row.Id_factura)
+		if err != nil {
+			return facturas, err
+		}
+
 		facturas = append(facturas, row)
 
 	}

@@ -17,7 +17,9 @@ func GetEmpleados(w http.ResponseWriter, req *http.Request) {
 
 	empleados, err := empleadoDAO.GetAll()
 	if err != nil {
-		log.Fatal(err)
+		w.WriteHeader(http.StatusBadRequest)
+		log.Print("Error: ", err)
+		return
 	}
 
 	json.NewEncoder(w).Encode(&empleados)
@@ -33,12 +35,16 @@ func InsertEmpleado(w http.ResponseWriter, req *http.Request) {
 	err := empleadoDAO.Create(&empleado)
 
 	if err != nil {
-		log.Fatal(err)
+		w.WriteHeader(http.StatusBadRequest)
+		log.Print("Error: ", err)
+		return
 	}
 
 	e, err := empleadoDAO.GetById(empleado.Id_empleado)
 	if err != nil {
-		log.Fatal(err)
+		w.WriteHeader(http.StatusBadRequest)
+		log.Print("Error: ", err)
+		return
 	}
 
 	json.NewEncoder(w).Encode(&e)
@@ -72,7 +78,9 @@ func DeleteEmpleado(w http.ResponseWriter, req *http.Request) {
 
 	err := empleadoDao.Delete(id)
 	if err != nil {
-		log.Fatal(err)
+		w.WriteHeader(http.StatusBadRequest)
+		log.Print("Error: ", err)
+		return
 	}
 	e := models.Empleado{}
 
@@ -89,12 +97,16 @@ func UpdateEmpleado(w http.ResponseWriter, req *http.Request) {
 
 	err := empleadoDAO.Update(&empleado)
 	if err != nil {
-		log.Fatal(err)
+		w.WriteHeader(http.StatusBadRequest)
+		log.Print("Error: ", err)
+		return
 	}
 
 	e, err := empleadoDAO.GetById(empleado.Id_empleado)
 	if err != nil {
-		log.Fatal(err)
+		w.WriteHeader(http.StatusBadRequest)
+		log.Print("Error: ", err)
+		return
 	}
 
 	json.NewEncoder(w).Encode(&e)

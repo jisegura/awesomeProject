@@ -15,7 +15,9 @@ func GetCajas(w http.ResponseWriter, req *http.Request) {
 
 	cajas, err := cajasDAO.GetAll()
 	if err != nil {
-		log.Fatal(err)
+		w.WriteHeader(http.StatusBadRequest)
+		log.Print("Error: ", err)
+		return
 	}
 
 	json.NewEncoder(w).Encode(&cajas)
@@ -27,7 +29,9 @@ func GetCaja(w http.ResponseWriter, req *http.Request) {
 
 	caja, err := cajaDAO.GetCaja()
 	if err != nil {
-		log.Fatal(err)
+		w.WriteHeader(http.StatusBadRequest)
+		log.Print("Error: ", err)
+		return
 	}
 
 	json.NewEncoder(w).Encode(&caja)
@@ -43,7 +47,9 @@ func InsertCaja(w http.ResponseWriter, req *http.Request) {
 	c, err := cajasDAO.Create(&caja)
 
 	if err != nil {
-		log.Fatal(err)
+		w.WriteHeader(http.StatusBadRequest)
+		log.Print("Error: ", err)
+		return
 	}
 
 	json.NewEncoder(w).Encode(&c)
@@ -59,7 +65,9 @@ func CerrarCaja(w http.ResponseWriter, req *http.Request) {
 
 	c, err := cajaDAO.CierreCaja(&caja)
 	if err != nil {
-		log.Fatal(err)
+		w.WriteHeader(http.StatusBadRequest)
+		log.Print("Error: ", err)
+		return
 	}
 
 	json.NewEncoder(w).Encode(&c)

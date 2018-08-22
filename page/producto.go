@@ -4,7 +4,6 @@ import (
 	"awesomeProject/dao/factory"
 	"awesomeProject/models"
 	"encoding/json"
-	"fmt"
 	"github.com/gorilla/mux"
 	"log"
 	"net/http"
@@ -18,7 +17,9 @@ func GetProductos(w http.ResponseWriter, req *http.Request) {
 
 	productos, err := productoDAO.GetAll()
 	if err != nil {
-		log.Fatal(err)
+		w.WriteHeader(http.StatusBadRequest)
+		log.Print("Error: ", err)
+		return
 	}
 
 	json.NewEncoder(w).Encode(&productos)
@@ -34,12 +35,16 @@ func InsertProducto(w http.ResponseWriter, req *http.Request) {
 	err := productoDAO.Create(&producto)
 
 	if err != nil {
-		log.Fatal(err)
+		w.WriteHeader(http.StatusBadRequest)
+		log.Print("Error: ", err)
+		return
 	}
 
 	p, err := productoDAO.GetById(producto.Id_producto)
 	if err != nil {
-		log.Fatal(err)
+		w.WriteHeader(http.StatusBadRequest)
+		log.Print("Error: ", err)
+		return
 	}
 
 	json.NewEncoder(w).Encode(&p)
@@ -54,7 +59,8 @@ func GetProductoById(w http.ResponseWriter, req *http.Request) {
 
 	producto, err := productoDao.GetById(id)
 	if err != nil {
-		fmt.Fprint(w, "No existe el producto")
+		w.WriteHeader(http.StatusBadRequest)
+		log.Print("Error: ", err)
 		return
 	}
 
@@ -71,7 +77,9 @@ func DeleteProducto(w http.ResponseWriter, req *http.Request) {
 
 	err := productoDao.Delete(id)
 	if err != nil {
-		log.Fatal(err)
+		w.WriteHeader(http.StatusBadRequest)
+		log.Print("Error: ", err)
+		return
 	}
 
 	p := models.Producto{}
@@ -89,12 +97,16 @@ func UpdateProducto(w http.ResponseWriter, req *http.Request) {
 
 	err := productoDao.Update(&producto)
 	if err != nil {
-		log.Fatal(err)
+		w.WriteHeader(http.StatusBadRequest)
+		log.Print("Error: ", err)
+		return
 	}
 
 	p, err := productoDao.GetById(producto.Id_producto)
 	if err != nil {
-		log.Fatal(err)
+		w.WriteHeader(http.StatusBadRequest)
+		log.Print("Error: ", err)
+		return
 	}
 
 	json.NewEncoder(w).Encode(&p)

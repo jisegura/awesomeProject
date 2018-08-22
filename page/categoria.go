@@ -72,6 +72,8 @@ func DeleteCategoria(w http.ResponseWriter, req *http.Request) {
 
 	err := categoriaDAO.Delete(i)
 	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		log.Print("Error: ", err)
 		return
 	}
 
@@ -90,12 +92,16 @@ func UpdateCategoria(w http.ResponseWriter, req *http.Request) {
 
 	err := categoriaDAO.Update(&categoria)
 	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		log.Print("Error: ", err)
 		return
 	}
 
 	cat, err := categoriaDAO.GetById(categoria.Id_categoria)
 	if err != nil {
-		log.Fatal(err)
+		w.WriteHeader(http.StatusBadRequest)
+		log.Print("Error: ", err)
+		return
 	}
 
 	json.NewEncoder(w).Encode(&cat)

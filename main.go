@@ -46,6 +46,7 @@ func main() {
 	router.HandleFunc("/factura/retiros/{id}", page.GetFacturasRetiro).Methods("GET")
 	router.HandleFunc("/factura/clientes/{id}", page.GetFacturasCliente).Methods("GET")
 	router.HandleFunc("/factura/otros/{id}", page.GetFacturasOtro).Methods("GET")
+	router.HandleFunc("/factura/{id}", page.GetAllFacturasById).Methods("GET")
 	router.HandleFunc("/factura/", page.GetFacturasEliminadas).Methods("GET")
 
 	router.HandleFunc("/factura/", page.UpdateFactura).Methods("PUT")
@@ -54,5 +55,5 @@ func main() {
 	allowedOrigins := handlers.AllowedOrigins([]string{"*"})
 	allowedMethods := handlers.AllowedMethods([]string{"GET", "HEAD", "POST", "PUT", "DELETE", "OPTIONS"})
 
-	log.Fatal(http.ListenAndServe("localhost:3000", handlers.CORS(allowedHeaders, allowedOrigins, allowedMethods)(router)))
+	log.Fatal(http.ListenAndServe("25.71.37.25:3000", handlers.CORS(allowedHeaders, allowedOrigins, allowedMethods)(router)))
 }
