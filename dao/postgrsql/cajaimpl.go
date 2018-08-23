@@ -31,7 +31,10 @@ func (dao CajaImpl) Create(caja *models.Caja) (models.Caja, error) {
 	defer stmt.Close()
 
 	row := stmt.QueryRow(caja.Inicio, 0, time.Now(), time.Time{})
-	row.Scan(&caja.Id_caja)
+	err = row.Scan(&caja.Id_caja)
+	if err != nil {
+		return newCaja, err
+	}
 
 	newCaja, err = GetById(caja.Id_caja)
 	if err != nil {
@@ -57,6 +60,7 @@ func GetCajaAbierta() (models.Caja, error) {
 	if err != nil {
 		return caja, err
 	}
+	defer stmt.Close()
 
 	row := stmt.QueryRow()
 	err = row.Scan(&caja.Id_caja, &caja.Inicio, &caja.Fin, &caja.HoraInicio, &caja.HoraFin)
@@ -79,6 +83,7 @@ func GetById(id int) (models.Caja, error) {
 	if err != nil {
 		return caja, err
 	}
+	defer stmt.Close()
 
 	row := stmt.QueryRow(id)
 	err = row.Scan(&caja.Id_caja, &caja.Inicio, &caja.Fin, &caja.HoraInicio, &caja.HoraFin)

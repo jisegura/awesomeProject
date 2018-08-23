@@ -22,7 +22,11 @@ func (dao CategoriaImpl) Create(categoria *models.Categoria) error {
 	defer stmt.Close()
 
 	row := stmt.QueryRow(categoria.Nombre)
-	row.Scan(&categoria.Id_categoria)
+	err = row.Scan(&categoria.Id_categoria)
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
 
@@ -38,6 +42,7 @@ func (dao CategoriaImpl) GetAll() ([]models.Categoria, error) {
 	if err != nil {
 		return categorias, err
 	}
+	defer stmt.Close()
 
 	rows, err := stmt.Query()
 	if err != nil {

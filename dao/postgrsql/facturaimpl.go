@@ -119,7 +119,10 @@ func InsertFactura(factura *models.Factura) error {
 
 	factura.Fecha = time.Now()
 	row := stmt.QueryRow(factura.Id_caja, factura.Id_empleado, factura.Fecha, factura.Precio, factura.ComentarioBaja)
-	row.Scan(&factura.Id_factura)
+	err = row.Scan(&factura.Id_factura)
+	if err != nil {
+		return err
+	}
 
 	return nil
 }
@@ -128,6 +131,13 @@ func InsertFactura(factura *models.Factura) error {
 func InsertCliente(factura *models.Factura) error {
 
 	err := InsertFactura(factura)
+	if err != nil {
+		err = deleteRow(factura.Id_factura)
+		if err != nil {
+			return err
+		}
+		return err
+	}
 
 	query := "INSERT INTO cliente (id_factura, descuento, formaDePago) VALUES ($1, $2, $3)"
 	db := getConnection()
@@ -150,10 +160,41 @@ func InsertCliente(factura *models.Factura) error {
 	return nil
 }
 
+func deleteRow(id int) error {
+
+	query := "DELETE FROM factura WHERE id_factura = $1"
+	db := getConnection()
+	defer db.Close()
+
+	stmt, err := db.Prepare(query)
+	if err != nil {
+		return err
+	}
+	defer stmt.Close()
+
+	row, err := stmt.Exec(id)
+	if err != nil {
+		return err
+	}
+
+	i, _ := row.RowsAffected()
+	if i != 1 {
+		return errors.New("Error, se esperaba una fila afectada")
+	}
+	return nil
+}
+
 //INSERT OTRO
 func InsertOtros(factura *models.Factura) error {
 
 	err := InsertFactura(factura)
+	if err != nil {
+		err = deleteRow(factura.Id_factura)
+		if err != nil {
+			return err
+		}
+		return err
+	}
 
 	query := "INSERT INTO otros (id_factura, comentario) VALUES ($1, $2)"
 	db := getConnection()
@@ -167,7 +208,10 @@ func InsertOtros(factura *models.Factura) error {
 
 	factura.Fecha = time.Now()
 	row := stmt.QueryRow(factura.Id_factura, factura.Comentario)
-	row.Scan(&factura.Id_factura)
+	err = row.Scan(&factura.Id_factura)
+	if err != nil {
+		return err
+	}
 
 	return nil
 }

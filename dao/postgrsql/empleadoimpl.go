@@ -20,7 +20,11 @@ func (dao EmpleadoImpl) Create(empleado *models.Empleado) error {
 	defer stmt.Close()
 
 	row := stmt.QueryRow(empleado.FirstName, empleado.LastName)
-	row.Scan(&empleado.Id_empleado)
+	err = row.Scan(&empleado.Id_empleado)
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
 
