@@ -1,6 +1,9 @@
 package models
 
-import "time"
+import (
+	"database/sql"
+	"time"
+)
 
 type Factura struct {
 	Id_factura     int
@@ -8,9 +11,9 @@ type Factura struct {
 	Id_empleado    int
 	Fecha          time.Time
 	Precio         float64
-	ComentarioBaja string
-	Descuento      float64
-	Comentario     string
-	FormaDePago    int
+	ComentarioBaja sql.NullString
+	Descuento      sql.NullFloat64
+	Comentario     sql.NullString
+	FormaDePago    sql.NullInt64
 	Renglones      []Renglon `json:"Renglones"`
 }

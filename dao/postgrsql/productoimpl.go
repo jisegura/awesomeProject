@@ -11,7 +11,7 @@ type ProductoImpl struct{}
 //INSERT
 func (dao ProductoImpl) Create(producto *models.Producto) error {
 
-	query := "INSERT INTO producto (id_categoria, nombre, precio, imagen, descuento) VALUES ($1, $2, $3, $4, $5) RETURNING id_producto"
+	query := "INSERT INTO producto (id_categoria, nombre, precio, imagen) VALUES ($1, $2, $3, $4) RETURNING id_producto"
 	db := getConnection()
 	defer db.Close()
 
@@ -21,7 +21,7 @@ func (dao ProductoImpl) Create(producto *models.Producto) error {
 	}
 	defer stmt.Close()
 
-	row := stmt.QueryRow(producto.Id_categoria, producto.Nombre, producto.Precio, producto.Imagen, producto.Descuento)
+	row := stmt.QueryRow(producto.Id_categoria, producto.Nombre, producto.Precio, producto.Imagen)
 	row.Scan(&producto.Id_producto)
 	return nil
 }
@@ -46,7 +46,7 @@ func (dao ProductoImpl) GetAll() ([]models.Producto, error) {
 
 	for rows.Next() {
 		var row models.Producto
-		err := rows.Scan(&row.Id_producto, &row.Id_categoria, &row.Nombre, &row.Precio, &row.Imagen, &row.Descuento)
+		err := rows.Scan(&row.Id_producto, &row.Id_categoria, &row.Nombre, &row.Precio, &row.Imagen)
 		if err != nil {
 			return productos, err
 		}
@@ -72,7 +72,7 @@ func (dao ProductoImpl) GetById(id int) (models.Producto, error) {
 	defer stmt.Close()
 
 	row := stmt.QueryRow(id)
-	err = row.Scan(&p.Id_producto, &p.Id_categoria, &p.Nombre, &p.Precio, &p.Imagen, &p.Descuento)
+	err = row.Scan(&p.Id_producto, &p.Id_categoria, &p.Nombre, &p.Precio, &p.Imagen)
 	if err != nil {
 		return p, err
 	}
@@ -109,7 +109,7 @@ func (dao ProductoImpl) Delete(id int) error {
 //UPDATE
 func (dao ProductoImpl) Update(producto *models.Producto) error {
 
-	query := "UPDATE producto SET id_categoria = $1, nombre = $2, precio = $3, imagen = $4, descuento = $5 WHERE id_producto = $6"
+	query := "UPDATE producto SET id_categoria = $1, nombre = $2, precio = $3, imagen = $4 WHERE id_producto = $5"
 	db := getConnection()
 	defer db.Close()
 
@@ -119,7 +119,7 @@ func (dao ProductoImpl) Update(producto *models.Producto) error {
 	}
 	defer stmt.Close()
 
-	row, err := stmt.Exec(producto.Id_categoria, producto.Nombre, producto.Precio, producto.Imagen, producto.Descuento, producto.Id_producto)
+	row, err := stmt.Exec(producto.Id_categoria, producto.Nombre, producto.Precio, producto.Imagen, producto.Id_producto)
 	if err != nil {
 		log.Fatal(err)
 	}

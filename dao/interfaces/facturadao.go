@@ -13,6 +13,7 @@ type FacturaDAO interface {
 
 	GetFacturasEliminadas() ([]models.Factura, error)
 	GetFacturasById(id int) ([]int, error)
+	GetLastFacturas(id int) ([]models.Factura, error)
 
 	GetAll(id int) ([]models.Factura, error)
 	GetById(id int) (models.Factura, error)

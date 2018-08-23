@@ -190,3 +190,21 @@ func GetFacturasEliminadas(w http.ResponseWriter, req *http.Request) {
 
 	json.NewEncoder(w).Encode(facturas)
 }
+
+func GetLastFacturas(w http.ResponseWriter, req *http.Request) {
+
+	facturaDAO := factory.FactoryFactura()
+
+	param := mux.Vars(req)
+	id, _ := strconv.Atoi(param["id"])
+
+	facturas, err := facturaDAO.GetLastFacturas(id)
+	if err != nil {
+
+		w.WriteHeader(http.StatusBadRequest)
+		log.Print("Error", err)
+		return
+	}
+
+	json.NewEncoder(w).Encode(&facturas)
+}

@@ -63,7 +63,7 @@ func GetAll(id int) ([]models.Renglon, error) {
 
 	for rows.Next() {
 		var row models.Renglon
-		err := rows.Scan(&row.Id_factura, &row.Id_renglon, &row.Id_producto, &row.Cantidad, &row.Precio, &row.Descuento)
+		err := rows.Scan(&row.Id_renglon, &row.Id_producto, &row.Id_factura, &row.Cantidad, &row.Precio, &row.Descuento)
 		if err != nil {
 			return renglones, err
 		}

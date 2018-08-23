@@ -48,12 +48,17 @@ func main() {
 	router.HandleFunc("/factura/otros/{id}", page.GetFacturasOtro).Methods("GET")
 	router.HandleFunc("/factura/{id}", page.GetAllFacturasById).Methods("GET")
 	router.HandleFunc("/factura/", page.GetFacturasEliminadas).Methods("GET")
+	router.HandleFunc("/factura/ultimas/{id}", page.GetLastFacturas).Methods("GET")
 
 	router.HandleFunc("/factura/", page.UpdateFactura).Methods("PUT")
+
+	router.HandleFunc("/upload/", page.Upload).Methods("POST")
+	//router.HandleFunc("/upload/", page.Download).Methods("GET")
 
 	allowedHeaders := handlers.AllowedHeaders([]string{"X-Requested-With", "Content-Type"})
 	allowedOrigins := handlers.AllowedOrigins([]string{"*"})
 	allowedMethods := handlers.AllowedMethods([]string{"GET", "HEAD", "POST", "PUT", "DELETE", "OPTIONS"})
 
+	log.Print("Escuchando en http://25.71.37.25:3000")
 	log.Fatal(http.ListenAndServe("25.71.37.25:3000", handlers.CORS(allowedHeaders, allowedOrigins, allowedMethods)(router)))
 }

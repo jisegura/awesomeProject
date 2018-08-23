@@ -3,6 +3,7 @@ package postgrsql
 import (
 	"awesomeProject/models"
 	"errors"
+	_ "github.com/teepark/pqinterval"
 	"time"
 )
 
@@ -245,7 +246,7 @@ func GetAllClientes(id int) ([]models.Factura, error) {
 func GetAllOtros(id int) ([]models.Factura, error) {
 
 	facturas := make([]models.Factura, 0)
-	query := "SELECT o.id_factura, id_caja, id_empleado, fecha, precio, comentarioBaja FROM factura f INNER JOIN otros o ON f.id_factura = o.id_factura WHERE id_caja =$1"
+	query := "SELECT o.id_factura, id_caja, id_empleado, fecha, precio, comentarioBaja, comentario FROM factura f INNER JOIN otros o ON f.id_factura = o.id_factura WHERE id_caja =$1"
 	db := getConnection()
 	defer db.Close()
 
@@ -261,7 +262,7 @@ func GetAllOtros(id int) ([]models.Factura, error) {
 
 	for rows.Next() {
 		var row models.Factura
-		err := rows.Scan(&row.Id_factura, &row.Id_caja, &row.Id_empleado, &row.Fecha, &row.Precio, &row.ComentarioBaja)
+		err := rows.Scan(&row.Id_factura, &row.Id_caja, &row.Id_empleado, &row.Fecha, &row.Precio, &row.ComentarioBaja, &row.Comentario)
 		if err != nil {
 			return facturas, err
 		}
@@ -278,7 +279,7 @@ func GetRetiroById(id int) (models.Factura, error) {
 
 	var factura models.Factura
 
-	query := "SELECT * FROM ONLY factura WHERE id_factura = $1"
+	query := "SELECT * FROM factura WHERE id_factura = $1"
 	db := getConnection()
 	defer db.Close()
 
@@ -379,7 +380,11 @@ func UpdateComentario(factura *models.Factura) error {
 func GetFacturasEliminadas() ([]models.Factura, error) {
 
 	var facturas []models.Factura
-	query := "SELECT * FROM factura WHERE comentarioBaja  NOT LIKE ' '"
+	query := "SELECT g.id_factura, id_caja, id_empleado, fecha, precio, comentarioBaja, descuento, formaDePago, comentario FROM otros o RIGHT JOIN" +
+		"(SELECT f.id_factura, id_caja, id_empleado, fecha, precio, comentarioBaja, descuento, formaDePago FROM cliente c RIGHT JOIN " +
+		"(SELECT * FROM factura WHERE comentarioBaja  IS NOT NULL) f ON c.id_factura = f.id_factura) g " +
+		"ON o.id_factura = g.id_factura"
+
 	db := getConnection()
 	defer db.Close()
 
@@ -408,6 +413,47 @@ func GetFacturasEliminadas() ([]models.Factura, error) {
 
 		facturas = append(facturas, row)
 
+	}
+
+	return facturas, nil
+}
+
+func (dao FacturaImpl) GetLastFacturas(id int) ([]models.Factura, error) {
+
+	query := "SELECT g.id_factura, id_caja, id_empleado, fecha, precio, comentarioBaja, descuento, formaDePago, comentario FROM otros o RIGHT JOIN" +
+		"(SELECT f.id_factura, id_caja, id_empleado, fecha, precio, comentarioBaja, descuento, formaDePago FROM cliente c RIGHT JOIN " +
+		"(SELECT * FROM factura WHERE id_caja = $1 ORDER BY fecha DESC LIMIT 5) f ON c.id_factura = f.id_factura) g " +
+		"ON o.id_factura = g.id_factura"
+
+	db := getConnection()
+	defer db.Close()
+
+	var facturas []models.Factura
+	stmt, err := db.Prepare(query)
+	if err != nil {
+		return facturas, err
+	}
+	defer stmt.Close()
+
+	rows, err := stmt.Query(id)
+	if err != nil {
+		return facturas, err
+	}
+
+	for rows.Next() {
+		var factura models.Factura
+
+		err = rows.Scan(&factura.Id_factura, &factura.Id_caja, &factura.Id_empleado, &factura.Fecha, &factura.Precio, &factura.ComentarioBaja, &factura.Descuento, &factura.FormaDePago, &factura.Comentario)
+		if err != nil {
+			return facturas, err
+		}
+
+		factura.Renglones, err = GetAll(factura.Id_factura)
+		if err != nil {
+			return facturas, err
+		}
+
+		facturas = append(facturas, factura)
 	}
 
 	return facturas, nil
