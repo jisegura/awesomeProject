@@ -149,36 +149,15 @@ func Upload(w http.ResponseWriter, req *http.Request) {
 func Download(w http.ResponseWriter, req *http.Request) {
 
 	if req.Method == http.MethodGet {
-		file, err := ioutil.ReadFile(".files/butterfly.jpg")
-		if err != nil {
-			w.WriteHeader(http.StatusBadRequest)
-			log.Print("Error", err)
-			return
-		}
 
-		err = ioutil.WriteFile("C:/Users/michelle/Desktop/Images", file, 0666)
-		if err != nil {
-			w.WriteHeader(http.StatusBadRequest)
-			log.Print("Error", err)
-			return
-		}
+		/*	imgfile, err := ioutil.ReadFile("./files/tiger.jpg")
+			if err != nil {
+				fmt.Println("img.jpg file not found!")
+				os.Exit(1)
+			}
 
+			w.Header().Set("Content-type", "tiger.jpg")
+			w.Write(imgfile)*/
 	}
 
-	/*	data, err := ioutil.ReadAll(file)
-		if err != nil {
-			w.WriteHeader(http.StatusBadRequest)
-			log.Print("Error", err)
-			return
-		}
-
-		err = ioutil.WriteFile("./files/"+ handle.Filename, data, 0666)
-		if err != nil {
-			w.WriteHeader(http.StatusBadRequest)
-			log.Print("Error", err)
-			return
-		}
-
-		fmt.Fprint(w, "Cargado exitosamente")
-	}*/
 }

@@ -46,14 +46,15 @@ func main() {
 	router.HandleFunc("/factura/retiros/{id}", page.GetFacturasRetiro).Methods("GET")
 	router.HandleFunc("/factura/clientes/{id}", page.GetFacturasCliente).Methods("GET")
 	router.HandleFunc("/factura/otros/{id}", page.GetFacturasOtro).Methods("GET")
-	router.HandleFunc("/factura/{id}", page.GetAllFacturasById).Methods("GET")
+	router.HandleFunc("/factura/{id}", page.GetAllIdFactura).Methods("GET")
+	router.HandleFunc("/factura/all/{id}", page.GetAllFacturas).Methods("GET")
 	router.HandleFunc("/factura/", page.GetFacturasEliminadas).Methods("GET")
 	router.HandleFunc("/factura/ultimas/{id}", page.GetLastFacturas).Methods("GET")
 
 	router.HandleFunc("/factura/", page.UpdateFactura).Methods("PUT")
 
 	router.HandleFunc("/upload/", page.Upload).Methods("POST")
-	//router.HandleFunc("/upload/", page.Download).Methods("GET")
+	router.HandleFunc("/upload/", page.Download).Methods("GET")
 
 	allowedHeaders := handlers.AllowedHeaders([]string{"X-Requested-With", "Content-Type"})
 	allowedOrigins := handlers.AllowedOrigins([]string{"*"})

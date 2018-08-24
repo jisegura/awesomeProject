@@ -6,14 +6,15 @@ import (
 
 type FacturaDAO interface {
 	Create(factura *models.Factura) error
-	CreateCliente(factura *models.Factura) error
-	CreateOtro(factura *models.Factura) error
+	CreateCliente(factura *models.Factura) (models.Factura, error)
+	CreateOtro(factura *models.Factura) (models.Factura, error)
 
 	Update(factura *models.Factura) error
 
 	GetFacturasEliminadas() ([]models.Factura, error)
 	GetFacturasById(id int) ([]int, error)
 	GetLastFacturas(id int) ([]models.Factura, error)
+	GetAllFacturasById(id int) ([]models.Factura, error)
 
 	GetAll(id int) ([]models.Factura, error)
 	GetById(id int) (models.Factura, error)

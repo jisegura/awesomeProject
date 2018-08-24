@@ -11,7 +11,7 @@ import (
 )
 
 //GET ID_FACTURA POR CAJA
-func GetAllFacturasById(w http.ResponseWriter, req *http.Request) {
+func GetAllIdFactura(w http.ResponseWriter, req *http.Request) {
 
 	facturaDao := factory.FactoryFactura()
 	param := mux.Vars(req)
@@ -25,6 +25,23 @@ func GetAllFacturasById(w http.ResponseWriter, req *http.Request) {
 	}
 
 	json.NewEncoder(w).Encode(&facturas)
+}
+
+//GET ALL FACTURAS POR CAJA
+func GetAllFacturas(w http.ResponseWriter, req *http.Request) {
+
+	facturaDAO := factory.FactoryFactura()
+	param := mux.Vars(req)
+	id, _ := strconv.Atoi(param["id"])
+
+	facturas, err := facturaDAO.GetAllFacturasById(id)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		log.Print("Error", err)
+		return
+	}
+
+	json.NewEncoder(w).Encode(facturas)
 }
 
 //SELECT RETIRO
@@ -111,7 +128,7 @@ func InsertCliente(w http.ResponseWriter, req *http.Request) {
 
 	_ = json.NewDecoder(req.Body).Decode(&factura)
 
-	err := facturaDAO.CreateCliente(&factura)
+	newFactura, err := facturaDAO.CreateCliente(&factura)
 
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
@@ -119,14 +136,7 @@ func InsertCliente(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	f, err := facturaDAO.GetByIdCliente(factura.Id_factura)
-	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		log.Print("Error: ", err)
-		return
-	}
-
-	json.NewEncoder(w).Encode(&f)
+	json.NewEncoder(w).Encode(&newFactura)
 }
 
 //INSERT OTRO
@@ -136,7 +146,7 @@ func InsertOtro(w http.ResponseWriter, req *http.Request) {
 	factura := models.Factura{}
 
 	_ = json.NewDecoder(req.Body).Decode(&factura)
-	err := facturaDAO.CreateOtro(&factura)
+	newFactura, err := facturaDAO.CreateOtro(&factura)
 
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
@@ -144,14 +154,7 @@ func InsertOtro(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	f, err := facturaDAO.GetByIdOtros(factura.Id_factura)
-	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		log.Print("Error: ", err)
-		return
-	}
-
-	json.NewEncoder(w).Encode(&f)
+	json.NewEncoder(w).Encode(&newFactura)
 }
 
 func UpdateFactura(w http.ResponseWriter, req *http.Request) {
