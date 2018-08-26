@@ -125,42 +125,6 @@ func (dao CajaImpl) GetAll() ([]models.Caja, error) {
 	return cajas, nil
 }
 
-func totalFactura(factura []models.Factura) float64 {
-
-	totalFactura := 0.0
-	for i := range factura {
-		totalFactura = totalFactura + factura[i].Precio
-	}
-
-	return totalFactura
-}
-
-func totalFacturas(id int) (float64, error) {
-
-	var total float64
-	facturasRetiros, err := GetAllFacturas(id)
-	if err != nil {
-		return total, err
-	}
-	totalRetiros := totalFactura(facturasRetiros)
-
-	facturasClientes, err := GetAllClientes(id)
-	if err != nil {
-		return total, err
-	}
-	totalClientes := totalFactura(facturasClientes)
-
-	facturasOtros, err := GetAllOtros(id)
-	if err != nil {
-		return total, err
-	}
-	totalOtros := totalFactura(facturasOtros)
-
-	total = totalClientes - totalRetiros - totalOtros
-
-	return total, nil
-}
-
 //UPADTE CIERRE CAJA
 func (dao CajaImpl) CierreCaja(caja *models.Caja) (models.Caja, error) {
 
@@ -176,12 +140,7 @@ func (dao CajaImpl) CierreCaja(caja *models.Caja) (models.Caja, error) {
 	}
 	defer stmt.Close()
 
-	totalCaja, err := totalFacturas(caja.Id_caja)
-	if err != nil {
-		return c, err
-	}
-
-	row, err := stmt.Exec(totalCaja, time.Now(), caja.Id_caja)
+	row, err := stmt.Exec(caja.Fin, time.Now(), caja.Id_caja)
 	if err != nil {
 		return c, err
 	}

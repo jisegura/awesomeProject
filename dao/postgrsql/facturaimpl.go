@@ -3,6 +3,7 @@ package postgrsql
 import (
 	"awesomeProject/models"
 	"errors"
+	"fmt"
 	_ "github.com/teepark/pqinterval"
 	"time"
 )
@@ -247,6 +248,7 @@ func GetAllFacturas(id int) ([]models.Factura, error) {
 		"WHERE id_factura NOT IN (SELECT id_factura FROM cliente) " +
 		"AND id_factura NOT IN (SELECT id_factura FROM otros) " +
 		"AND id_caja = $1"
+
 	db := getConnection()
 	defer db.Close()
 
@@ -274,7 +276,7 @@ func GetAllFacturas(id int) ([]models.Factura, error) {
 	return facturas, nil
 }
 
-//SELECT ALL FROM CLIENTE FOR CAJA
+//SELECT  FROM CLIENTE FOR CAJA
 func GetAllClientes(id int) ([]models.Factura, error) {
 
 	facturas := make([]models.Factura, 0)
@@ -431,6 +433,7 @@ func UpdateComentario(factura *models.Factura) error {
 	}
 	defer stmt.Close()
 
+	fmt.Print(factura)
 	row, err := stmt.Exec(factura.ComentarioBaja, factura.Id_factura)
 	if err != nil {
 		return err
@@ -449,7 +452,7 @@ func GetFacturasEliminadas() ([]models.Factura, error) {
 	var facturas []models.Factura
 	query := "SELECT g.id_factura, id_caja, id_empleado, fecha, precio, comentarioBaja, descuento, formaDePago, comentario FROM otros o RIGHT JOIN" +
 		"(SELECT f.id_factura, id_caja, id_empleado, fecha, precio, comentarioBaja, descuento, formaDePago FROM cliente c RIGHT JOIN " +
-		"(SELECT * FROM factura WHERE comentarioBaja  IS NOT NULL) f ON c.id_factura = f.id_factura) g " +
+		"(SELECT * FROM factura WHERE comentarioBaja  NOT LIKE '') f ON c.id_factura = f.id_factura) g " +
 		"ON o.id_factura = g.id_factura"
 
 	db := getConnection()
@@ -489,7 +492,7 @@ func (dao FacturaImpl) GetLastFacturas(id int) ([]models.Factura, error) {
 
 	query := "SELECT g.id_factura, id_caja, id_empleado, fecha, precio, comentarioBaja, descuento, formaDePago, comentario FROM otros o RIGHT JOIN" +
 		"(SELECT f.id_factura, id_caja, id_empleado, fecha, precio, comentarioBaja, descuento, formaDePago FROM cliente c RIGHT JOIN " +
-		"(SELECT * FROM factura WHERE id_caja = $1 ORDER BY fecha DESC LIMIT 5) f ON c.id_factura = f.id_factura) g " +
+		"(SELECT * FROM factura WHERE id_caja = $1  AND comentarioBaja LIKE '' ORDER BY fecha DESC LIMIT 5) f ON c.id_factura = f.id_factura) g " +
 		"ON o.id_factura = g.id_factura"
 
 	db := getConnection()

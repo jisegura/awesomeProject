@@ -4,6 +4,7 @@ import (
 	"awesomeProject/dao/factory"
 	"awesomeProject/models"
 	"encoding/json"
+	"fmt"
 	"github.com/gorilla/mux"
 	"log"
 	"net/http"
@@ -163,6 +164,8 @@ func UpdateFactura(w http.ResponseWriter, req *http.Request) {
 	factura := models.Factura{}
 
 	_ = json.NewDecoder(req.Body).Decode(&factura)
+	fmt.Println(factura)
+
 	err := facturaDAO.Update(&factura)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
