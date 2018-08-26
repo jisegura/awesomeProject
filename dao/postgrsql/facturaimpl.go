@@ -137,6 +137,11 @@ func (dao FacturaImpl) GetAllFacturasById(id int) ([]models.Factura, error) {
 			return facturas, err
 		}
 
+		row.Renglones, err = GetAll(row.Id_factura)
+		if err != nil {
+			return facturas, err
+		}
+
 		facturas = append(facturas, row)
 	}
 
