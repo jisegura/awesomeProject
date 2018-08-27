@@ -3,7 +3,6 @@ package postgrsql
 import (
 	"awesomeProject/models"
 	"errors"
-	"fmt"
 	_ "github.com/teepark/pqinterval"
 	"time"
 )
@@ -438,7 +437,6 @@ func UpdateComentario(factura *models.Factura) error {
 	}
 	defer stmt.Close()
 
-	fmt.Print(factura)
 	row, err := stmt.Exec(factura.ComentarioBaja, factura.Id_factura)
 	if err != nil {
 		return err

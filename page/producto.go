@@ -11,7 +11,6 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
-	"os"
 	"strconv"
 )
 
@@ -161,7 +160,9 @@ func Download(w http.ResponseWriter, req *http.Request) {
 			w.Write(imgfile)*/
 		imgfile, err := ioutil.ReadFile("./files/tiger.jpg")
 		if err != nil {
-			os.Exit(1)
+			w.WriteHeader(http.StatusBadRequest)
+			log.Print("Error", err)
+			return
 		}
 		w.Header().Set("Content-type", "tiger.jpg")
 		w.Write(imgfile)

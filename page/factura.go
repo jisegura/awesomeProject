@@ -206,7 +206,6 @@ func GetLastFacturas(w http.ResponseWriter, req *http.Request) {
 
 	facturas, err := facturaDAO.GetLastFacturas(id)
 	if err != nil {
-
 		w.WriteHeader(http.StatusBadRequest)
 		log.Print("Error", err)
 		return

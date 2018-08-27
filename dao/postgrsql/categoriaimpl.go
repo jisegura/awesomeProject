@@ -3,7 +3,6 @@ package postgrsql
 import (
 	"awesomeProject/models"
 	"errors"
-	"log"
 )
 
 type CategoriaImpl struct{}
@@ -120,13 +119,13 @@ func (dao CategoriaImpl) Update(categoria *models.Categoria) error {
 
 	stmt, err := db.Prepare(query)
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 	defer stmt.Close()
 
 	r, err := stmt.Exec(categoria.Nombre, categoria.Id_categoria)
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 
 	i, _ := r.RowsAffected()
