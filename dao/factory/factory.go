@@ -1,6 +1,7 @@
 package factory
 
 import (
+	"awesomeProject/dao/imports"
 	"awesomeProject/dao/interfaces"
 	"awesomeProject/dao/postgrsql"
 )
@@ -38,5 +39,11 @@ func FactoryRenglon() interfaces.RenglonDAO {
 func FactoryCategoria() interfaces.CategoriaDAO {
 	var i interfaces.CategoriaDAO
 	i = postgrsql.CategoriaImpl{}
+	return i
+}
+
+func FactoryExcel() interfaces.ExcelDAO {
+	var i interfaces.ExcelDAO
+	i = imports.ExcelImpl{}
 	return i
 }

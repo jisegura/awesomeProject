@@ -157,3 +157,35 @@ func (dao CajaImpl) CierreCaja(caja *models.Caja) (models.Caja, error) {
 
 	return c, nil
 }
+
+//DEVUELVE LAS CAJAS DEL HISTORIAL MEDIANTE UN INTERVALO DE FECHAS
+func (dao CajaImpl) GetCajasByFechas(fechaIncio time.Time, fechaFin time.Time) ([]models.Caja, error) {
+
+	query := "SELECT * FROM caja where horaInicio BETWEEN $1 AND $2"
+	db := getConnection()
+	defer db.Close()
+
+	var cajas []models.Caja
+	stmt, err := db.Prepare(query)
+	if err != nil {
+		return cajas, err
+	}
+	defer stmt.Close()
+
+	rows, err := stmt.Query(fechaIncio, fechaFin)
+	if err != nil {
+		return cajas, err
+	}
+
+	for rows.Next() {
+		var caja models.Caja
+		err := rows.Scan(&caja.Id_caja, &caja.Inicio, &caja.Fin, &caja.HoraInicio, &caja.HoraFin)
+		if err != nil {
+			return cajas, err
+		}
+
+		cajas = append(cajas, caja)
+	}
+
+	return cajas, nil
+}

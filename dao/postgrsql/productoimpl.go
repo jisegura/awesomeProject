@@ -80,6 +80,29 @@ func (dao ProductoImpl) GetById(id int) (models.Producto, error) {
 	return p, nil
 }
 
+func GetNombreById(id int64) (string, error) {
+
+	query := "SELECT nombre FROM producto WHERE id_producto = $1"
+	db := getConnection()
+	defer db.Close()
+
+	var nombre string
+
+	stmt, err := db.Prepare(query)
+	if err != nil {
+		return nombre, err
+	}
+	defer stmt.Close()
+
+	row := stmt.QueryRow(id)
+	err = row.Scan(&nombre)
+	if err != nil {
+		return nombre, err
+	}
+
+	return nombre, nil
+}
+
 //DELETE
 func (dao ProductoImpl) Delete(id int) error {
 

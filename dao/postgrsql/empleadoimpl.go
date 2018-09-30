@@ -3,7 +3,6 @@ package postgrsql
 import (
 	"awesomeProject/models"
 	"errors"
-	"log"
 )
 
 type EmpleadoImpl struct{}
@@ -115,13 +114,13 @@ func (dao EmpleadoImpl) Update(empleado *models.Empleado) error {
 
 	stmt, err := db.Prepare(query)
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 	defer stmt.Close()
 
 	r, err := stmt.Exec(empleado.FirstName, empleado.LastName, empleado.Id_empleado)
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 
 	i, _ := r.RowsAffected()
@@ -130,4 +129,27 @@ func (dao EmpleadoImpl) Update(empleado *models.Empleado) error {
 	}
 
 	return nil
+}
+
+func GetNombre(id int64) (string, error) {
+
+	query := "SELECT firstname FROM empleado WHERE id_empleado = $1"
+	db := getConnection()
+	defer db.Close()
+
+	var nombre string
+
+	stmt, err := db.Prepare(query)
+	if err != nil {
+		return nombre, err
+	}
+	defer stmt.Close()
+
+	row := stmt.QueryRow(id)
+	err = row.Scan(&nombre)
+	if err != nil {
+		return nombre, err
+	}
+
+	return nombre, nil
 }

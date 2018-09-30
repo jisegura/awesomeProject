@@ -4,8 +4,11 @@ import (
 	"awesomeProject/dao/factory"
 	"awesomeProject/models"
 	"encoding/json"
+	"github.com/gorilla/mux"
 	"log"
 	"net/http"
+	"strconv"
+	"time"
 )
 
 //SELECT
@@ -71,4 +74,57 @@ func CerrarCaja(w http.ResponseWriter, req *http.Request) {
 	}
 
 	json.NewEncoder(w).Encode(&c)
+}
+
+func GetCajasByFechas(w http.ResponseWriter, req *http.Request) {
+
+	cajaDAO := factory.FactoryCaja()
+	facturaDAO := factory.FactoryFactura()
+	excelDAO := factory.FactoryExcel()
+
+	param := mux.Vars(req)
+	i, err := strconv.ParseInt(param["fechaInicio"], 10, 64)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		log.Print("Error: ", err)
+		return
+	}
+	j, err := strconv.ParseInt(param["fechaFin"], 10, 64)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		log.Print("Error: ", err)
+		return
+	}
+
+	fechaInicio := time.Unix(i, 0)
+	fechaFin := time.Unix(j, 0)
+
+	cajas, err := cajaDAO.GetCajasByFechas(fechaInicio, fechaFin)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		log.Print("Error: ", err)
+		return
+	}
+	var movimientos []models.Movimientos
+
+	for i := range cajas {
+		var movimiento models.Movimientos
+		facturas, err := facturaDAO.GetAllFacturasById(cajas[i].Id_caja)
+		if err != nil {
+			w.WriteHeader(http.StatusBadRequest)
+			log.Print("Error: ", err)
+			return
+		}
+		movimiento.Caja = cajas[i]
+		movimiento.Facturas = facturas
+		movimientos = append(movimientos, movimiento)
+	}
+
+	err = excelDAO.Export(movimientos)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		log.Print("Error: ", err)
+		return
+	}
+	w.WriteHeader(http.StatusOK)
 }

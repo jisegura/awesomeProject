@@ -37,6 +37,7 @@ func main() {
 	router.HandleFunc("/caja/", page.CerrarCaja).Methods("PUT")
 	router.HandleFunc("/caja/", page.GetCajas).Methods("GET")
 	router.HandleFunc("/caja/open/", page.GetCaja).Methods("GET")
+	router.HandleFunc("/caja/export/{fechaInicio}/{fechaFin}/", page.GetCajasByFechas).Methods("GET")
 
 	//FACTURA/////
 	router.HandleFunc("/factura/retiros/", page.InsertFactura).Methods("POST")
@@ -60,6 +61,6 @@ func main() {
 	allowedOrigins := handlers.AllowedOrigins([]string{"*"})
 	allowedMethods := handlers.AllowedMethods([]string{"GET", "HEAD", "POST", "PUT", "DELETE", "OPTIONS"})
 
-	log.Print("Escuchando en http://25.71.37.25:3000")
-	log.Fatal(http.ListenAndServe("25.71.37.25:3000", handlers.CORS(allowedHeaders, allowedOrigins, allowedMethods)(router)))
+	log.Print("Escuchando en localhost:3000")
+	log.Fatal(http.ListenAndServe("localhost:3000", handlers.CORS(allowedHeaders, allowedOrigins, allowedMethods)(router)))
 }
