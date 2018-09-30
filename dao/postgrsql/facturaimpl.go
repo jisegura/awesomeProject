@@ -495,7 +495,7 @@ func (dao FacturaImpl) GetLastFacturas(id int) ([]models.Factura, error) {
 
 	query := "SELECT g.id_factura, id_caja, id_empleado, fecha, precio, comentarioBaja, descuento, formaDePago, comentario FROM otros o RIGHT JOIN" +
 		"(SELECT f.id_factura, id_caja, id_empleado, fecha, precio, comentarioBaja, descuento, formaDePago FROM cliente c RIGHT JOIN " +
-		"(SELECT * FROM factura WHERE id_caja = $1  AND comentarioBaja LIKE '' ORDER BY fecha DESC LIMIT 5) f ON c.id_factura = f.id_factura) g " +
+		"(SELECT * FROM factura WHERE id_caja = $1 ORDER BY fecha DESC LIMIT 5) f ON c.id_factura = f.id_factura) g " +
 		"ON o.id_factura = g.id_factura"
 
 	db := getConnection()
@@ -541,4 +541,88 @@ func GetTipo(factura models.Factura) string {
 		return "Otros"
 	}
 	return "Clientes"
+}
+
+//1 efectivo
+//2 debito
+//3 credito
+
+func (dao FacturaImpl) GetIngresos(id int, formaDePago int) (float64, error) {
+
+	return Get_ingresos(id, formaDePago)
+}
+
+func Get_ingresos(id int, formaDePago int) (float64, error) {
+
+	query := "SELECT COALESCE(SUM(precio), 0) FROM " +
+		"(SELECT formadepago, precio FROM cliente c INNER JOIN (SELECT id_factura, precio FROM factura WHERE id_caja = $1) f ON " +
+		"c.id_factura = f.id_factura) f " +
+		"WHERE f.formadepago = $2"
+
+	db := getConnection()
+	defer db.Close()
+
+	var total float64
+
+	stmt, err := db.Prepare(query)
+	if err != nil {
+		return total, err
+	}
+	defer stmt.Close()
+
+	row := stmt.QueryRow(id, formaDePago)
+	err = row.Scan(&total)
+	if err != nil {
+		return total, err
+	}
+
+	return total, nil
+}
+
+func GetTotalRetiros(id int) (float64, error) {
+
+	query := "SELECT COALESCE(SUM(precio), 0) FROM factura WHERE id_caja = $1 AND id_factura NOT IN (SELECT id_factura FROM otros) AND " +
+		"id_factura NOT IN (SELECT id_factura FROM cliente)"
+	db := getConnection()
+	defer db.Close()
+
+	var total float64
+
+	stmt, err := db.Prepare(query)
+	if err != nil {
+		return total, err
+	}
+	defer stmt.Close()
+
+	row := stmt.QueryRow(id)
+	err = row.Scan(&total)
+	if err != nil {
+		return total, err
+	}
+
+	return total, nil
+}
+
+func GetTotalGastos(id int) (float64, error) {
+
+	query := "SELECT COALESCE(SUM(precio), 0) FROM otros o INNER JOIN (SELECT id_factura, precio FROM factura WHERE id_caja = $1) f " +
+		"ON o.id_factura = f.id_factura"
+	db := getConnection()
+	defer db.Close()
+
+	var total float64
+
+	stmt, err := db.Prepare(query)
+	if err != nil {
+		return total, err
+	}
+	defer stmt.Close()
+
+	row := stmt.QueryRow(id)
+	err = row.Scan(&total)
+	if err != nil {
+		return total, err
+	}
+
+	return total, nil
 }

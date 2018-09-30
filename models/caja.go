@@ -8,4 +8,5 @@ type Caja struct {
 	Fin        float64
 	HoraInicio time.Time
 	HoraFin    time.Time
+	CierreReal float64
 }

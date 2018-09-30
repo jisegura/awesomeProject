@@ -128,3 +128,54 @@ func GetCajasByFechas(w http.ResponseWriter, req *http.Request) {
 	}
 	w.WriteHeader(http.StatusOK)
 }
+
+func GetIngresosEfectivo(w http.ResponseWriter, req *http.Request) {
+
+	facturaDAO := factory.FactoryFactura()
+
+	param := mux.Vars(req)
+	id, _ := strconv.Atoi(param["id"])
+
+	total, err := facturaDAO.GetIngresos(id, 1)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		log.Print("Error: ", err)
+		return
+	}
+
+	json.NewEncoder(w).Encode(&total)
+}
+
+func GetIngresosDebito(w http.ResponseWriter, req *http.Request) {
+
+	facturaDAO := factory.FactoryFactura()
+
+	param := mux.Vars(req)
+	id, _ := strconv.Atoi(param["id"])
+
+	total, err := facturaDAO.GetIngresos(id, 2)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		log.Print("Error: ", err)
+		return
+	}
+
+	json.NewEncoder(w).Encode(&total)
+}
+
+func GetIngresosCredito(w http.ResponseWriter, req *http.Request) {
+
+	facturaDAO := factory.FactoryFactura()
+
+	param := mux.Vars(req)
+	id, _ := strconv.Atoi(param["id"])
+
+	total, err := facturaDAO.GetIngresos(id, 3)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		log.Print("Error: ", err)
+		return
+	}
+
+	json.NewEncoder(w).Encode(&total)
+}

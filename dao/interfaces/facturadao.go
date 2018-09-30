@@ -24,4 +24,6 @@ type FacturaDAO interface {
 
 	GetFacturasOtro(id int) ([]models.Factura, error)
 	GetByIdOtros(id int) (models.Factura, error)
+
+	GetIngresos(id int, formaDePago int) (float64, error)
 }

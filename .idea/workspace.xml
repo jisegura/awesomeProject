@@ -2,18 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="82b569fb-848c-4ea9-bcaa-b4562bd687bf" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/dao/imports/excel.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dao/interfaces/exceldao.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models/excel.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models/movimientos.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/models/user.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dao/factory/factory.go" beforeDir="false" afterPath="$PROJECT_DIR$/dao/factory/factory.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dao/interfaces/cajadao.go" beforeDir="false" afterPath="$PROJECT_DIR$/dao/interfaces/cajadao.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Movimientos.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/Movimientos.xlsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dao/imports/excel.go" beforeDir="false" afterPath="$PROJECT_DIR$/dao/imports/excel.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dao/interfaces/facturadao.go" beforeDir="false" afterPath="$PROJECT_DIR$/dao/interfaces/facturadao.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dao/postgrsql/cajaimpl.go" beforeDir="false" afterPath="$PROJECT_DIR$/dao/postgrsql/cajaimpl.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dao/postgrsql/empleadoimpl.go" beforeDir="false" afterPath="$PROJECT_DIR$/dao/postgrsql/empleadoimpl.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dao/postgrsql/facturaimpl.go" beforeDir="false" afterPath="$PROJECT_DIR$/dao/postgrsql/facturaimpl.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dao/postgrsql/productoimpl.go" beforeDir="false" afterPath="$PROJECT_DIR$/dao/postgrsql/productoimpl.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/caja.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/caja.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/excel.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/excel.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/page/caja.go" beforeDir="false" afterPath="$PROJECT_DIR$/page/caja.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -26,7 +24,7 @@
     <session id="936556327">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="33" />
+          <entry key="project.closed" value="35" />
           <entry key="project.open.time.10" value="2" />
           <entry key="project.open.time.11" value="2" />
           <entry key="project.open.time.12" value="1" />
@@ -37,12 +35,14 @@
           <entry key="project.open.time.20" value="2" />
           <entry key="project.open.time.22" value="2" />
           <entry key="project.open.time.23" value="3" />
+          <entry key="project.open.time.25" value="1" />
           <entry key="project.open.time.26" value="1" />
           <entry key="project.open.time.28" value="1" />
           <entry key="project.open.time.29" value="1" />
           <entry key="project.open.time.30" value="1" />
           <entry key="project.open.time.32" value="1" />
           <entry key="project.open.time.33" value="1" />
+          <entry key="project.open.time.34" value="1" />
           <entry key="project.open.time.37" value="1" />
           <entry key="project.open.time.38" value="1" />
           <entry key="project.open.time.41" value="1" />
@@ -52,40 +52,40 @@
           <entry key="project.open.time.6" value="1" />
           <entry key="project.open.time.9" value="1" />
           <entry key="project.open.time.97" value="1" />
-          <entry key="project.opened" value="38" />
+          <entry key="project.opened" value="40" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="go" value="675" />
+          <entry key="go" value="701" />
           <entry key="jpg" value="4" />
           <entry key="json" value="10" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="Go" value="675" />
+          <entry key="Go" value="701" />
           <entry key="Image" value="4" />
           <entry key="JSON" value="10" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="go" value="41510" />
+          <entry key="go" value="44963" />
           <entry key="json" value="65" />
-          <entry key="txt" value="22" />
+          <entry key="txt" value="39" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Go" value="41510" />
+          <entry key="Go" value="44963" />
           <entry key="JSON" value="65" />
-          <entry key="PLAIN_TEXT" value="22" />
+          <entry key="PLAIN_TEXT" value="39" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.go.postfix.template.usages.trigger">
         <counts>
-          <entry key=".len" value="5" />
+          <entry key=".len" value="6" />
           <entry key=".p" value="8" />
           <entry key=".println" value="1" />
           <entry key=".var" value="1" />
@@ -96,37 +96,31 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/page/caja.go">
+        <entry file="file://$PROJECT_DIR$/main.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="425">
-              <caret line="34" column="44" selection-start-line="34" selection-start-column="44" selection-end-line="34" selection-end-column="44" />
+            <state relative-caret-position="403">
+              <caret line="67" column="44" selection-start-line="67" selection-start-column="44" selection-end-line="67" selection-end-column="44" />
               <folding>
-                <element signature="e#14#160#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/dao/imports/excel.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="85" column="32" selection-start-line="85" selection-start-column="32" selection-end-line="85" selection-end-column="32" />
-              <folding>
-                <element signature="e#17#121#0" expanded="true" />
+                <element signature="e#14#123#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/main.go">
+        <entry file="file://$PROJECT_DIR$/models/empleado.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="284">
-              <caret line="63" column="29" lean-forward="true" selection-start-line="63" selection-start-column="29" selection-end-line="63" selection-end-column="29" />
-              <folding>
-                <element signature="e#14#123#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="85">
+              <caret line="5" column="22" selection-start-line="5" selection-start-column="22" selection-end-line="5" selection-end-column="22" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/models/user.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret column="14" selection-start-column="14" selection-end-column="14" />
             </state>
           </provider>
         </entry>
@@ -152,7 +146,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/models/users.go" />
         <option value="$PROJECT_DIR$/models/configuration.go" />
         <option value="$PROJECT_DIR$/configuration.json" />
         <option value="$PROJECT_DIR$/page/goapp.go" />
@@ -174,7 +167,6 @@
         <option value="$PROJECT_DIR$/models/facturaVista.go" />
         <option value="$PROJECT_DIR$/page/enablecors.go" />
         <option value="$PROJECT_DIR$/dao/interfaces/empleadodao.go" />
-        <option value="$PROJECT_DIR$/models/caja.go" />
         <option value="$PROJECT_DIR$/models/retiro.go" />
         <option value="$PROJECT_DIR$/models/otros.go" />
         <option value="$PROJECT_DIR$/models/cliente.go" />
@@ -185,24 +177,26 @@
         <option value="$PROJECT_DIR$/models/empleado.go" />
         <option value="$PROJECT_DIR$/dao/postgrsql/categoriaimpl.go" />
         <option value="$PROJECT_DIR$/dao/postgrsql/connection.go" />
-        <option value="$PROJECT_DIR$/dao/interfaces/facturadao.go" />
         <option value="$PROJECT_DIR$/models/renglon.go" />
         <option value="$PROJECT_DIR$/models/factura.go" />
         <option value="$PROJECT_DIR$/page/factura.go" />
         <option value="$PROJECT_DIR$/page/producto.go" />
         <option value="$PROJECT_DIR$/dao/interfaces/cajadao.go" />
-        <option value="$PROJECT_DIR$/dao/postgrsql/cajaimpl.go" />
         <option value="$PROJECT_DIR$/dao/factory/factory.go" />
         <option value="$PROJECT_DIR$/models/Movimientos.go" />
         <option value="$PROJECT_DIR$/models/movimientos.go" />
-        <option value="$PROJECT_DIR$/page/caja.go" />
         <option value="$PROJECT_DIR$/dao/interfaces/exceldao.go" />
-        <option value="$PROJECT_DIR$/models/excel.go" />
         <option value="$PROJECT_DIR$/dao/postgrsql/productoimpl.go" />
         <option value="$PROJECT_DIR$/dao/postgrsql/empleadoimpl.go" />
+        <option value="$PROJECT_DIR$/page/caja.go" />
+        <option value="$PROJECT_DIR$/dao/interfaces/facturadao.go" />
+        <option value="$PROJECT_DIR$/models/excel.go" />
+        <option value="$PROJECT_DIR$/dao/postgrsql/cajaimpl.go" />
         <option value="$PROJECT_DIR$/dao/postgrsql/facturaimpl.go" />
+        <option value="$PROJECT_DIR$/models/caja.go" />
         <option value="$PROJECT_DIR$/main.go" />
         <option value="$PROJECT_DIR$/dao/imports/excel.go" />
+        <option value="$PROJECT_DIR$/models/user.go" />
       </list>
     </option>
   </component>
@@ -275,13 +269,7 @@
             <path>
               <item name="awesomeProject" type="b2602c69:ProjectViewProjectNode" />
               <item name="awesomeProject" type="462c0819:PsiDirectoryNode" />
-              <item name="dao" type="462c0819:PsiDirectoryNode" />
-              <item name="postgrsql" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="awesomeProject" type="b2602c69:ProjectViewProjectNode" />
-              <item name="awesomeProject" type="462c0819:PsiDirectoryNode" />
-              <item name="page" type="462c0819:PsiDirectoryNode" />
+              <item name="models" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -337,13 +325,14 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.23146747" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.23903178" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3295082" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.20491803" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.20491803" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -367,7 +356,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="vcs" />
     <MESSAGE value="update del backend" />
-    <option name="LAST_COMMIT_MESSAGE" value="update del backend" />
+    <MESSAGE value="add export excel" />
+    <option name="LAST_COMMIT_MESSAGE" value="add export excel" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/models/configuration.go">
@@ -435,13 +425,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/models/empleado.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="22" selection-start-line="5" selection-start-column="22" selection-end-line="5" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://C:/Go/src/net/http/server.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="130">
@@ -480,13 +463,6 @@
     <entry file="file://$PROJECT_DIR$/files/tiger.jpg">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/models/caja.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="24" lean-forward="true" selection-start-line="8" selection-start-column="24" selection-end-line="8" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/page/factura.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="442">
@@ -498,13 +474,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="646">
           <caret line="41" selection-start-line="41" selection-end-line="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dao/interfaces/facturadao.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="16" column="55" selection-start-line="16" selection-start-column="55" selection-end-line="16" selection-end-column="55" />
         </state>
       </provider>
     </entry>
@@ -543,13 +512,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/models/factura.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="17" column="37" lean-forward="true" selection-start-line="17" selection-start-column="37" selection-end-line="17" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/dao/factory/factory.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="301">
@@ -561,13 +523,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
           <caret line="5" column="51" lean-forward="true" selection-start-line="5" selection-start-column="51" selection-end-line="5" selection-end-column="51" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/models/excel.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="22" selection-start-line="6" selection-start-column="22" selection-end-line="6" selection-end-column="22" />
         </state>
       </provider>
     </entry>
@@ -588,47 +543,86 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dao/postgrsql/cajaimpl.go">
+    <entry file="file://$PROJECT_DIR$/models/factura.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="7" lean-forward="true" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
+        <state relative-caret-position="221">
+          <caret line="16" column="20" selection-start-line="16" selection-end-line="17" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dao/postgrsql/facturaimpl.go">
+    <entry file="file://$PROJECT_DIR$/dao/interfaces/facturadao.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3264">
-          <caret line="192" lean-forward="true" selection-start-line="192" selection-end-line="192" />
+        <state relative-caret-position="307">
+          <caret line="24" column="53" lean-forward="true" selection-start-line="24" selection-start-column="53" selection-end-line="24" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/excel.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="22" lean-forward="true" selection-start-line="4" selection-start-column="22" selection-end-line="4" selection-end-column="22" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/page/caja.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="34" column="44" selection-start-line="34" selection-start-column="44" selection-end-line="34" selection-end-column="44" />
+        <state relative-caret-position="318">
+          <caret line="145" column="37" lean-forward="true" selection-start-line="145" selection-start-column="37" selection-end-line="145" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dao/postgrsql/cajaimpl.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="454">
+          <caret line="133" lean-forward="true" selection-start-line="133" selection-end-line="133" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dao/postgrsql/facturaimpl.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4826">
+          <caret line="294" lean-forward="true" selection-start-line="294" selection-end-line="294" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/caja.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="7" selection-start-line="7" selection-start-column="7" selection-end-line="7" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dao/imports/excel.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="219">
+          <caret line="272" column="52" selection-start-line="272" selection-start-column="52" selection-end-line="272" selection-end-column="52" />
           <folding>
-            <element signature="e#14#160#0" expanded="true" />
+            <element signature="e#17#121#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/main.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="284">
-          <caret line="63" column="29" lean-forward="true" selection-start-line="63" selection-start-column="29" selection-end-line="63" selection-end-column="29" />
+        <state relative-caret-position="403">
+          <caret line="67" column="44" selection-start-line="67" selection-start-column="44" selection-end-line="67" selection-end-column="44" />
           <folding>
             <element signature="e#14#123#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dao/imports/excel.go">
+    <entry file="file://$PROJECT_DIR$/models/empleado.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="85" column="32" selection-start-line="85" selection-start-column="32" selection-end-line="85" selection-end-column="32" />
-          <folding>
-            <element signature="e#17#121#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="85">
+          <caret line="5" column="22" selection-start-line="5" selection-start-column="22" selection-end-line="5" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/user.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="14" selection-start-column="14" selection-end-column="14" />
         </state>
       </provider>
     </entry>

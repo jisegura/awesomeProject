@@ -1,7 +1,8 @@
 package models
 
 type Excel struct {
-	Caja      []string
+	Caja1     []string
+	Caja2     []string
 	Facturas  []string
 	Renglones []string
 }

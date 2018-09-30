@@ -20,7 +20,7 @@ func (dao CajaImpl) Create(caja *models.Caja) (models.Caja, error) {
 		return cAbierta, nil
 	}
 
-	query := "INSERT INTO caja (inicio, fin, horaInicio, horaFin) VALUES ($1, $2, $3, $4) RETURNING id_caja"
+	query := "INSERT INTO caja (inicio, fin, horaInicio, horaFin, cierreReal) VALUES ($1, $2, $3, $4, $5) RETURNING id_caja"
 	db := getConnection()
 	defer db.Close()
 
@@ -30,7 +30,7 @@ func (dao CajaImpl) Create(caja *models.Caja) (models.Caja, error) {
 	}
 	defer stmt.Close()
 
-	row := stmt.QueryRow(caja.Inicio, 0, time.Now(), time.Time{})
+	row := stmt.QueryRow(caja.Inicio, 0, time.Now(), time.Time{}, 0)
 	err = row.Scan(&caja.Id_caja)
 	if err != nil {
 		return newCaja, err
@@ -63,7 +63,7 @@ func GetCajaAbierta() (models.Caja, error) {
 	defer stmt.Close()
 
 	row := stmt.QueryRow()
-	err = row.Scan(&caja.Id_caja, &caja.Inicio, &caja.Fin, &caja.HoraInicio, &caja.HoraFin)
+	err = row.Scan(&caja.Id_caja, &caja.Inicio, &caja.Fin, &caja.HoraInicio, &caja.HoraFin, &caja.CierreReal)
 	if err != nil && err != sql.ErrNoRows {
 		return caja, err
 	}
@@ -86,7 +86,7 @@ func GetById(id int) (models.Caja, error) {
 	defer stmt.Close()
 
 	row := stmt.QueryRow(id)
-	err = row.Scan(&caja.Id_caja, &caja.Inicio, &caja.Fin, &caja.HoraInicio, &caja.HoraFin)
+	err = row.Scan(&caja.Id_caja, &caja.Inicio, &caja.Fin, &caja.HoraInicio, &caja.HoraFin, &caja.CierreReal)
 	if err != nil && err != sql.ErrNoRows {
 		return caja, err
 	}
@@ -115,7 +115,7 @@ func (dao CajaImpl) GetAll() ([]models.Caja, error) {
 
 	for rows.Next() {
 		var row models.Caja
-		err := rows.Scan(&row.Id_caja, &row.Inicio, &row.Fin, &row.HoraInicio, &row.HoraFin)
+		err := rows.Scan(&row.Id_caja, &row.Inicio, &row.Fin, &row.HoraInicio, &row.HoraFin, &row.CierreReal)
 		if err != nil {
 			return cajas, err
 		}
@@ -128,7 +128,7 @@ func (dao CajaImpl) GetAll() ([]models.Caja, error) {
 //UPADTE CIERRE CAJA
 func (dao CajaImpl) CierreCaja(caja *models.Caja) (models.Caja, error) {
 
-	query := "UPDATE caja SET fin = $1, horaFin = $2 WHERE id_caja = $3"
+	query := "UPDATE caja SET fin = $1, horaFin = $2, cierreReal = $3 WHERE id_caja = $4"
 	db := getConnection()
 	defer db.Close()
 
@@ -140,7 +140,7 @@ func (dao CajaImpl) CierreCaja(caja *models.Caja) (models.Caja, error) {
 	}
 	defer stmt.Close()
 
-	row, err := stmt.Exec(caja.Fin, time.Now(), caja.Id_caja)
+	row, err := stmt.Exec(caja.Fin, time.Now(), caja.CierreReal, caja.Id_caja)
 	if err != nil {
 		return c, err
 	}
@@ -179,7 +179,7 @@ func (dao CajaImpl) GetCajasByFechas(fechaIncio time.Time, fechaFin time.Time) (
 
 	for rows.Next() {
 		var caja models.Caja
-		err := rows.Scan(&caja.Id_caja, &caja.Inicio, &caja.Fin, &caja.HoraInicio, &caja.HoraFin)
+		err := rows.Scan(&caja.Id_caja, &caja.Inicio, &caja.Fin, &caja.HoraInicio, &caja.HoraFin, &caja.CierreReal)
 		if err != nil {
 			return cajas, err
 		}

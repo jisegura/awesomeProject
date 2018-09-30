@@ -38,6 +38,9 @@ func main() {
 	router.HandleFunc("/caja/", page.GetCajas).Methods("GET")
 	router.HandleFunc("/caja/open/", page.GetCaja).Methods("GET")
 	router.HandleFunc("/caja/export/{fechaInicio}/{fechaFin}/", page.GetCajasByFechas).Methods("GET")
+	router.HandleFunc("/caja/efectivo/{id}", page.GetIngresosEfectivo).Methods("GET")
+	router.HandleFunc("/caja/debito/{id}", page.GetIngresosDebito).Methods("GET")
+	router.HandleFunc("/caja/credito/{id}", page.GetIngresosCredito).Methods("GET")
 
 	//FACTURA/////
 	router.HandleFunc("/factura/retiros/", page.InsertFactura).Methods("POST")
