@@ -47,3 +47,9 @@ func FactoryExcel() interfaces.ExcelDAO {
 	i = imports.ExcelImpl{}
 	return i
 }
+
+func FactoryUser() interfaces.UserDAO {
+	var i interfaces.UserDAO
+	i = postgrsql.UserImpl{}
+	return i
+}
