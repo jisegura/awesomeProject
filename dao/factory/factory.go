@@ -48,8 +48,8 @@ func FactoryExcel() interfaces.ExcelDAO {
 	return i
 }
 
-func FactoryUser() interfaces.UserDAO {
-	var i interfaces.UserDAO
-	i = postgrsql.UserImpl{}
+func FactoryLogin() interfaces.LoginDAO {
+	var i interfaces.LoginDAO
+	i = postgrsql.LoginImpl{}
 	return i
 }

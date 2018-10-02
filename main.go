@@ -17,6 +17,8 @@ func main() {
 	router.HandleFunc("/empleado/", page.UpdateEmpleado).Methods("PUT")
 	router.HandleFunc("/empleado/{id}", page.DeleteEmpleado).Methods("DELETE")
 	router.HandleFunc("/empleado/", page.GetEmpleados).Methods("GET")
+	router.HandleFunc("/empleado/login/", page.HashPassword).Methods("POST")
+	router.HandleFunc("/empleado/log/", page.Login).Methods("POST")
 
 	//CATEGORIA/////
 	router.HandleFunc("/categoria/", page.GetCategorias).Methods("GET")

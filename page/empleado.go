@@ -95,7 +95,31 @@ func UpdateEmpleado(w http.ResponseWriter, req *http.Request) {
 
 	_ = json.NewDecoder(req.Body).Decode(&empleado)
 
-	err := empleadoDAO.Update(&empleado)
+	err := empleadoDAO.UpdateNombre(&empleado)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		log.Print("Error: ", err)
+		return
+	}
+
+	e, err := empleadoDAO.GetById(empleado.Id_empleado)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		log.Print("Error: ", err)
+		return
+	}
+
+	json.NewEncoder(w).Encode(&e)
+}
+
+func UpdateBaja(w http.ResponseWriter, req *http.Request) {
+
+	empleadoDAO := factory.FactoryEmpleado()
+	empleado := models.Empleado{}
+
+	_ = json.NewDecoder(req.Body).Decode(&empleado)
+
+	err := empleadoDAO.UpdateBaja(&empleado)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		log.Print("Error: ", err)

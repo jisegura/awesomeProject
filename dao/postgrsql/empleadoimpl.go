@@ -46,7 +46,7 @@ func (dao EmpleadoImpl) GetAll() ([]models.Empleado, error) {
 
 	for rows.Next() {
 		var row models.Empleado
-		err := rows.Scan(&row.Id_empleado, &row.FirstName, &row.LastName)
+		err := rows.Scan(&row.Id_empleado, &row.Id_login, &row.FechaBaja, &row.FirstName, &row.LastName)
 		if err != nil {
 			return empleados, err
 		}
@@ -71,7 +71,7 @@ func (dao EmpleadoImpl) GetById(id int) (models.Empleado, error) {
 	defer stmt.Close()
 
 	row := stmt.QueryRow(id)
-	err = row.Scan(&p.Id_empleado, &p.FirstName, &p.LastName)
+	err = row.Scan(&p.Id_empleado, &p.Id_login, &p.FechaBaja, &p.FirstName, &p.LastName)
 	if err != nil {
 		return p, err
 	}
@@ -106,7 +106,7 @@ func (dao EmpleadoImpl) Delete(id int) error {
 }
 
 //UPDATE
-func (dao EmpleadoImpl) Update(empleado *models.Empleado) error {
+func (dao EmpleadoImpl) UpdateNombre(empleado *models.Empleado) error {
 
 	query := "UPDATE empleado SET firstname = $1, lastname = $2 WHERE id_empleado= $3"
 	db := getConnection()
@@ -124,6 +124,31 @@ func (dao EmpleadoImpl) Update(empleado *models.Empleado) error {
 	}
 
 	i, _ := r.RowsAffected()
+	if i != 1 {
+		return errors.New("Error, se esperaba una fila afectada")
+	}
+
+	return nil
+}
+
+func (dao EmpleadoImpl) UpdateBaja(empleado *models.Empleado) error {
+
+	query := "UPDATE empleado SET fechaBaja = $1 WHERE id_empleado = $2"
+	db := getConnection()
+	defer db.Close()
+
+	stmt, err := db.Prepare(query)
+	if err != nil {
+		return err
+	}
+	defer stmt.Close()
+
+	row, err := stmt.Exec(empleado.FechaBaja, empleado.Id_empleado)
+	if err != nil {
+		return err
+	}
+
+	i, _ := row.RowsAffected()
 	if i != 1 {
 		return errors.New("Error, se esperaba una fila afectada")
 	}
