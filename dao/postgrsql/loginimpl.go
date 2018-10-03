@@ -3,60 +3,86 @@ package postgrsql
 import (
 	"awesomeProject/models"
 	"encoding/base64"
+	"errors"
 	"fmt"
 	"golang.org/x/crypto/bcrypt"
 )
 
 type LoginImpl struct{}
 
-func (dao LoginImpl) AddLogin(login models.Login) error {
+func AddLogin(login models.Login, id int) error {
 
-	query := "INSERT INTO Login (usuario, password) VALUES ($1, $2) RETURNING id_login"
-	db := getConnection()
-	defer db.Close()
-
-	stmt, err := db.Prepare(query)
+	activo, err := InsertActivo(id)
 	if err != nil {
 		return err
 	}
-	defer stmt.Close()
+	if activo {
+		query := "INSERT INTO Login (usuario, password) VALUES ($1, $2) RETURNING id_login"
+		db := getConnection()
+		defer db.Close()
 
-	password, err := HashPassword(login.Password)
-	if err != nil {
-		return err
+		stmt, err := db.Prepare(query)
+		if err != nil {
+			return err
+		}
+		defer stmt.Close()
+
+		password, err := HashPassword(login.Password)
+		if err != nil {
+			return err
+		}
+
+		row := stmt.QueryRow(login.Usuario, password)
+		err = row.Scan(&login.Id_login)
+		if err != nil {
+			return err
+		}
+
+		err = UpdateLogin(id, login.Id_login)
+		if err != nil {
+			return err
+		}
+
+		return nil
 	}
 
-	row := stmt.QueryRow(login.Usuario, password)
-	err = row.Scan(&login.Id_login)
-	if err != nil {
-		return err
-	}
-
-	return nil
+	err = errors.New("Error, usuario inválido")
+	return err
 }
 
-func (dao LoginImpl) Login(login models.Login) (bool, error) {
+func Login(login models.Login) (bool, error) {
 
-	query := "SELECT password FROM login WHERE id_login = $1"
-	db := getConnection()
-	defer db.Close()
+	var ok = false
 
-	var correct bool
-	var password string
-
-	stmt, err := db.Prepare(query)
+	activo, err := Activo(login.Id_login)
 	if err != nil {
-		return correct, err
+		return ok, err
 	}
-	defer stmt.Close()
+	if activo {
 
-	row := stmt.QueryRow(login.Id_login)
-	err = row.Scan(&password)
-	if err != nil {
-		return correct, err
+		query := "SELECT password FROM login WHERE id_login = $1"
+		db := getConnection()
+		defer db.Close()
+
+		var password string
+
+		stmt, err := db.Prepare(query)
+		if err != nil {
+			return ok, err
+		}
+		defer stmt.Close()
+
+		row := stmt.QueryRow(login.Id_login)
+		err = row.Scan(&password)
+		if err != nil {
+			return ok, err
+		}
+
+		return ComparePassword(password, login.Password), err
 	}
 
-	return ComparePassword(password, login.Password), err
+	err = errors.New("Error, usuario inválido")
+	return false, err
 }
 
 func HashPassword(password string) (string, error) {

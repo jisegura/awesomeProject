@@ -9,4 +9,6 @@ type EmpleadoDAO interface {
 	Delete(id int) error
 	GetById(id int) (models.Empleado, error)
 	GetAll() ([]models.Empleado, error)
+	AddLogin(login models.Login, id int) error
+	Login(login models.Login) (bool, error)
 }

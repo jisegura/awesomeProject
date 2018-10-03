@@ -3,6 +3,7 @@ package postgrsql
 import (
 	"awesomeProject/models"
 	"errors"
+	"github.com/lib/pq"
 )
 
 type EmpleadoImpl struct{}
@@ -71,7 +72,7 @@ func (dao EmpleadoImpl) GetById(id int) (models.Empleado, error) {
 	defer stmt.Close()
 
 	row := stmt.QueryRow(id)
-	err = row.Scan(&p.Id_empleado, &p.Id_login, &p.FechaBaja, &p.FirstName, &p.LastName)
+	err = row.Scan(&p.Id_empleado, &p.FirstName, &p.LastName, &p.FechaBaja, &p.Id_login)
 	if err != nil {
 		return p, err
 	}
@@ -177,4 +178,93 @@ func GetNombre(id int64) (string, error) {
 	}
 
 	return nombre, nil
+}
+
+func InsertActivo(id int) (bool, error) {
+
+	query := "SELECT fechaBaja FROM empleado WHERE id_empleado = $1"
+	db := getConnection()
+	defer db.Close()
+
+	var activo = false
+	var fechaBaja pq.NullTime
+
+	stmt, err := db.Prepare(query)
+	if err != nil {
+		return activo, err
+	}
+	defer stmt.Close()
+
+	row := stmt.QueryRow(id)
+	err = row.Scan(&fechaBaja)
+	if err != nil {
+		return activo, err
+	}
+
+	return !fechaBaja.Valid, nil
+}
+
+func Activo(id int) (bool, error) {
+
+	query := "SELECT fechaBaja FROM Login l INNER JOIN Empleado e ON l.id_login = e.id_login " +
+		"WHERE l.id_login = $1"
+	db := getConnection()
+	defer db.Close()
+
+	var activo = false
+	var fechaBaja pq.NullTime
+
+	stmt, err := db.Prepare(query)
+	if err != nil {
+		return activo, err
+	}
+	defer stmt.Close()
+
+	row := stmt.QueryRow(id)
+	err = row.Scan(&fechaBaja)
+	if err != nil {
+		return activo, err
+	}
+
+	return !fechaBaja.Valid, nil
+}
+
+func UpdateLogin(id_empleado int, id_login int) error {
+
+	query := "UPDATE empleado SET id_login = $1 WHERE id_empleado = $2"
+	db := getConnection()
+	defer db.Close()
+
+	stmt, err := db.Prepare(query)
+	if err != nil {
+		return err
+	}
+	defer stmt.Close()
+
+	row, err := stmt.Exec(id_login, id_empleado)
+	if err != nil {
+		return err
+	}
+
+	i, _ := row.RowsAffected()
+	if i != 1 {
+		return errors.New("Error, se esperaba una fila afectada")
+	}
+
+	return nil
+}
+
+/*
+func existeUsuario (nombre string) (bool, error) {
+
+}*/
+
+func (dao EmpleadoImpl) AddLogin(login models.Login, id int) error {
+
+	return AddLogin(login, id)
+}
+
+func (dao EmpleadoImpl) Login(login models.Login) (bool, error) {
+
+	return Login(login)
 }
