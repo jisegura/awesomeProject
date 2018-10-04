@@ -20,7 +20,7 @@ func GetAllIdFactura(w http.ResponseWriter, req *http.Request) {
 
 	facturas, err := facturaDao.GetFacturasById(id)
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		log.Print("Error", err)
 		return
 	}
@@ -37,7 +37,7 @@ func GetAllFacturas(w http.ResponseWriter, req *http.Request) {
 
 	facturas, err := facturaDAO.GetAllFacturasById(id)
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		log.Print("Error", err)
 		return
 	}
@@ -54,7 +54,7 @@ func GetFacturasRetiro(w http.ResponseWriter, req *http.Request) {
 
 	facturas, err := facturaDAO.GetAll(id)
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		log.Print("Error: ", err)
 		return
 	}
@@ -71,7 +71,7 @@ func GetFacturasCliente(w http.ResponseWriter, req *http.Request) {
 
 	facturas, err := facturaDAO.GetFacturasCliente(id)
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		log.Print("Error: ", err)
 		return
 	}
@@ -88,7 +88,7 @@ func GetFacturasOtro(w http.ResponseWriter, req *http.Request) {
 
 	facturas, err := facturaDAO.GetFacturasOtro(id)
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		log.Print("Error: ", err)
 		return
 	}
@@ -106,14 +106,14 @@ func InsertFactura(w http.ResponseWriter, req *http.Request) {
 	err := facturaDAO.Create(&factura)
 
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		log.Print("Error: ", err)
 		return
 	}
 
 	f, err := facturaDAO.GetById(factura.Id_factura)
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		log.Print("Error: ", err)
 		return
 	}
@@ -132,7 +132,7 @@ func InsertCliente(w http.ResponseWriter, req *http.Request) {
 	newFactura, err := facturaDAO.CreateCliente(&factura)
 
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		log.Print("Error: ", err)
 		return
 	}
@@ -150,7 +150,7 @@ func InsertOtro(w http.ResponseWriter, req *http.Request) {
 	newFactura, err := facturaDAO.CreateOtro(&factura)
 
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		log.Print("Error: ", err)
 		return
 	}
@@ -168,14 +168,14 @@ func UpdateFactura(w http.ResponseWriter, req *http.Request) {
 
 	err := facturaDAO.Update(&factura)
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		log.Print("Error: ", err)
 		return
 	}
 
 	f, err := facturaDAO.GetById(factura.Id_factura)
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		log.Print("Error: ", err)
 		return
 	}
@@ -189,7 +189,7 @@ func GetFacturasEliminadas(w http.ResponseWriter, req *http.Request) {
 
 	facturas, err := facturaDAO.GetFacturasEliminadas()
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		log.Print("Error: ", err)
 		return
 	}
@@ -206,8 +206,7 @@ func GetLastFacturas(w http.ResponseWriter, req *http.Request) {
 
 	facturas, err := facturaDAO.GetLastFacturas(id)
 	if err != nil {
-
-		w.WriteHeader(http.StatusBadRequest)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		log.Print("Error", err)
 		return
 	}

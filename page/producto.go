@@ -22,7 +22,7 @@ func GetProductos(w http.ResponseWriter, req *http.Request) {
 
 	productos, err := productoDAO.GetAll()
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		log.Print("Error: ", err)
 		return
 	}
@@ -40,14 +40,14 @@ func InsertProducto(w http.ResponseWriter, req *http.Request) {
 	err := productoDAO.Create(&producto)
 
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		log.Print("Error: ", err)
 		return
 	}
 
 	p, err := productoDAO.GetById(producto.Id_producto)
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		log.Print("Error: ", err)
 		return
 	}
@@ -64,7 +64,7 @@ func GetProductoById(w http.ResponseWriter, req *http.Request) {
 
 	producto, err := productoDao.GetById(id)
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		log.Print("Error: ", err)
 		return
 	}
@@ -82,7 +82,7 @@ func DeleteProducto(w http.ResponseWriter, req *http.Request) {
 
 	err := productoDao.Delete(id)
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		log.Print("Error: ", err)
 		return
 	}
@@ -102,14 +102,14 @@ func UpdateProducto(w http.ResponseWriter, req *http.Request) {
 
 	err := productoDao.Update(&producto)
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		log.Print("Error: ", err)
 		return
 	}
 
 	p, err := productoDao.GetById(producto.Id_producto)
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		log.Print("Error: ", err)
 		return
 	}
@@ -123,7 +123,7 @@ func Upload(w http.ResponseWriter, req *http.Request) {
 	if req.Method == http.MethodPost {
 		file, handle, err := req.FormFile("myFile")
 		if err != nil {
-			w.WriteHeader(http.StatusBadRequest)
+			http.Error(w, err.Error(), http.StatusBadRequest)
 			log.Print("Error", err)
 			return
 		}
@@ -131,14 +131,14 @@ func Upload(w http.ResponseWriter, req *http.Request) {
 
 		data, err := ioutil.ReadAll(file)
 		if err != nil {
-			w.WriteHeader(http.StatusBadRequest)
+			http.Error(w, err.Error(), http.StatusBadRequest)
 			log.Print("Error", err)
 			return
 		}
 
 		err = ioutil.WriteFile("./files/"+handle.Filename, data, 0666)
 		if err != nil {
-			w.WriteHeader(http.StatusBadRequest)
+			http.Error(w, err.Error(), http.StatusBadRequest)
 			log.Print("Error", err)
 			return
 		}

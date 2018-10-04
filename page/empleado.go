@@ -17,7 +17,7 @@ func GetEmpleados(w http.ResponseWriter, req *http.Request) {
 
 	empleados, err := empleadoDAO.GetAll()
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		log.Print("Error: ", err)
 		return
 	}
@@ -35,14 +35,14 @@ func InsertEmpleado(w http.ResponseWriter, req *http.Request) {
 	err := empleadoDAO.Create(&empleado)
 
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		log.Print("Error: ", err)
 		return
 	}
 
 	e, err := empleadoDAO.GetById(empleado.Id_empleado)
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		log.Print("Error: ", err)
 		return
 	}
@@ -78,7 +78,7 @@ func DeleteEmpleado(w http.ResponseWriter, req *http.Request) {
 
 	err := empleadoDao.Delete(id)
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		log.Print("Error: ", err)
 		return
 	}
@@ -97,14 +97,14 @@ func UpdateEmpleado(w http.ResponseWriter, req *http.Request) {
 
 	err := empleadoDAO.UpdateNombre(&empleado)
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		log.Print("Error: ", err)
 		return
 	}
 
 	e, err := empleadoDAO.GetById(empleado.Id_empleado)
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		log.Print("Error: ", err)
 		return
 	}
@@ -121,14 +121,14 @@ func UpdateBaja(w http.ResponseWriter, req *http.Request) {
 
 	err := empleadoDAO.UpdateBaja(&empleado)
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		log.Print("Error: ", err)
 		return
 	}
 
 	e, err := empleadoDAO.GetById(empleado.Id_empleado)
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		log.Print("Error: ", err)
 		return
 	}
@@ -147,7 +147,7 @@ func AddLogin(w http.ResponseWriter, req *http.Request) {
 
 	err := empleadoDAO.AddLogin(login, id)
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
+		http.Error(w, err.Error(), http.StatusOK)
 		log.Print("Error: ", err)
 		return
 	}
@@ -164,7 +164,7 @@ func Login(w http.ResponseWriter, req *http.Request) {
 
 	ok, err := empleadoDAO.Login(login)
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
+		http.Error(w, err.Error(), http.StatusOK)
 		log.Print("Error: ", err)
 		return
 	}

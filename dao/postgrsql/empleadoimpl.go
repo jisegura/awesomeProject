@@ -2,6 +2,7 @@ package postgrsql
 
 import (
 	"awesomeProject/models"
+	"database/sql"
 	"errors"
 	"github.com/lib/pq"
 )
@@ -254,10 +255,29 @@ func UpdateLogin(id_empleado int, id_login int) error {
 	return nil
 }
 
-/*
-func existeUsuario (nombre string) (bool, error) {
+func existeUsuario(nombre string) (bool, error) {
 
-}*/
+	query := "SELECT id_login FROM Login WHERE usuario SIMILAR TO $1"
+	db := getConnection()
+	defer db.Close()
+
+	var existe = false
+	var id_login sql.NullInt64
+
+	stmt, err := db.Prepare(query)
+	if err != nil {
+		return existe, err
+	}
+	defer stmt.Close()
+
+	row := stmt.QueryRow(nombre)
+	err = row.Scan(&id_login)
+	if err != nil {
+		return existe, errors.New("Error, usuario incorrecto")
+	}
+
+	return id_login.Valid, nil
+}
 
 func (dao EmpleadoImpl) AddLogin(login models.Login, id int) error {
 

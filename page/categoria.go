@@ -4,7 +4,6 @@ import (
 	"awesomeProject/dao/factory"
 	"awesomeProject/models"
 	"encoding/json"
-	"fmt"
 	"github.com/gorilla/mux"
 	"log"
 	"net/http"
@@ -18,7 +17,9 @@ func GetCategorias(w http.ResponseWriter, req *http.Request) {
 
 	categorias, err := categoriaDAO.GetAll()
 	if err != nil {
-		log.Fatal(err)
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		log.Print("Error: ", err)
+		return
 	}
 
 	json.NewEncoder(w).Encode(&categorias)
@@ -34,12 +35,16 @@ func InsertCategoria(w http.ResponseWriter, req *http.Request) {
 	err := categoriaDAO.Create(&categoria)
 
 	if err != nil {
-		log.Fatal(err)
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		log.Print("Error: ", err)
+		return
 	}
 
 	cat, err := categoriaDAO.GetById(categoria.Id_categoria)
 	if err != nil {
-		log.Fatal(err)
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		log.Print("Error: ", err)
+		return
 	}
 
 	json.NewEncoder(w).Encode(&cat)
@@ -55,7 +60,8 @@ func GetCategoriaById(w http.ResponseWriter, req *http.Request) {
 
 	categoria, err := categoriaDAO.GetById(i)
 	if err != nil {
-		fmt.Fprint(w, "No existe la categoria")
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		log.Print("Error: ", err)
 		return
 	}
 
@@ -72,7 +78,7 @@ func DeleteCategoria(w http.ResponseWriter, req *http.Request) {
 
 	err := categoriaDAO.Delete(i)
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		log.Print("Error: ", err)
 		return
 	}
@@ -92,14 +98,14 @@ func UpdateCategoria(w http.ResponseWriter, req *http.Request) {
 
 	err := categoriaDAO.Update(&categoria)
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		log.Print("Error: ", err)
 		return
 	}
 
 	cat, err := categoriaDAO.GetById(categoria.Id_categoria)
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		log.Print("Error: ", err)
 		return
 	}

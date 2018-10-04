@@ -60,25 +60,38 @@ func Login(login models.Login) (bool, error) {
 	}
 	if activo {
 
-		query := "SELECT password FROM login WHERE id_login = $1"
-		db := getConnection()
-		defer db.Close()
-
-		var password string
-
-		stmt, err := db.Prepare(query)
+		existe, err := existeUsuario(login.Usuario)
 		if err != nil {
 			return ok, err
 		}
-		defer stmt.Close()
+		if existe {
 
-		row := stmt.QueryRow(login.Id_login)
-		err = row.Scan(&password)
-		if err != nil {
-			return ok, err
+			query := "SELECT password FROM login WHERE id_login = $1"
+			db := getConnection()
+			defer db.Close()
+
+			var password string
+
+			stmt, err := db.Prepare(query)
+			if err != nil {
+				return ok, err
+			}
+			defer stmt.Close()
+
+			row := stmt.QueryRow(login.Id_login)
+			err = row.Scan(&password)
+			if err != nil {
+				return ok, err
+			}
+
+			if ComparePassword(password, login.Password) {
+				return true, nil
+			}
+			err = errors.New("Error, contraseña incorrecta")
+			return false, err
 		}
 
-		return ComparePassword(password, login.Password), err
+		return false, err
 	}
 
 	err = errors.New("Error, usuario inválido")

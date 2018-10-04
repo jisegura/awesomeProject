@@ -18,7 +18,7 @@ func GetCajas(w http.ResponseWriter, req *http.Request) {
 
 	cajas, err := cajasDAO.GetAll()
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		log.Print("Error: ", err)
 		return
 	}
@@ -32,7 +32,7 @@ func GetCaja(w http.ResponseWriter, req *http.Request) {
 
 	caja, err := cajaDAO.GetCaja()
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		log.Print("Error: ", err)
 		return
 	}
@@ -50,7 +50,7 @@ func InsertCaja(w http.ResponseWriter, req *http.Request) {
 	c, err := cajasDAO.Create(&caja)
 
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		log.Print("Error: ", err)
 		return
 	}
@@ -68,7 +68,7 @@ func CerrarCaja(w http.ResponseWriter, req *http.Request) {
 
 	c, err := cajaDAO.CierreCaja(&caja)
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		log.Print("Error: ", err)
 		return
 	}
@@ -85,13 +85,13 @@ func GetCajasByFechas(w http.ResponseWriter, req *http.Request) {
 	param := mux.Vars(req)
 	i, err := strconv.ParseInt(param["fechaInicio"], 10, 64)
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		log.Print("Error: ", err)
 		return
 	}
 	j, err := strconv.ParseInt(param["fechaFin"], 10, 64)
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		log.Print("Error: ", err)
 		return
 	}
@@ -101,7 +101,7 @@ func GetCajasByFechas(w http.ResponseWriter, req *http.Request) {
 
 	cajas, err := cajaDAO.GetCajasByFechas(fechaInicio, fechaFin)
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		log.Print("Error: ", err)
 		return
 	}
@@ -111,7 +111,7 @@ func GetCajasByFechas(w http.ResponseWriter, req *http.Request) {
 		var movimiento models.Movimientos
 		facturas, err := facturaDAO.GetAllFacturasById(cajas[i].Id_caja)
 		if err != nil {
-			w.WriteHeader(http.StatusBadRequest)
+			http.Error(w, err.Error(), http.StatusBadRequest)
 			log.Print("Error: ", err)
 			return
 		}
@@ -122,7 +122,7 @@ func GetCajasByFechas(w http.ResponseWriter, req *http.Request) {
 
 	err = excelDAO.Export(movimientos)
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		log.Print("Error: ", err)
 		return
 	}
@@ -138,7 +138,7 @@ func GetIngresosEfectivo(w http.ResponseWriter, req *http.Request) {
 
 	total, err := facturaDAO.GetIngresos(id, 1)
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		log.Print("Error: ", err)
 		return
 	}
@@ -155,7 +155,7 @@ func GetIngresosDebito(w http.ResponseWriter, req *http.Request) {
 
 	total, err := facturaDAO.GetIngresos(id, 2)
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		log.Print("Error: ", err)
 		return
 	}
@@ -172,7 +172,7 @@ func GetIngresosCredito(w http.ResponseWriter, req *http.Request) {
 
 	total, err := facturaDAO.GetIngresos(id, 3)
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		log.Print("Error: ", err)
 		return
 	}
