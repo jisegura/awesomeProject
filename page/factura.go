@@ -133,7 +133,7 @@ func InsertCliente(w http.ResponseWriter, req *http.Request) {
 
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
-		log.Print("Error: ", err)
+		log.Println("Error: ", err)
 		return
 	}
 

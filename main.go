@@ -4,13 +4,24 @@ import (
 	"awesomeProject/page"
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
+	"io"
 	"log"
 	"net/http"
+	"os"
 )
 
 func main() {
 
 	router := mux.NewRouter()
+
+	f, err := os.OpenFile("testlogfile", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
+	if err != nil {
+		log.Print("Error")
+	}
+	defer f.Close()
+
+	log.SetOutput(io.MultiWriter(os.Stderr, f))
+	log.Println("This is a test log entry")
 
 	//EMPLEADO/////
 	router.HandleFunc("/empleado/", page.InsertEmpleado).Methods("POST")

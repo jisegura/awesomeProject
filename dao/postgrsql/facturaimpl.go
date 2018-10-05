@@ -4,6 +4,7 @@ import (
 	"awesomeProject/models"
 	"errors"
 	_ "github.com/teepark/pqinterval"
+	"strings"
 	"time"
 )
 
@@ -195,7 +196,10 @@ func InsertCliente(factura *models.Factura) (models.Factura, error) {
 	row := stmt.QueryRow(factura.Id_caja, factura.Id_empleado, factura.Fecha, factura.Precio, factura.ComentarioBaja, factura.Descuento, factura.FormaDePago)
 	err = row.Scan(&factura.Id_factura)
 	if err != nil {
-		return newFactura, err
+		if strings.Contains(err.Error(), "fk_empleado") {
+			return newFactura, errors.New("Error, no hay empleado seleccionado")
+		}
+		return newFactura, errors.New("Error, no hay caja abierta")
 	}
 
 	err = InsertRenglones(factura.Renglones, factura.Id_factura)
