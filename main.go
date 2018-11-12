@@ -28,7 +28,7 @@ func main() {
 	router.HandleFunc("/empleado/login/{id}", page.AddLogin).Methods("POST")
 	router.HandleFunc("/empleado/", page.UpdateEmpleado).Methods("PUT")
 	router.HandleFunc("/empleado/baja/", page.UpdateBaja).Methods("PUT")
-	router.HandleFunc("/empleado/{id}", page.DeleteEmpleado).Methods("DELETE")
+	router.HandleFunc("/empleado/{id}", page.UpdateBaja).Methods("DELETE")
 	router.HandleFunc("/empleado/", page.GetEmpleados).Methods("GET")
 	router.HandleFunc("/empleado/login/", page.Login).Methods("POST")
 
@@ -51,7 +51,7 @@ func main() {
 	router.HandleFunc("/caja/", page.CerrarCaja).Methods("PUT")
 	router.HandleFunc("/caja/", page.GetCajas).Methods("GET")
 	router.HandleFunc("/caja/open/", page.GetCaja).Methods("GET")
-	router.HandleFunc("/caja/export/{fechaInicio}/{fechaFin}/", page.GetCajasByFechas).Methods("GET")
+	router.HandleFunc("/caja/export/{fechaInicio}/{fechaFin}/", page.ExportByFecha).Methods("GET")
 	router.HandleFunc("/caja/efectivo/{id}", page.GetIngresosEfectivo).Methods("GET")
 	router.HandleFunc("/caja/debito/{id}", page.GetIngresosDebito).Methods("GET")
 	router.HandleFunc("/caja/credito/{id}", page.GetIngresosCredito).Methods("GET")

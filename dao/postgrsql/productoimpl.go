@@ -11,7 +11,7 @@ type ProductoImpl struct{}
 //INSERT
 func (dao ProductoImpl) Create(producto *models.Producto) error {
 
-	query := "INSERT INTO producto (id_categoria, nombre, precio, imagen) VALUES ($1, $2, $3, $4) RETURNING id_producto"
+	query := "INSERT INTO producto (id_categoria, nombre, precio, imagen, activo) VALUES ($1, $2, $3, $4, $5) RETURNING id_producto"
 	db := getConnection()
 	defer db.Close()
 
@@ -21,7 +21,7 @@ func (dao ProductoImpl) Create(producto *models.Producto) error {
 	}
 	defer stmt.Close()
 
-	row := stmt.QueryRow(producto.Id_categoria, producto.Nombre, producto.Precio, producto.Imagen)
+	row := stmt.QueryRow(producto.Id_categoria, producto.Nombre, producto.Precio, producto.Imagen, true)
 	row.Scan(&producto.Id_producto)
 	return nil
 }
@@ -46,11 +46,13 @@ func (dao ProductoImpl) GetAll() ([]models.Producto, error) {
 
 	for rows.Next() {
 		var row models.Producto
-		err := rows.Scan(&row.Id_producto, &row.Id_categoria, &row.Nombre, &row.Precio, &row.Imagen)
+		err := rows.Scan(&row.Id_producto, &row.Id_categoria, &row.Nombre, &row.Precio, &row.Imagen, &row.Activo)
 		if err != nil {
 			return productos, err
 		}
-		productos = append(productos, row)
+		if row.Activo {
+			productos = append(productos, row)
+		}
 	}
 
 	return productos, nil
@@ -72,7 +74,7 @@ func (dao ProductoImpl) GetById(id int) (models.Producto, error) {
 	defer stmt.Close()
 
 	row := stmt.QueryRow(id)
-	err = row.Scan(&p.Id_producto, &p.Id_categoria, &p.Nombre, &p.Precio, &p.Imagen)
+	err = row.Scan(&p.Id_producto, &p.Id_categoria, &p.Nombre, &p.Precio, &p.Imagen, &p.Activo)
 	if err != nil {
 		return p, err
 	}
@@ -106,7 +108,7 @@ func GetNombreById(id int64) (string, error) {
 //DELETE
 func (dao ProductoImpl) Delete(id int) error {
 
-	query := "DELETE FROM producto WHERE id_producto = $1"
+	query := "UPDATE producto SET activo = false where id_producto = $1"
 	db := getConnection()
 	defer db.Close()
 

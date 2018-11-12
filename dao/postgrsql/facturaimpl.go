@@ -540,16 +540,30 @@ func GetTipo(factura models.Factura) string {
 
 	if len(factura.Renglones) == 0 {
 		if !factura.Comentario.Valid {
-			return "Retiros"
+			return "Retiro"
 		}
-		return "Otros"
+		return "Gastos"
 	}
-	return "Clientes"
+	return "Cliente"
 }
 
 //1 efectivo
 //2 debito
 //3 credito
+
+func GetFormaDePago(factura models.Factura) string {
+
+	if factura.FormaDePago.Valid {
+		if factura.FormaDePago.Int64 == 1 {
+			return "Efectivo"
+		} else {
+			if factura.FormaDePago.Int64 == 2 {
+				return "Débito"
+			}
+		}
+	}
+	return "Crédito"
+}
 
 func (dao FacturaImpl) GetIngresos(id int, formaDePago int) (float64, error) {
 
@@ -559,7 +573,7 @@ func (dao FacturaImpl) GetIngresos(id int, formaDePago int) (float64, error) {
 func Get_ingresos(id int, formaDePago int) (float64, error) {
 
 	query := "SELECT COALESCE(SUM(precio), 0) FROM " +
-		"(SELECT formadepago, precio FROM cliente c INNER JOIN (SELECT id_factura, precio FROM factura WHERE id_caja = $1) f ON " +
+		"(SELECT formadepago, precio FROM cliente c INNER JOIN (SELECT id_factura, precio FROM factura WHERE id_caja = $1 AND comentarioBaja SIMILAR TO '') f ON " +
 		"c.id_factura = f.id_factura) f " +
 		"WHERE f.formadepago = $2"
 
@@ -585,7 +599,8 @@ func Get_ingresos(id int, formaDePago int) (float64, error) {
 
 func GetTotalRetiros(id int) (float64, error) {
 
-	query := "SELECT COALESCE(SUM(precio), 0) FROM factura WHERE id_caja = $1 AND id_factura NOT IN (SELECT id_factura FROM otros) AND " +
+	query := "SELECT COALESCE(SUM(precio), 0) FROM factura WHERE id_caja = $1 AND comentarioBaja SIMILAR TO '' " +
+		"AND id_factura NOT IN (SELECT id_factura FROM otros) AND " +
 		"id_factura NOT IN (SELECT id_factura FROM cliente)"
 	db := getConnection()
 	defer db.Close()
@@ -609,7 +624,8 @@ func GetTotalRetiros(id int) (float64, error) {
 
 func GetTotalGastos(id int) (float64, error) {
 
-	query := "SELECT COALESCE(SUM(precio), 0) FROM otros o INNER JOIN (SELECT id_factura, precio FROM factura WHERE id_caja = $1) f " +
+	query := "SELECT COALESCE(SUM(precio), 0) FROM otros o INNER JOIN " +
+		"(SELECT id_factura, precio FROM factura WHERE id_caja = $1  AND comentarioBaja SIMILAR TO '') f " +
 		"ON o.id_factura = f.id_factura"
 	db := getConnection()
 	defer db.Close()

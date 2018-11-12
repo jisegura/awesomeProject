@@ -115,18 +115,20 @@ func UpdateEmpleado(w http.ResponseWriter, req *http.Request) {
 func UpdateBaja(w http.ResponseWriter, req *http.Request) {
 
 	empleadoDAO := factory.FactoryEmpleado()
-	empleado := models.Empleado{}
+	//empleado := models.Empleado{}
 
-	_ = json.NewDecoder(req.Body).Decode(&empleado)
+	param := mux.Vars(req)
 
-	err := empleadoDAO.UpdateBaja(&empleado)
+	id, _ := strconv.Atoi(param["id"])
+
+	err := empleadoDAO.UpdateBaja(id)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		log.Print("Error: ", err)
 		return
 	}
 
-	e, err := empleadoDAO.GetById(empleado.Id_empleado)
+	e, err := empleadoDAO.GetById(id)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		log.Print("Error: ", err)

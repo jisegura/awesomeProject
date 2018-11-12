@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	"errors"
 	"github.com/lib/pq"
+	"time"
 )
 
 type EmpleadoImpl struct{}
@@ -48,11 +49,13 @@ func (dao EmpleadoImpl) GetAll() ([]models.Empleado, error) {
 
 	for rows.Next() {
 		var row models.Empleado
-		err := rows.Scan(&row.Id_empleado, &row.Id_login, &row.FechaBaja, &row.FirstName, &row.LastName)
+		err := rows.Scan(&row.Id_empleado, &row.FirstName, &row.LastName, &row.FechaBaja, &row.Id_login)
 		if err != nil {
 			return empleados, err
 		}
-		empleados = append(empleados, row)
+		if !row.FechaBaja.Valid {
+			empleados = append(empleados, row)
+		}
 	}
 	return empleados, nil
 }
@@ -133,7 +136,7 @@ func (dao EmpleadoImpl) UpdateNombre(empleado *models.Empleado) error {
 	return nil
 }
 
-func (dao EmpleadoImpl) UpdateBaja(empleado *models.Empleado) error {
+func (dao EmpleadoImpl) UpdateBaja(id int) error {
 
 	query := "UPDATE empleado SET fechaBaja = $1 WHERE id_empleado = $2"
 	db := getConnection()
@@ -145,7 +148,7 @@ func (dao EmpleadoImpl) UpdateBaja(empleado *models.Empleado) error {
 	}
 	defer stmt.Close()
 
-	row, err := stmt.Exec(empleado.FechaBaja, empleado.Id_empleado)
+	row, err := stmt.Exec(time.Now(), id)
 	if err != nil {
 		return err
 	}

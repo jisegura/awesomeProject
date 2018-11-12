@@ -13,7 +13,7 @@ func newExcel() models.Excel {
 
 	excel := models.Excel{}
 	excel.Caja1 = []string{"Fecha inicio", "Fecha fin", "Inicio caja", "Cierre caja", "Cierre real", "Diferencia"}
-	excel.Caja2 = []string{"Ingreso efectivo", "Ingreso crédito", "Ingreso débito", "Retiros", "Gastos", "Ingreso total"}
+	excel.Caja2 = []string{"Ingreso efectivo", "Ingreso crédito", "Ingreso débito", "Retiros", "Gastos", "Ingreso total", "Cierre fiscal"}
 	excel.Facturas = []string{"Tipo", "Empleado", "Hora", "Precio", "Descuento", "Forma de pago", "Comentario", "Comentario baja"}
 	excel.Renglones = []string{"Producto", "Cantidad", "Precio", "Descuento"}
 
@@ -38,7 +38,7 @@ func (dao ExcelImpl) Export(movimientos []models.Movimientos) error {
 		row = sheet.AddRow()
 		for j := range excel.Caja1 {
 			cell = row.AddCell()
-			cell.SetStyle(titleFactStyle())
+			cell.SetStyle(titleCajaStyle())
 			cell.Value = excel.Caja1[j]
 		}
 
@@ -75,7 +75,7 @@ func (dao ExcelImpl) Export(movimientos []models.Movimientos) error {
 
 		for j := range excel.Caja2 {
 			cell = row.AddCell()
-			cell.SetStyle(titleFactStyle())
+			cell.SetStyle(titleCajaStyle())
 			cell.Value = excel.Caja2[j]
 		}
 		row = sheet.AddRow()
@@ -125,89 +125,152 @@ func (dao ExcelImpl) Export(movimientos []models.Movimientos) error {
 		//Ingreso total
 		ingresoTotal := movimientos[i].Caja.Inicio + efectivo + credito + debito - retiros - gastos
 		cell.Value = strconv.FormatFloat(ingresoTotal, 'f', 2, 64)
+		cell = row.AddCell()
+		cell.SetStyle(dataStyle())
+		//Cierre fiscal
+		cell.Value = strconv.FormatFloat(movimientos[i].Caja.CierreFiscal, 'f', 2, 64)
+
 		row = sheet.AddRow()
 		row = sheet.AddRow()
 		cell = row.AddCell()
 		cell.SetStyle(titleStyle())
 		cell.Value = "Facturas"
 
+		//FACTURAS
+
 		for facturas := range movimientos[i].Facturas {
 
+			style := dataStyle()
 			row = sheet.AddRow()
 			for j := range excel.Facturas {
 				cell = row.AddCell()
-				cell.SetStyle(titleFactStyle())
+				if j == len(excel.Facturas)-1 {
+					cell.SetStyle(borderTitleStyle())
+				} else {
+					cell.SetStyle(titleFacturaStyle())
+				}
 				cell.Value = excel.Facturas[j]
 			}
 			row = sheet.AddRow()
 
 			cell = row.AddCell()
-			cell.SetStyle(dataStyle())
+			//Tipo
+			cell.SetStyle(style)
 			cell.Value = postgrsql.GetTipo(movimientos[i].Facturas[facturas])
 			cell = row.AddCell()
-			cell.SetStyle(dataStyle())
+			//Nombre empleado
+			cell.SetStyle(style)
 			nombre, err := postgrsql.GetNombre(movimientos[i].Facturas[facturas].Id_empleado.Int64)
 			if err != nil {
 				return err
 			}
 			cell.Value = nombre
 			cell = row.AddCell()
-			cell.SetStyle(dataStyle())
+			//Fecha
+			cell.SetStyle(style)
 			cell.Value = movimientos[i].Facturas[facturas].Fecha.Format("15:04:05")
 			cell = row.AddCell()
-			cell.SetStyle(dataStyle())
+			cell.SetStyle(style)
+			//Precio
 			cell.Value = strconv.FormatFloat(movimientos[i].Facturas[facturas].Precio, 'f', 2, 64)
 			cell = row.AddCell()
-			cell.SetStyle(dataStyle())
+			//Descuento
+			if movimientos[i].Facturas[facturas].Descuento.Int64 != 0 {
+				cell.SetStyle(descuentoStyle())
+			} else {
+				cell.SetStyle(style)
+			}
 			cell.Value = strconv.FormatInt(movimientos[i].Facturas[facturas].Descuento.Int64, 10)
 			cell = row.AddCell()
-			cell.SetStyle(dataStyle())
-			cell.Value = strconv.FormatInt(movimientos[i].Facturas[facturas].FormaDePago.Int64, 10)
+			cell.SetStyle(style)
+			//Forma de pago
+			if movimientos[i].Facturas[facturas].FormaDePago.Valid {
+				cell.Value = postgrsql.GetFormaDePago(movimientos[i].Facturas[facturas])
+			}
 			cell = row.AddCell()
-			cell.SetStyle(dataStyle())
+			cell.SetStyle(style)
+			//Comentario
 			cell.Value = (movimientos[i].Facturas[facturas].Comentario).String
 			cell = row.AddCell()
-			cell.SetStyle(dataStyle())
+			//Comentario baja
+			if len(movimientos[i].Facturas[facturas].ComentarioBaja) != 0 {
+				cell.SetStyle(comentarioStyle())
+			} else {
+				cell.SetStyle(borderDataStyle())
+			}
 			cell.Value = movimientos[i].Facturas[facturas].ComentarioBaja
-			cell = row.AddCell()
 			row = sheet.AddRow()
 
-			if len(movimientos[i].Facturas[facturas].Renglones) != 0 {
-				row = sheet.AddRow()
-				for j := range excel.Renglones {
+			if len(movimientos[i].Facturas[facturas].Renglones) == 0 {
+				for range excel.Facturas {
 					cell = row.AddCell()
-					cell.SetStyle(titleRenglonStyle())
-					cell.Value = excel.Renglones[j]
-
+					cell.SetStyle(lastDataStyle())
+				}
+			} else {
+				for j := range excel.Facturas {
+					cell = row.AddCell()
+					if j == len(excel.Facturas)-1 {
+						cell.SetStyle(borderDataStyle())
+					} else {
+						cell.SetStyle(dataStyle())
+					}
 				}
 				row = sheet.AddRow()
+				for j := range excel.Facturas {
+					cell = row.AddCell()
+					if j == len(excel.Facturas)-1 {
+						cell.SetStyle(borderRenglonStyle())
+					} else {
+						cell.SetStyle(titleRenglonStyle())
+					}
+					if j < len(excel.Renglones) {
+						cell.Value = excel.Renglones[j]
+					}
+				}
+
+				row = sheet.AddRow()
 				for renglones := range movimientos[i].Facturas[facturas].Renglones {
+
+					style = dataStyle()
+
 					cell = row.AddCell()
 					producto, err := postgrsql.GetNombreById(movimientos[i].Facturas[facturas].Renglones[renglones].Id_producto.Int64)
 					if err != nil {
 						return err
 					}
-					cell.SetStyle(dataStyle())
+
+					cell.SetStyle(style)
 					cell.Value = producto
 					cell = row.AddCell()
-					cell.SetStyle(dataStyle())
+					cell.SetStyle(style)
 					cell.Value = strconv.Itoa(movimientos[i].Facturas[facturas].Renglones[renglones].Cantidad)
 					cell = row.AddCell()
-					cell.SetStyle(dataStyle())
+					cell.SetStyle(style)
 					cell.Value = strconv.FormatFloat(movimientos[i].Facturas[facturas].Renglones[renglones].Precio, 'f', 2, 64)
 					cell = row.AddCell()
-					cell.SetStyle(dataStyle())
+					cell.SetStyle(style)
 					cell.Value = strconv.FormatFloat(movimientos[i].Facturas[facturas].Renglones[renglones].Descuento, 'f', 2, 64)
+					for col := len(excel.Renglones); col < len(excel.Facturas); col++ {
+						cell = row.AddCell()
+						cell.SetStyle(style)
+						if col == len(excel.Facturas)-1 {
+							cell.SetStyle(borderDataStyle())
+						}
+					}
+
 					row = sheet.AddRow()
+				}
+				for range excel.Facturas {
+					cell = row.AddCell()
+					cell.SetStyle(lastDataStyle())
 				}
 			}
 
 		}
 		row = sheet.AddRow()
-
 	}
 
-	err := file.Save("./Movimientos.xlsx")
+	err := file.Save("./" + movimientos[0].Caja.HoraInicio.Format("2006-01-02") + "to" + movimientos[len(movimientos)-1].Caja.HoraInicio.Format("2006-01-02") + ".xlsx")
 	if err != nil {
 		return err
 	}
@@ -236,14 +299,26 @@ func titleStyle() *xlsx.Style {
 	return style
 }
 
-func titleFactStyle() *xlsx.Style {
+func titleFacturaStyle() *xlsx.Style {
+
+	style := xlsx.NewStyle()
+	border := *xlsx.NewBorder("solid", "solid", "medium", "solid")
+	fill := *xlsx.NewFill("solid", "c4d79b", "c4d79b")
+	style.Border = border
+	style.Fill = fill
+
+	style.ApplyBorder = true
+	style.ApplyFill = true
+	return style
+}
+
+func titleCajaStyle() *xlsx.Style {
 
 	style := xlsx.NewStyle()
 	fill := *xlsx.NewFill("solid", "c4d79b", "c4d79b")
 	style.Fill = fill
 
 	style.ApplyFill = true
-
 	return style
 }
 
@@ -267,11 +342,87 @@ func dataStyle() *xlsx.Style {
 	return style
 }
 
+func lastDataStyle() *xlsx.Style {
+
+	style := xlsx.NewStyle()
+	border := *xlsx.NewBorder("solid", "solid", "medium", "solid")
+	style.Border = border
+
+	style.ApplyBorder = true
+	return style
+}
+
+func borderTitleStyle() *xlsx.Style {
+
+	style := xlsx.NewStyle()
+	border := *xlsx.NewBorder("solid", "medium", "medium", "solid")
+	fill := *xlsx.NewFill("solid", "c4d79b", "c4d79b")
+	style.Border = border
+	style.Fill = fill
+
+	style.ApplyBorder = true
+	style.ApplyFill = true
+
+	return style
+}
+
+func borderDataStyle() *xlsx.Style {
+
+	style := xlsx.NewStyle()
+	border := *xlsx.NewBorder("solid", "medium", "solid", "solid")
+	fill := *xlsx.NewFill("solid", "ebf1de", "ebf1de")
+
+	style.Border = border
+	style.Fill = fill
+	style.ApplyBorder = true
+	style.ApplyFill = true
+
+	return style
+}
+
+func borderRenglonStyle() *xlsx.Style {
+
+	style := xlsx.NewStyle()
+	border := *xlsx.NewBorder("solid", "medium", "solid", "solid")
+	fill := *xlsx.NewFill("solid", "d8e4bc", "d8e4bc")
+
+	style.Border = border
+	style.Fill = fill
+	style.ApplyBorder = true
+	style.ApplyFill = true
+
+	return style
+
+}
+
 func perdidaStyle() *xlsx.Style {
 
 	style := xlsx.NewStyle()
 	fill := *xlsx.NewFill("solid", "ff0000", "ff0000")
 	style.Fill = fill
+	style.ApplyFill = true
+
+	return style
+}
+
+func descuentoStyle() *xlsx.Style {
+
+	style := xlsx.NewStyle()
+	fill := *xlsx.NewFill("solid", "ffc000", "ffc000")
+	style.Fill = fill
+	style.ApplyFill = true
+
+	return style
+}
+
+func comentarioStyle() *xlsx.Style {
+
+	style := xlsx.NewStyle()
+	border := *xlsx.NewBorder("solid", "medium", "solid", "solid")
+	fill := *xlsx.NewFill("solid", "ffff00", "ffff00")
+	style.Border = border
+	style.Fill = fill
+	style.ApplyBorder = true
 	style.ApplyFill = true
 
 	return style
