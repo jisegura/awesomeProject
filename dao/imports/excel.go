@@ -248,7 +248,12 @@ func (dao ExcelImpl) Export(movimientos []models.Movimientos) error {
 					cell.SetStyle(style)
 					cell.Value = strconv.FormatFloat(movimientos[i].Facturas[facturas].Renglones[renglones].Precio, 'f', 2, 64)
 					cell = row.AddCell()
-					cell.SetStyle(style)
+					//Descuento
+					if movimientos[i].Facturas[facturas].Renglones[renglones].Descuento != 0 {
+						cell.SetStyle(descuentoStyle())
+					} else {
+						cell.SetStyle(style)
+					}
 					cell.Value = strconv.FormatFloat(movimientos[i].Facturas[facturas].Renglones[renglones].Descuento, 'f', 2, 64)
 					for col := len(excel.Renglones); col < len(excel.Facturas); col++ {
 						cell = row.AddCell()
