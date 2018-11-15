@@ -123,7 +123,7 @@ func (dao ExcelImpl) Export(movimientos []models.Movimientos) error {
 		cell = row.AddCell()
 		cell.SetStyle(dataStyle())
 		//Ingreso total
-		ingresoTotal := movimientos[i].Caja.Inicio + efectivo + credito + debito - retiros - gastos
+		ingresoTotal := efectivo + credito + debito
 		cell.Value = strconv.FormatFloat(ingresoTotal, 'f', 2, 64)
 		cell = row.AddCell()
 		cell.SetStyle(dataStyle())
