@@ -3,7 +3,6 @@ package postgrsql
 import (
 	"awesomeProject/models"
 	"errors"
-	"log"
 )
 
 type ProductoImpl struct{}
@@ -15,8 +14,7 @@ func (dao ProductoImpl) Create(producto *models.Producto) error {
 	db := getConnection()
 	defer db.Close()
 
-	stmt, err := db.Prepare(query)
-	if err != nil {
+	stmt, err := db.Prepare(query); if err != nil {
 		return err
 	}
 	defer stmt.Close()
@@ -34,20 +32,17 @@ func (dao ProductoImpl) GetAll() ([]models.Producto, error) {
 	db := getConnection()
 	defer db.Close()
 
-	stmt, err := db.Prepare(query)
-	if err != nil {
+	stmt, err := db.Prepare(query); if err != nil {
 		return productos, err
 	}
 
-	rows, err := stmt.Query()
-	if err != nil {
+	rows, err := stmt.Query(); if err != nil {
 		return productos, err
 	}
 
 	for rows.Next() {
 		var row models.Producto
-		err := rows.Scan(&row.Id_producto, &row.Id_categoria, &row.Nombre, &row.Precio, &row.Imagen, &row.Activo)
-		if err != nil {
+		err := rows.Scan(&row.Id_producto, &row.Id_categoria, &row.Nombre, &row.Precio, &row.Imagen, &row.Activo); if err != nil {
 			return productos, err
 		}
 		if row.Activo {
@@ -67,15 +62,13 @@ func (dao ProductoImpl) GetById(id int) (models.Producto, error) {
 	db := getConnection()
 	defer db.Close()
 
-	stmt, err := db.Prepare(query)
-	if err != nil {
+	stmt, err := db.Prepare(query); if err != nil {
 		return p, err
 	}
 	defer stmt.Close()
 
 	row := stmt.QueryRow(id)
-	err = row.Scan(&p.Id_producto, &p.Id_categoria, &p.Nombre, &p.Precio, &p.Imagen, &p.Activo)
-	if err != nil {
+	err = row.Scan(&p.Id_producto, &p.Id_categoria, &p.Nombre, &p.Precio, &p.Imagen, &p.Activo); if err != nil {
 		return p, err
 	}
 
@@ -90,15 +83,13 @@ func GetNombreById(id int64) (string, error) {
 
 	var nombre string
 
-	stmt, err := db.Prepare(query)
-	if err != nil {
+	stmt, err := db.Prepare(query); if err != nil {
 		return nombre, err
 	}
 	defer stmt.Close()
 
 	row := stmt.QueryRow(id)
-	err = row.Scan(&nombre)
-	if err != nil {
+	err = row.Scan(&nombre); if err != nil {
 		return nombre, err
 	}
 
@@ -112,14 +103,12 @@ func (dao ProductoImpl) Delete(id int) error {
 	db := getConnection()
 	defer db.Close()
 
-	stmt, err := db.Prepare(query)
-	if err != nil {
+	stmt, err := db.Prepare(query); if err != nil {
 		return err
 	}
 	defer stmt.Close()
 
-	r, err := stmt.Exec(id)
-	if err != nil {
+	r, err := stmt.Exec(id); if err != nil {
 		return err
 	}
 
@@ -138,15 +127,13 @@ func (dao ProductoImpl) Update(producto *models.Producto) error {
 	db := getConnection()
 	defer db.Close()
 
-	stmt, err := db.Prepare(query)
-	if err != nil {
-		log.Fatal(err)
+	stmt, err := db.Prepare(query); if err != nil {
+		return err
 	}
 	defer stmt.Close()
 
-	row, err := stmt.Exec(producto.Id_categoria, producto.Nombre, producto.Precio, producto.Imagen, producto.Id_producto)
-	if err != nil {
-		log.Fatal(err)
+	row, err := stmt.Exec(producto.Id_categoria, producto.Nombre, producto.Precio, producto.Imagen, producto.Id_producto); if err != nil {
+		return err
 	}
 
 	i, _ := row.RowsAffected()

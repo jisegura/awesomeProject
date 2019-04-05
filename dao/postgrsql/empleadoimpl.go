@@ -15,15 +15,13 @@ func (dao EmpleadoImpl) Create(empleado *models.Empleado) error {
 	db := getConnection()
 	defer db.Close()
 
-	stmt, err := db.Prepare(query)
-	if err != nil {
+	stmt, err := db.Prepare(query); if err != nil {
 		return err
 	}
 	defer stmt.Close()
 
 	row := stmt.QueryRow(empleado.FirstName, empleado.LastName)
-	err = row.Scan(&empleado.Id_empleado)
-	if err != nil {
+	err = row.Scan(&empleado.Id_empleado); if err != nil {
 		return err
 	}
 
@@ -36,21 +34,19 @@ func (dao EmpleadoImpl) GetAll() ([]models.Empleado, error) {
 	db := getConnection()
 	defer db.Close()
 
-	stmt, err := db.Prepare(query)
-	if err != nil {
+	stmt, err := db.Prepare(query); if err != nil {
 		return empleados, err
 	}
+
 	defer stmt.Close()
 
-	rows, err := stmt.Query()
-	if err != nil {
+	rows, err := stmt.Query(); if err != nil {
 		return empleados, err
 	}
 
 	for rows.Next() {
 		var row models.Empleado
-		err := rows.Scan(&row.Id_empleado, &row.FirstName, &row.LastName, &row.FechaBaja, &row.Id_login)
-		if err != nil {
+		err := rows.Scan(&row.Id_empleado, &row.FirstName, &row.LastName, &row.FechaBaja, &row.Id_login); if err != nil {
 			return empleados, err
 		}
 		if !row.FechaBaja.Valid {
@@ -69,15 +65,13 @@ func (dao EmpleadoImpl) GetById(id int) (models.Empleado, error) {
 	db := getConnection()
 	defer db.Close()
 
-	stmt, err := db.Prepare(query)
-	if err != nil {
+	stmt, err := db.Prepare(query); if err != nil {
 		return p, err
 	}
 	defer stmt.Close()
 
 	row := stmt.QueryRow(id)
-	err = row.Scan(&p.Id_empleado, &p.FirstName, &p.LastName, &p.FechaBaja, &p.Id_login)
-	if err != nil {
+	err = row.Scan(&p.Id_empleado, &p.FirstName, &p.LastName, &p.FechaBaja, &p.Id_login); if err != nil {
 		return p, err
 	}
 
@@ -91,14 +85,12 @@ func (dao EmpleadoImpl) Delete(id int) error {
 	db := getConnection()
 	defer db.Close()
 
-	stmt, err := db.Prepare(query)
-	if err != nil {
+	stmt, err := db.Prepare(query); if err != nil {
 		return err
 	}
 	defer stmt.Close()
 
-	r, err := stmt.Exec(id)
-	if err != nil {
+	r, err := stmt.Exec(id); if err != nil {
 		return err
 	}
 
@@ -117,14 +109,12 @@ func (dao EmpleadoImpl) UpdateNombre(empleado *models.Empleado) error {
 	db := getConnection()
 	defer db.Close()
 
-	stmt, err := db.Prepare(query)
-	if err != nil {
+	stmt, err := db.Prepare(query); if err != nil {
 		return err
 	}
 	defer stmt.Close()
 
-	r, err := stmt.Exec(empleado.FirstName, empleado.LastName, empleado.Id_empleado)
-	if err != nil {
+	r, err := stmt.Exec(empleado.FirstName, empleado.LastName, empleado.Id_empleado); if err != nil {
 		return err
 	}
 
@@ -142,14 +132,12 @@ func (dao EmpleadoImpl) UpdateBaja(id int) error {
 	db := getConnection()
 	defer db.Close()
 
-	stmt, err := db.Prepare(query)
-	if err != nil {
+	stmt, err := db.Prepare(query); if err != nil {
 		return err
 	}
 	defer stmt.Close()
 
-	row, err := stmt.Exec(time.Now(), id)
-	if err != nil {
+	row, err := stmt.Exec(time.Now(), id); if err != nil {
 		return err
 	}
 
@@ -169,15 +157,13 @@ func GetNombre(id int64) (string, error) {
 
 	var nombre string
 
-	stmt, err := db.Prepare(query)
-	if err != nil {
+	stmt, err := db.Prepare(query); if err != nil{
 		return nombre, err
 	}
 	defer stmt.Close()
 
 	row := stmt.QueryRow(id)
-	err = row.Scan(&nombre)
-	if err != nil {
+	err = row.Scan(&nombre); if err != nil {
 		return nombre, err
 	}
 
@@ -193,15 +179,13 @@ func InsertActivo(id int) (bool, error) {
 	var activo = false
 	var fechaBaja pq.NullTime
 
-	stmt, err := db.Prepare(query)
-	if err != nil {
+	stmt, err := db.Prepare(query); if err != nil {
 		return activo, err
 	}
 	defer stmt.Close()
 
 	row := stmt.QueryRow(id)
-	err = row.Scan(&fechaBaja)
-	if err != nil {
+	err = row.Scan(&fechaBaja); if err != nil {
 		return activo, err
 	}
 
@@ -218,15 +202,13 @@ func Activo(id int) (bool, error) {
 	var activo = false
 	var fechaBaja pq.NullTime
 
-	stmt, err := db.Prepare(query)
-	if err != nil {
+	stmt, err := db.Prepare(query); if err != nil {
 		return activo, err
 	}
 	defer stmt.Close()
 
 	row := stmt.QueryRow(id)
-	err = row.Scan(&fechaBaja)
-	if err != nil {
+	err = row.Scan(&fechaBaja); if err != nil {
 		return activo, err
 	}
 
@@ -239,14 +221,12 @@ func UpdateLogin(id_empleado int, id_login int) error {
 	db := getConnection()
 	defer db.Close()
 
-	stmt, err := db.Prepare(query)
-	if err != nil {
+	stmt, err := db.Prepare(query); if err != nil {
 		return err
 	}
 	defer stmt.Close()
 
-	row, err := stmt.Exec(id_login, id_empleado)
-	if err != nil {
+	row, err := stmt.Exec(id_login, id_empleado); if err != nil {
 		return err
 	}
 
@@ -267,15 +247,13 @@ func existeUsuario(nombre string) (bool, error) {
 	var existe = false
 	var id_login sql.NullInt64
 
-	stmt, err := db.Prepare(query)
-	if err != nil {
+	stmt, err := db.Prepare(query); if err != nil {
 		return existe, err
 	}
 	defer stmt.Close()
 
 	row := stmt.QueryRow(nombre)
-	err = row.Scan(&id_login)
-	if err != nil {
+	err = row.Scan(&id_login); if err != nil {
 		return existe, errors.New("Error, usuario incorrecto")
 	}
 

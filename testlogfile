@@ -1,0 +1,74 @@
+2019/03/24 19:21:13 This is a test log entry
+2019/03/24 19:21:13 Escuchando en localhost:3000
+2019/03/24 19:30:36 This is a test log entry
+2019/03/24 19:30:36 Escuchando en localhost:3000
+2019/03/24 19:30:46 pq: password authentication failed for user "user"
+2019/03/24 19:31:14 This is a test log entry
+2019/03/24 19:31:14 Escuchando en localhost:3000
+2019/03/24 19:31:32 pq: password authentication failed for user "user"
+2019/03/24 19:32:37 This is a test log entry
+2019/03/24 19:32:37 Escuchando en localhost:3000
+2019/03/24 19:32:46 Error: Error, se esperaba una fila afectada
+2019/03/25 12:55:11 This is a test log entry
+2019/03/25 12:55:12 Escuchando en localhost:3000
+2019/03/25 21:15:42 This is a test log entry
+2019/03/25 21:15:42 Escuchando en 192.168.1.17:3000
+2019/03/26 08:17:55 This is a test log entry
+2019/03/26 08:17:55 Escuchando en 192.168.1.17:3000
+2019/03/26 11:53:59 This is a test log entry
+2019/03/26 11:53:59 Escuchando en 192.168.1.17:3000
+2019/03/27 20:55:35 This is a test log entry
+2019/03/27 20:55:35 Escuchando en 192.168.1.17:3000
+2019/03/27 22:56:55 This is a test log entry
+2019/03/27 22:56:55 Escuchando en 192.168.1.17:3000
+2019/03/27 22:56:55 listen tcp 192.168.1.17:3000: bind: address already in use
+2019/03/28 08:25:06 This is a test log entry
+2019/03/28 08:25:06 Escuchando en 192.168.1.17:3000
+2019/03/28 08:28:33 This is a test log entry
+2019/03/28 08:28:33 Escuchando en 192.168.1.17:3000
+2019/03/28 08:30:53 This is a test log entry
+2019/03/28 08:30:53 Escuchando en 192.168.1.17:3000
+2019/03/28 08:39:01 This is a test log entry
+2019/03/28 08:39:01 Escuchando en 192.168.1.17:3000
+2019/03/28 09:12:43 This is a test log entry
+2019/03/28 09:12:43 Escuchando en 192.168.1.17:3000
+2019/03/28 09:40:54 This is a test log entry
+2019/03/28 09:40:54 Escuchando en 192.168.1.17:3000
+2019/03/28 12:24:30 Error: Error, se esperaba una fila afectada
+2019/03/28 12:24:44 Error: Error, se esperaba una fila afectada
+2019/03/28 12:26:04 Error: Error, se esperaba una fila afectada
+2019/03/28 14:05:09 This is a test log entry
+2019/03/28 14:05:09 Escuchando en 192.168.1.17:3000
+2019/03/28 14:20:25 This is a test log entry
+2019/03/28 14:20:25 Escuchando en 192.168.1.17:3000
+2019/03/28 21:20:36 This is a test log entry
+2019/03/28 21:20:36 Escuchando en 192.168.1.38:3000
+2019/03/28 21:22:05 This is a test log entry
+2019/03/28 21:22:05 Escuchando en 192.168.1.38:3000
+2019/04/03 09:57:32 This is a test log entry
+2019/04/03 09:57:32 Escuchando en 192.168.1.38:3000
+2019/04/03 09:57:32 listen tcp 192.168.1.38:3000: bind: cannot assign requested address
+2019/04/03 09:58:09 This is a test log entry
+2019/04/03 09:58:09 Escuchando en 192.168.1.17:3000
+2019/04/05 16:51:22 This is a test log entry
+2019/04/05 16:51:22 Escuchando en 192.168.1.17:3000
+2019/04/05 17:03:23 This is a test log entry
+2019/04/05 17:03:23 Escuchando en 192.168.1.17:3000
+2019/04/05 17:05:00 This is a test log entry
+2019/04/05 17:05:00 Escuchando en 192.168.1.17:3000
+2019/04/05 17:19:26 This is a test log entry
+2019/04/05 17:19:26 Escuchando en 192.168.1.17:3000
+2019/04/05 17:31:44 This is a test log entry
+2019/04/05 17:31:44 Escuchando en 192.168.1.17:3000
+2019/04/05 17:32:07 This is a test log entry
+2019/04/05 17:32:07 Escuchando en 192.168.1.17:3000
+2019/04/05 17:33:05 This is a test log entry
+2019/04/05 17:33:05 Escuchando en 192.168.1.17:3000
+2019/04/05 17:33:23 This is a test log entry
+2019/04/05 17:33:23 Escuchando en 192.168.1.17:3000
+2019/04/05 17:39:58 This is a test log entry
+2019/04/05 17:39:58 Escuchando en 192.168.1.17:3000
+2019/04/05 17:40:35 This is a test log entry
+2019/04/05 17:40:35 Escuchando en 192.168.1.17:3000
+2019/04/05 18:03:30 This is a test log entry
+2019/04/05 18:03:30 Escuchando en 192.168.1.17:3000

@@ -15,8 +15,7 @@ func InsertRenglones(renglones []models.Renglon, id int) error {
 
 	for i := range renglones {
 		renglones[i].Id_factura = id
-		err := create(&renglones[i])
-		if err != nil {
+		err := create(&renglones[i]); if err != nil {
 			return err
 		}
 	}
@@ -31,8 +30,7 @@ func create(renglon *models.Renglon) error {
 	db := getConnection()
 	defer db.Close()
 
-	stmt, err := db.Prepare(query)
-	if err != nil {
+	stmt, err := db.Prepare(query); if err != nil {
 		return err
 	}
 	defer stmt.Close()
@@ -51,20 +49,17 @@ func GetAll(id int) ([]models.Renglon, error) {
 	db := getConnection()
 	defer db.Close()
 
-	stmt, err := db.Prepare(query)
-	if err != nil {
+	stmt, err := db.Prepare(query); if err != nil {
 		return renglones, err
 	}
 
-	rows, err := stmt.Query(id)
-	if err != nil {
+	rows, err := stmt.Query(id); if err != nil {
 		return renglones, err
 	}
 
 	for rows.Next() {
 		var row models.Renglon
-		err := rows.Scan(&row.Id_renglon, &row.Id_producto, &row.Id_factura, &row.Cantidad, &row.Precio, &row.Descuento)
-		if err != nil {
+		err := rows.Scan(&row.Id_renglon, &row.Id_producto, &row.Id_factura, &row.Cantidad, &row.Precio, &row.Descuento); if err != nil {
 			return renglones, err
 		}
 

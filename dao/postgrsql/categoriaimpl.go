@@ -3,7 +3,6 @@ package postgrsql
 import (
 	"awesomeProject/models"
 	"errors"
-	"log"
 )
 
 type CategoriaImpl struct{}
@@ -15,15 +14,13 @@ func (dao CategoriaImpl) Create(categoria *models.Categoria) error {
 	db := getConnection()
 	defer db.Close()
 
-	stmt, err := db.Prepare(query)
-	if err != nil {
+	stmt, err := db.Prepare(query); if err != nil {
 		return err
 	}
 	defer stmt.Close()
 
 	row := stmt.QueryRow(categoria.Nombre)
-	err = row.Scan(&categoria.Id_categoria)
-	if err != nil {
+	err = row.Scan(&categoria.Id_categoria); if err != nil {
 		return err
 	}
 
@@ -38,21 +35,18 @@ func (dao CategoriaImpl) GetAll() ([]models.Categoria, error) {
 	db := getConnection()
 	defer db.Close()
 
-	stmt, err := db.Prepare(query)
-	if err != nil {
+	stmt, err := db.Prepare(query); if err != nil {
 		return categorias, err
 	}
 	defer stmt.Close()
 
-	rows, err := stmt.Query()
-	if err != nil {
+	rows, err := stmt.Query(); if err != nil {
 		return categorias, err
 	}
 
 	for rows.Next() {
 		var row models.Categoria
-		err := rows.Scan(&row.Id_categoria, &row.Nombre)
-		if err != nil {
+		err := rows.Scan(&row.Id_categoria, &row.Nombre); if err != nil {
 			return categorias, err
 		}
 		categorias = append(categorias, row)
@@ -70,15 +64,13 @@ func (dao CategoriaImpl) GetById(id int) (models.Categoria, error) {
 	db := getConnection()
 	defer db.Close()
 
-	stmt, err := db.Prepare(query)
-	if err != nil {
+	stmt, err := db.Prepare(query); if err != nil {
 		return p, err
 	}
 	defer stmt.Close()
 
 	row := stmt.QueryRow(id)
-	err = row.Scan(&p.Id_categoria, &p.Nombre)
-	if err != nil {
+	err = row.Scan(&p.Id_categoria, &p.Nombre); if err != nil {
 		return p, err
 	}
 
@@ -92,14 +84,12 @@ func (dao CategoriaImpl) Delete(id int) error {
 	db := getConnection()
 	defer db.Close()
 
-	stmt, err := db.Prepare(query)
-	if err != nil {
+	stmt, err := db.Prepare(query); if err != nil {
 		return err
 	}
 	defer stmt.Close()
 
-	r, err := stmt.Exec(id)
-	if err != nil {
+	r, err := stmt.Exec(id); if err != nil {
 		return err
 	}
 
@@ -118,15 +108,13 @@ func (dao CategoriaImpl) Update(categoria *models.Categoria) error {
 	db := getConnection()
 	defer db.Close()
 
-	stmt, err := db.Prepare(query)
-	if err != nil {
-		log.Fatal(err)
+	stmt, err := db.Prepare(query); if err != nil {
+		return err
 	}
 	defer stmt.Close()
 
-	r, err := stmt.Exec(categoria.Nombre, categoria.Id_categoria)
-	if err != nil {
-		log.Fatal(err)
+	r, err := stmt.Exec(categoria.Nombre, categoria.Id_categoria); if err != nil {
+		return err
 	}
 
 	i, _ := r.RowsAffected()

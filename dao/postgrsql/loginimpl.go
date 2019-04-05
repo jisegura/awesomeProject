@@ -12,8 +12,7 @@ type LoginImpl struct{}
 
 func AddLogin(login models.Login, id int) error {
 
-	activo, err := InsertActivo(id)
-	if err != nil {
+	activo, err := InsertActivo(id); if err != nil {
 		return err
 	}
 	if activo {
@@ -21,25 +20,21 @@ func AddLogin(login models.Login, id int) error {
 		db := getConnection()
 		defer db.Close()
 
-		stmt, err := db.Prepare(query)
-		if err != nil {
+		stmt, err := db.Prepare(query); if err != nil {
 			return err
 		}
 		defer stmt.Close()
 
-		password, err := HashPassword(login.Password)
-		if err != nil {
+		password, err := HashPassword(login.Password); if err != nil {
 			return err
 		}
 
 		row := stmt.QueryRow(login.Usuario, password)
-		err = row.Scan(&login.Id_login)
-		if err != nil {
+		err = row.Scan(&login.Id_login); if err != nil {
 			return err
 		}
 
-		err = UpdateLogin(id, login.Id_login)
-		if err != nil {
+		err = UpdateLogin(id, login.Id_login); if err != nil {
 			return err
 		}
 
@@ -54,14 +49,12 @@ func Login(login models.Login) (bool, error) {
 
 	var ok = false
 
-	activo, err := Activo(login.Id_login)
-	if err != nil {
+	activo, err := Activo(login.Id_login); if err != nil {
 		return ok, err
 	}
 	if activo {
 
-		existe, err := existeUsuario(login.Usuario)
-		if err != nil {
+		existe, err := existeUsuario(login.Usuario); if err != nil {
 			return ok, err
 		}
 		if existe {
@@ -72,15 +65,13 @@ func Login(login models.Login) (bool, error) {
 
 			var password string
 
-			stmt, err := db.Prepare(query)
-			if err != nil {
+			stmt, err := db.Prepare(query); if err != nil {
 				return ok, err
 			}
 			defer stmt.Close()
 
 			row := stmt.QueryRow(login.Id_login)
-			err = row.Scan(&password)
-			if err != nil {
+			err = row.Scan(&password); if err != nil {
 				return ok, err
 			}
 
@@ -99,8 +90,7 @@ func Login(login models.Login) (bool, error) {
 }
 
 func HashPassword(password string) (string, error) {
-	hashedBytes, err := bcrypt.GenerateFromPassword([]byte(password), 10 /*cost*/)
-	if err != nil {
+	hashedBytes, err := bcrypt.GenerateFromPassword([]byte(password), 10 /*cost*/); if err != nil {
 		return "", err
 	}
 

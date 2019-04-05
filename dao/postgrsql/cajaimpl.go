@@ -24,20 +24,17 @@ func (dao CajaImpl) Create(caja *models.Caja) (models.Caja, error) {
 	db := getConnection()
 	defer db.Close()
 
-	stmt, err := db.Prepare(query)
-	if err != nil {
+	stmt, err := db.Prepare(query); if err != nil {
 		return newCaja, err
 	}
 	defer stmt.Close()
 
 	row := stmt.QueryRow(caja.Inicio, 0, time.Now(), time.Time{}, 0, 0)
-	err = row.Scan(&caja.Id_caja)
-	if err != nil {
+	err = row.Scan(&caja.Id_caja); if err != nil {
 		return newCaja, err
 	}
 
-	newCaja, err = GetById(caja.Id_caja)
-	if err != nil {
+	newCaja, err = GetById(caja.Id_caja); if err != nil {
 		return newCaja, err
 	}
 
@@ -56,8 +53,7 @@ func GetCajaAbierta() (models.Caja, error) {
 	db := getConnection()
 	defer db.Close()
 
-	stmt, err := db.Prepare(query)
-	if err != nil {
+	stmt, err := db.Prepare(query); if err != nil {
 		return caja, err
 	}
 	defer stmt.Close()
@@ -79,8 +75,7 @@ func GetById(id int) (models.Caja, error) {
 	db := getConnection()
 	defer db.Close()
 
-	stmt, err := db.Prepare(query)
-	if err != nil {
+	stmt, err := db.Prepare(query); if err != nil {
 		return caja, err
 	}
 	defer stmt.Close()
@@ -102,21 +97,18 @@ func (dao CajaImpl) GetAll() ([]models.Caja, error) {
 	db := getConnection()
 	defer db.Close()
 
-	stmt, err := db.Prepare(query)
-	if err != nil {
+	stmt, err := db.Prepare(query); if err != nil {
 		return cajas, err
 	}
 	defer stmt.Close()
 
-	rows, err := stmt.Query()
-	if err != nil {
+	rows, err := stmt.Query(); if err != nil {
 		return cajas, err
 	}
 
 	for rows.Next() {
 		var row models.Caja
-		err := rows.Scan(&row.Id_caja, &row.Inicio, &row.Fin, &row.HoraInicio, &row.HoraFin, &row.CierreReal, &row.CierreFiscal)
-		if err != nil {
+		err := rows.Scan(&row.Id_caja, &row.Inicio, &row.Fin, &row.HoraInicio, &row.HoraFin, &row.CierreReal, &row.CierreFiscal); if err != nil {
 			return cajas, err
 		}
 		cajas = append(cajas, row)
@@ -134,14 +126,12 @@ func (dao CajaImpl) CierreCaja(caja *models.Caja) (models.Caja, error) {
 
 	var c models.Caja
 
-	stmt, err := db.Prepare(query)
-	if err != nil {
+	stmt, err := db.Prepare(query); if err != nil {
 		return c, err
 	}
 	defer stmt.Close()
 
-	row, err := stmt.Exec(caja.Fin, time.Now(), caja.CierreReal, caja.CierreFiscal, caja.Id_caja)
-	if err != nil {
+	row, err := stmt.Exec(caja.Fin, time.Now(), caja.CierreReal, caja.CierreFiscal, caja.Id_caja); if err != nil {
 		return c, err
 	}
 
@@ -150,8 +140,7 @@ func (dao CajaImpl) CierreCaja(caja *models.Caja) (models.Caja, error) {
 		return c, errors.New("Error, se esperaba una fila afectada")
 	}
 
-	c, err = GetById(caja.Id_caja)
-	if err != nil {
+	c, err = GetById(caja.Id_caja); if err != nil {
 		return c, err
 	}
 
@@ -166,21 +155,18 @@ func (dao CajaImpl) GetCajasByFechas(fechaIncio time.Time, fechaFin time.Time) (
 	defer db.Close()
 
 	var cajas []models.Caja
-	stmt, err := db.Prepare(query)
-	if err != nil {
+	stmt, err := db.Prepare(query); if err != nil {
 		return cajas, err
 	}
 	defer stmt.Close()
 
-	rows, err := stmt.Query(fechaIncio, fechaFin)
-	if err != nil {
+	rows, err := stmt.Query(fechaIncio, fechaFin); if err != nil {
 		return cajas, err
 	}
 
 	for rows.Next() {
 		var caja models.Caja
-		err := rows.Scan(&caja.Id_caja, &caja.Inicio, &caja.Fin, &caja.HoraInicio, &caja.HoraFin, &caja.CierreReal, &caja.CierreFiscal)
-		if err != nil {
+		err := rows.Scan(&caja.Id_caja, &caja.Inicio, &caja.Fin, &caja.HoraInicio, &caja.HoraFin, &caja.CierreReal, &caja.CierreFiscal); if err != nil {
 			return cajas, err
 		}
 		cajas = append(cajas, caja)

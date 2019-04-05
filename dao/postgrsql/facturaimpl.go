@@ -81,22 +81,19 @@ func (dao FacturaImpl) GetFacturasById(id int) ([]int, error) {
 	db := getConnection()
 	defer db.Close()
 
-	stmt, err := db.Prepare(query)
-	if err != nil {
+	stmt, err := db.Prepare(query); if err != nil {
 		return ids, err
 	}
 	defer stmt.Close()
 
-	rows, err := stmt.Query(id)
-	if err != nil {
+	rows, err := stmt.Query(id); if err != nil {
 		return ids, err
 	}
 
 	for rows.Next() {
 		var row models.Factura
 
-		err = rows.Scan(&row.Id_factura)
-		if err != nil {
+		err = rows.Scan(&row.Id_factura); if err != nil{
 			return ids, err
 		}
 
@@ -109,36 +106,32 @@ func (dao FacturaImpl) GetFacturasById(id int) ([]int, error) {
 func (dao FacturaImpl) GetAllFacturasById(id int) ([]models.Factura, error) {
 
 	query := "SELECT g.id_factura, id_caja, id_empleado, fecha, precio, comentarioBaja, descuento, formaDePago, comentario FROM otros o RIGHT JOIN" +
-		"(SELECT f.id_factura, id_caja, id_empleado, fecha, precio, comentarioBaja, descuento, formaDePago FROM cliente c RIGHT JOIN " +
-		"(SELECT * FROM factura WHERE id_caja = $1 ORDER BY fecha DESC) f ON c.id_factura = f.id_factura) g " +
-		"ON o.id_factura = g.id_factura"
+		     "(SELECT f.id_factura, id_caja, id_empleado, fecha, precio, comentarioBaja, descuento, formaDePago FROM cliente c RIGHT JOIN " +
+		     "(SELECT * FROM factura WHERE id_caja = $1 ORDER BY fecha DESC) f ON c.id_factura = f.id_factura) g " +
+		     "ON o.id_factura = g.id_factura"
 
 	db := getConnection()
 	defer db.Close()
 
 	var facturas []models.Factura
 
-	stmt, err := db.Prepare(query)
-	if err != nil {
+	stmt, err := db.Prepare(query); if err != nil {
 		return facturas, err
 	}
 	defer stmt.Close()
 
-	rows, err := stmt.Query(id)
-	if err != nil {
+	rows, err := stmt.Query(id); if err != nil {
 		return facturas, err
 	}
 
 	for rows.Next() {
 		var row models.Factura
 
-		err = rows.Scan(&row.Id_factura, &row.Id_caja, &row.Id_empleado, &row.Fecha, &row.Precio, &row.ComentarioBaja, &row.Descuento, &row.FormaDePago, &row.Comentario)
-		if err != nil {
+		err = rows.Scan(&row.Id_factura, &row.Id_caja, &row.Id_empleado, &row.Fecha, &row.Precio, &row.ComentarioBaja, &row.Descuento, &row.FormaDePago, &row.Comentario); if err != nil {
 			return facturas, err
 		}
 
-		row.Renglones, err = GetAll(row.Id_factura)
-		if err != nil {
+		row.Renglones, err = GetAll(row.Id_factura); if err != nil {
 			return facturas, err
 		}
 
@@ -158,19 +151,16 @@ func InsertFactura(factura *models.Factura) error {
 	db := getConnection()
 	defer db.Close()
 
-	stmt, err := db.Prepare(query)
-	if err != nil {
+	stmt, err := db.Prepare(query); if err != nil {
 		return err
 	}
 	defer stmt.Close()
 
 	factura.Fecha = time.Now()
 	row := stmt.QueryRow(factura.Id_caja, factura.Id_empleado, factura.Fecha, factura.Precio, factura.ComentarioBaja)
-	err = row.Scan(&factura.Id_factura)
-	if err != nil {
+	err = row.Scan(&factura.Id_factura); if err != nil {
 		return err
 	}
-
 	return nil
 }
 
@@ -178,16 +168,15 @@ func InsertFactura(factura *models.Factura) error {
 func InsertCliente(factura *models.Factura) (models.Factura, error) {
 
 	query := "WITH X AS" +
-		"(INSERT INTO factura (id_caja, id_empleado, fecha, precio, comentarioBaja) VALUES ($1, $2, $3, $4, $5) RETURNING id_factura)" +
-		"INSERT INTO cliente (id_factura, descuento, formaDePago) VALUES ((SELECT id_factura FROM X), $6, $7) RETURNING id_factura"
+		     "(INSERT INTO factura (id_caja, id_empleado, fecha, precio, comentarioBaja) VALUES ($1, $2, $3, $4, $5) RETURNING id_factura)" +
+		     "INSERT INTO cliente (id_factura, descuento, formaDePago) VALUES ((SELECT id_factura FROM X), $6, $7) RETURNING id_factura"
 
 	db := getConnection()
 	defer db.Close()
 
 	var newFactura models.Factura
 
-	stmt, err := db.Prepare(query)
-	if err != nil {
+	stmt, err := db.Prepare(query); if err != nil {
 		return newFactura, err
 	}
 	defer stmt.Close()
@@ -202,13 +191,11 @@ func InsertCliente(factura *models.Factura) (models.Factura, error) {
 		return newFactura, errors.New("Error, no hay caja abierta")
 	}
 
-	err = InsertRenglones(factura.Renglones, factura.Id_factura)
-	if err != nil {
+	err = InsertRenglones(factura.Renglones, factura.Id_factura); if err != nil {
 		return newFactura, err
 	}
 
-	newFactura, err = GetClienteById(factura.Id_factura)
-	if err != nil {
+	newFactura, err = GetClienteById(factura.Id_factura); if err != nil {
 		return newFactura, err
 	}
 
@@ -219,29 +206,26 @@ func InsertCliente(factura *models.Factura) (models.Factura, error) {
 func InsertOtros(factura *models.Factura) (models.Factura, error) {
 
 	query := "WITH X AS" +
-		"(INSERT INTO factura (id_caja, id_empleado, fecha, precio, comentarioBaja) VALUES ($1, $2, $3, $4, $5) RETURNING id_factura)" +
-		"INSERT INTO otros (id_factura, comentario) VALUES ((SELECT id_factura FROM X), $6) RETURNING id_factura"
+		     "(INSERT INTO factura (id_caja, id_empleado, fecha, precio, comentarioBaja) VALUES ($1, $2, $3, $4, $5) RETURNING id_factura)" +
+		     "INSERT INTO otros (id_factura, comentario) VALUES ((SELECT id_factura FROM X), $6) RETURNING id_factura"
 
 	db := getConnection()
 	defer db.Close()
 
 	var newFactura models.Factura
 
-	stmt, err := db.Prepare(query)
-	if err != nil {
+	stmt, err := db.Prepare(query); if err != nil {
 		return newFactura, err
 	}
 	defer stmt.Close()
 
 	factura.Fecha = time.Now()
 	row := stmt.QueryRow(factura.Id_caja, factura.Id_empleado, factura.Fecha, factura.Precio, factura.ComentarioBaja, factura.Comentario)
-	err = row.Scan(&factura.Id_factura)
-	if err != nil {
+	err = row.Scan(&factura.Id_factura); if err != nil {
 		return newFactura, err
 	}
 
-	newFactura, err = GetOtrosById(factura.Id_factura)
-	if err != nil {
+	newFactura, err = GetOtrosById(factura.Id_factura); if err != nil {
 		return newFactura, err
 	}
 
@@ -253,28 +237,25 @@ func GetAllFacturas(id int) ([]models.Factura, error) {
 
 	facturas := make([]models.Factura, 0)
 	query := "SELECT * FROM factura " +
-		"WHERE id_factura NOT IN (SELECT id_factura FROM cliente) " +
-		"AND id_factura NOT IN (SELECT id_factura FROM otros) " +
-		"AND id_caja = $1"
+		     "WHERE id_factura NOT IN (SELECT id_factura FROM cliente) " +
+		     "AND id_factura NOT IN (SELECT id_factura FROM otros) " +
+		     "AND id_caja = $1"
 
 	db := getConnection()
 	defer db.Close()
 
-	stmt, err := db.Prepare(query)
-	if err != nil {
+	stmt, err := db.Prepare(query); if err != nil {
 		return facturas, err
 	}
 	defer stmt.Close()
 
-	rows, err := stmt.Query(id)
-	if err != nil {
+	rows, err := stmt.Query(id); if err != nil {
 		return facturas, err
 	}
 
 	for rows.Next() {
 		var row models.Factura
-		err := rows.Scan(&row.Id_factura, &row.Id_caja, &row.Id_empleado, &row.Fecha, &row.Precio, &row.ComentarioBaja)
-		if err != nil {
+		err := rows.Scan(&row.Id_factura, &row.Id_caja, &row.Id_empleado, &row.Fecha, &row.Precio, &row.ComentarioBaja); if err != nil {
 			return facturas, err
 		}
 
@@ -292,25 +273,21 @@ func GetAllClientes(id int) ([]models.Factura, error) {
 	db := getConnection()
 	defer db.Close()
 
-	stmt, err := db.Prepare(query)
-	if err != nil {
+	stmt, err := db.Prepare(query); if err != nil {
 		return facturas, err
 	}
 
-	rows, err := stmt.Query(id)
-	if err != nil {
+	rows, err := stmt.Query(id); if err != nil {
 		return facturas, err
 	}
 
 	for rows.Next() {
 		var row models.Factura
-		err := rows.Scan(&row.Id_factura, &row.Id_caja, &row.Id_empleado, &row.Fecha, &row.Precio, &row.ComentarioBaja, &row.Descuento, &row.FormaDePago)
-		if err != nil {
+		err := rows.Scan(&row.Id_factura, &row.Id_caja, &row.Id_empleado, &row.Fecha, &row.Precio, &row.ComentarioBaja, &row.Descuento, &row.FormaDePago); if err != nil {
 			return facturas, err
 		}
 
-		row.Renglones, err = GetAll(row.Id_factura)
-		if err != nil {
+		row.Renglones, err = GetAll(row.Id_factura); if err != nil {
 			return facturas, err
 		}
 		facturas = append(facturas, row)
@@ -327,20 +304,17 @@ func GetAllOtros(id int) ([]models.Factura, error) {
 	db := getConnection()
 	defer db.Close()
 
-	stmt, err := db.Prepare(query)
-	if err != nil {
+	stmt, err := db.Prepare(query); if err != nil {
 		return facturas, err
 	}
 
-	rows, err := stmt.Query(id)
-	if err != nil {
+	rows, err := stmt.Query(id); if err != nil {
 		return facturas, err
 	}
 
 	for rows.Next() {
 		var row models.Factura
-		err := rows.Scan(&row.Id_factura, &row.Id_caja, &row.Id_empleado, &row.Fecha, &row.Precio, &row.ComentarioBaja, &row.Comentario)
-		if err != nil {
+		err := rows.Scan(&row.Id_factura, &row.Id_caja, &row.Id_empleado, &row.Fecha, &row.Precio, &row.ComentarioBaja, &row.Comentario); if err != nil {
 			return facturas, err
 		}
 
@@ -360,15 +334,13 @@ func GetRetiroById(id int) (models.Factura, error) {
 	db := getConnection()
 	defer db.Close()
 
-	stmt, err := db.Prepare(query)
-	if err != nil {
+	stmt, err := db.Prepare(query); if err != nil {
 		return factura, err
 	}
 	defer stmt.Close()
 
 	row := stmt.QueryRow(id)
-	err = row.Scan(&factura.Id_factura, &factura.Id_caja, &factura.Id_empleado, &factura.Fecha, &factura.Precio, &factura.ComentarioBaja)
-	if err != nil {
+	err = row.Scan(&factura.Id_factura, &factura.Id_caja, &factura.Id_empleado, &factura.Fecha, &factura.Precio, &factura.ComentarioBaja); if err != nil {
 		return factura, err
 	}
 
@@ -384,20 +356,17 @@ func GetClienteById(id int) (models.Factura, error) {
 	db := getConnection()
 	defer db.Close()
 
-	stmt, err := db.Prepare(query)
-	if err != nil {
+	stmt, err := db.Prepare(query); if err != nil {
 		return factura, err
 	}
 	defer stmt.Close()
 
 	row := stmt.QueryRow(id)
-	err = row.Scan(&factura.Id_factura, &factura.Id_caja, &factura.Id_empleado, &factura.Fecha, &factura.Precio, &factura.ComentarioBaja, &factura.Descuento, &factura.FormaDePago)
-	if err != nil {
+	err = row.Scan(&factura.Id_factura, &factura.Id_caja, &factura.Id_empleado, &factura.Fecha, &factura.Precio, &factura.ComentarioBaja, &factura.Descuento, &factura.FormaDePago); if err != nil {
 		return factura, err
 	}
 
-	factura.Renglones, err = GetAll(factura.Id_factura)
-	if err != nil {
+	factura.Renglones, err = GetAll(factura.Id_factura); if err != nil {
 		return factura, err
 	}
 
@@ -413,15 +382,13 @@ func GetOtrosById(id int) (models.Factura, error) {
 	db := getConnection()
 	defer db.Close()
 
-	stmt, err := db.Prepare(query)
-	if err != nil {
+	stmt, err := db.Prepare(query); if err != nil {
 		return factura, err
 	}
 	defer stmt.Close()
 
 	row := stmt.QueryRow(id)
-	err = row.Scan(&factura.Id_factura, &factura.Id_caja, &factura.Id_empleado, &factura.Fecha, &factura.Precio, &factura.ComentarioBaja, &factura.Comentario)
-	if err != nil {
+	err = row.Scan(&factura.Id_factura, &factura.Id_caja, &factura.Id_empleado, &factura.Fecha, &factura.Precio, &factura.ComentarioBaja, &factura.Comentario); if err != nil {
 		return factura, err
 	}
 
@@ -435,14 +402,12 @@ func UpdateComentario(factura *models.Factura) error {
 	db := getConnection()
 	defer db.Close()
 
-	stmt, err := db.Prepare(query)
-	if err != nil {
+	stmt, err := db.Prepare(query); if err != nil {
 		return err
 	}
 	defer stmt.Close()
 
-	row, err := stmt.Exec(factura.ComentarioBaja, factura.Id_factura)
-	if err != nil {
+	row, err := stmt.Exec(factura.ComentarioBaja, factura.Id_factura); if err != nil {
 		return err
 	}
 
@@ -458,33 +423,29 @@ func GetFacturasEliminadas() ([]models.Factura, error) {
 
 	var facturas []models.Factura
 	query := "SELECT g.id_factura, id_caja, id_empleado, fecha, precio, comentarioBaja, descuento, formaDePago, comentario FROM otros o RIGHT JOIN" +
-		"(SELECT f.id_factura, id_caja, id_empleado, fecha, precio, comentarioBaja, descuento, formaDePago FROM cliente c RIGHT JOIN " +
-		"(SELECT * FROM factura WHERE comentarioBaja  NOT LIKE '') f ON c.id_factura = f.id_factura) g " +
-		"ON o.id_factura = g.id_factura"
+		     "(SELECT f.id_factura, id_caja, id_empleado, fecha, precio, comentarioBaja, descuento, formaDePago FROM cliente c RIGHT JOIN " +
+		     "(SELECT * FROM factura WHERE comentarioBaja  NOT LIKE '') f ON c.id_factura = f.id_factura) g " +
+		     "ON o.id_factura = g.id_factura"
 
 	db := getConnection()
 	defer db.Close()
 
-	stmt, err := db.Prepare(query)
-	if err != nil {
+	stmt, err := db.Prepare(query); if err != nil {
 		return facturas, err
 	}
 	defer stmt.Close()
 
-	rows, err := db.Query(query)
-	if err != nil {
+	rows, err := db.Query(query); if err != nil {
 		return facturas, err
 	}
 
 	for rows.Next() {
 		var row models.Factura
-		err := rows.Scan(&row.Id_factura, &row.Id_caja, &row.Id_empleado, &row.Fecha, &row.Precio, &row.ComentarioBaja, &row.Descuento, &row.FormaDePago, &row.Comentario)
-		if err != nil {
+		err := rows.Scan(&row.Id_factura, &row.Id_caja, &row.Id_empleado, &row.Fecha, &row.Precio, &row.ComentarioBaja, &row.Descuento, &row.FormaDePago, &row.Comentario); if err != nil {
 			return facturas, err
 		}
 
-		row.Renglones, err = GetAll(row.Id_factura)
-		if err != nil {
+		row.Renglones, err = GetAll(row.Id_factura); if err != nil {
 			return facturas, err
 		}
 
@@ -498,35 +459,31 @@ func GetFacturasEliminadas() ([]models.Factura, error) {
 func (dao FacturaImpl) GetLastFacturas(id int) ([]models.Factura, error) {
 
 	query := "SELECT g.id_factura, id_caja, id_empleado, fecha, precio, comentarioBaja, descuento, formaDePago, comentario FROM otros o RIGHT JOIN" +
-		"(SELECT f.id_factura, id_caja, id_empleado, fecha, precio, comentarioBaja, descuento, formaDePago FROM cliente c RIGHT JOIN " +
-		"(SELECT * FROM factura WHERE id_caja = $1 ORDER BY fecha DESC LIMIT 5) f ON c.id_factura = f.id_factura) g " +
-		"ON o.id_factura = g.id_factura"
+		     "(SELECT f.id_factura, id_caja, id_empleado, fecha, precio, comentarioBaja, descuento, formaDePago FROM cliente c RIGHT JOIN " +
+		     "(SELECT * FROM factura WHERE id_caja = $1 ORDER BY fecha DESC LIMIT 5) f ON c.id_factura = f.id_factura) g " +
+		     "ON o.id_factura = g.id_factura"
 
 	db := getConnection()
 	defer db.Close()
 
 	var facturas []models.Factura
-	stmt, err := db.Prepare(query)
-	if err != nil {
+	stmt, err := db.Prepare(query); if err != nil {
 		return facturas, err
 	}
 	defer stmt.Close()
 
-	rows, err := stmt.Query(id)
-	if err != nil {
+	rows, err := stmt.Query(id); if err != nil {
 		return facturas, err
 	}
 
 	for rows.Next() {
 		var factura models.Factura
 
-		err = rows.Scan(&factura.Id_factura, &factura.Id_caja, &factura.Id_empleado, &factura.Fecha, &factura.Precio, &factura.ComentarioBaja, &factura.Descuento, &factura.FormaDePago, &factura.Comentario)
-		if err != nil {
+		err = rows.Scan(&factura.Id_factura, &factura.Id_caja, &factura.Id_empleado, &factura.Fecha, &factura.Precio, &factura.ComentarioBaja, &factura.Descuento, &factura.FormaDePago, &factura.Comentario); if err != nil {
 			return facturas, err
 		}
 
-		factura.Renglones, err = GetAll(factura.Id_factura)
-		if err != nil {
+		factura.Renglones, err = GetAll(factura.Id_factura); if err != nil {
 			return facturas, err
 		}
 
@@ -573,24 +530,22 @@ func (dao FacturaImpl) GetIngresos(id int, formaDePago int) (float64, error) {
 func Get_ingresos(id int, formaDePago int) (float64, error) {
 
 	query := "SELECT COALESCE(SUM(precio), 0) FROM " +
-		"(SELECT formadepago, precio FROM cliente c INNER JOIN (SELECT id_factura, precio FROM factura WHERE id_caja = $1 AND comentarioBaja SIMILAR TO '') f ON " +
-		"c.id_factura = f.id_factura) f " +
-		"WHERE f.formadepago = $2"
+		     "(SELECT formadepago, precio FROM cliente c INNER JOIN (SELECT id_factura, precio FROM factura WHERE id_caja = $1 AND comentarioBaja SIMILAR TO '') f ON " +
+		     "c.id_factura = f.id_factura) f " +
+		     "WHERE f.formadepago = $2"
 
 	db := getConnection()
 	defer db.Close()
 
 	var total float64
 
-	stmt, err := db.Prepare(query)
-	if err != nil {
+	stmt, err := db.Prepare(query); if err != nil {
 		return total, err
 	}
 	defer stmt.Close()
 
 	row := stmt.QueryRow(id, formaDePago)
-	err = row.Scan(&total)
-	if err != nil {
+	err = row.Scan(&total); if err != nil {
 		return total, err
 	}
 
@@ -600,22 +555,20 @@ func Get_ingresos(id int, formaDePago int) (float64, error) {
 func GetTotalRetiros(id int) (float64, error) {
 
 	query := "SELECT COALESCE(SUM(precio), 0) FROM factura WHERE id_caja = $1 AND comentarioBaja SIMILAR TO '' " +
-		"AND id_factura NOT IN (SELECT id_factura FROM otros) AND " +
-		"id_factura NOT IN (SELECT id_factura FROM cliente)"
+		     "AND id_factura NOT IN (SELECT id_factura FROM otros) AND " +
+		     "id_factura NOT IN (SELECT id_factura FROM cliente)"
 	db := getConnection()
 	defer db.Close()
 
 	var total float64
 
-	stmt, err := db.Prepare(query)
-	if err != nil {
+	stmt, err := db.Prepare(query); if err != nil {
 		return total, err
 	}
 	defer stmt.Close()
 
 	row := stmt.QueryRow(id)
-	err = row.Scan(&total)
-	if err != nil {
+	err = row.Scan(&total); if err != nil {
 		return total, err
 	}
 
@@ -625,22 +578,20 @@ func GetTotalRetiros(id int) (float64, error) {
 func GetTotalGastos(id int) (float64, error) {
 
 	query := "SELECT COALESCE(SUM(precio), 0) FROM otros o INNER JOIN " +
-		"(SELECT id_factura, precio FROM factura WHERE id_caja = $1  AND comentarioBaja SIMILAR TO '') f " +
-		"ON o.id_factura = f.id_factura"
+		     "(SELECT id_factura, precio FROM factura WHERE id_caja = $1  AND comentarioBaja SIMILAR TO '') f " +
+		     "ON o.id_factura = f.id_factura"
 	db := getConnection()
 	defer db.Close()
 
 	var total float64
 
-	stmt, err := db.Prepare(query)
-	if err != nil {
+	stmt, err := db.Prepare(query); if err != nil {
 		return total, err
 	}
 	defer stmt.Close()
 
 	row := stmt.QueryRow(id)
-	err = row.Scan(&total)
-	if err != nil {
+	err = row.Scan(&total); if err != nil {
 		return total, err
 	}
 
