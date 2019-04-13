@@ -78,6 +78,7 @@ func main() {
 	allowedOrigins := handlers.AllowedOrigins([]string{"*"})
 	allowedMethods := handlers.AllowedMethods([]string{"GET", "HEAD", "POST", "PUT", "DELETE", "OPTIONS"})
 
-	log.Print("Escuchando en 192.168.1.17:3000")
-	log.Fatal(http.ListenAndServe("192.168.1.17:3000", handlers.CORS(allowedHeaders, allowedOrigins, allowedMethods)(router)))
+	log.Print("Version 1.2")
+	log.Print("Escuchando en localhost:3000")
+	log.Fatal(http.ListenAndServe("localhost:3000", handlers.CORS(allowedHeaders, allowedOrigins, allowedMethods)(router)))
 }
