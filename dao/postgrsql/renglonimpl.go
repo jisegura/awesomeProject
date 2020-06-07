@@ -27,7 +27,10 @@ func InsertRenglones(renglones []models.Renglon, id int) error {
 //CREATE
 func create(renglon *models.Renglon) error {
 
-	query := "INSERT INTO renglon (id_producto, id_factura, cantidad, precio, descuento) VALUES ($1, $2, $3, $4, $5) RETURNING id_renglon"
+	query := "INSERT INTO renglon (id_producto, id_factura, cantidad, precio, descuento) " +
+		"VALUES ($1, $2, $3, $4, $5)" +
+		"RETURNING id_renglon"
+
 	db := getConnection()
 	defer db.Close()
 

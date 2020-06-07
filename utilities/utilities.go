@@ -7,6 +7,7 @@ import (
 )
 
 func GetConfiguration() (models.Configuration, error) {
+
 	config := models.Configuration{}
 	file, err := os.Open("./configuration.json")
 	if err != nil {

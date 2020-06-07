@@ -1,6 +1,7 @@
 package main
 
 import (
+	"awesomeProject/dao/postgrsql"
 	"awesomeProject/page"
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
@@ -12,33 +13,62 @@ func main() {
 
 	router := mux.NewRouter()
 
-	//EMPLEADO/////
+	//------------------------------------------------------------------------------------//
+	//------------------------RESET-------------------------------------------------------//
+	//------------------------------------------------------------------------------------//
+
+	//------------------------------------------------------------------------------------//
+	//------------------------BACKUP------------------------------------------------------//
+	//------------------------------------------------------------------------------------//
+	err := postgrsql.Backup()
+	if err != nil {
+		log.Print(err)
+	}
+	//------------------------------------------------------------------------------------//
+	//------------------------RESTORE-----------------------------------------------------//
+	//------------------------------------------------------------------------------------//
+	//	err = postgrsql.Restore()
+	//	if err !=nil {
+	//		log.Print(err)
+	//	}
+
+	//------------------------------------------------------------------------------------//
+	//------------------------EMPLEADO----------------------------------------------------//
+	//------------------------------------------------------------------------------------//
 	router.HandleFunc("/empleado/", page.InsertEmpleado).Methods("POST")
 	router.HandleFunc("/empleado/", page.UpdateEmpleado).Methods("PUT")
 	router.HandleFunc("/empleado/{id}", page.DeleteEmpleado).Methods("DELETE")
 	router.HandleFunc("/empleado/", page.GetEmpleados).Methods("GET")
 
-	//CATEGORIA/////
+	//------------------------------------------------------------------------------------//
+	//------------------------CATEGORIA---------------------------------------------------//
+	//------------------------------------------------------------------------------------//
 	router.HandleFunc("/categoria/", page.GetCategorias).Methods("GET")
 	router.HandleFunc("/categoria/{id}", page.GetCategoriaById).Methods("GET")
 	router.HandleFunc("/categoria/", page.InsertCategoria).Methods("POST")
 	router.HandleFunc("/categoria/{id}", page.DeleteCategoria).Methods("DELETE")
 	router.HandleFunc("/categoria/", page.UpdateCategoria).Methods("PUT")
 
-	//PRODUCTO/////
+	//------------------------------------------------------------------------------------//
+	//------------------------PRODUCTO----------------------------------------------------//
+	//------------------------------------------------------------------------------------//
 	router.HandleFunc("/producto/", page.GetProductos).Methods("GET")
 	router.HandleFunc("/producto/{id}", page.GetProductoById).Methods("GET")
 	router.HandleFunc("/producto/", page.InsertProducto).Methods("POST")
 	router.HandleFunc("/producto/{id}", page.DeleteProducto).Methods("DELETE")
 	router.HandleFunc("/producto/", page.UpdateProducto).Methods("PUT")
 
-	//CAJA/////
+	//------------------------------------------------------------------------------------//
+	//------------------------CAJA--------------------------------------------------------//
+	//------------------------------------------------------------------------------------//
 	router.HandleFunc("/caja/", page.InsertCaja).Methods("POST")
 	router.HandleFunc("/caja/", page.CerrarCaja).Methods("PUT")
 	router.HandleFunc("/caja/", page.GetCajas).Methods("GET")
 	router.HandleFunc("/caja/open/", page.GetCaja).Methods("GET")
 
-	//FACTURA/////
+	//------------------------------------------------------------------------------------//
+	//------------------------FACTURA-----------------------------------------------------//
+	//------------------------------------------------------------------------------------//
 	router.HandleFunc("/factura/retiros/", page.InsertFactura).Methods("POST")
 	router.HandleFunc("/factura/clientes/", page.InsertCliente).Methods("POST")
 	router.HandleFunc("/factura/otros/", page.InsertOtro).Methods("POST")
@@ -53,13 +83,22 @@ func main() {
 
 	router.HandleFunc("/factura/", page.UpdateFactura).Methods("PUT")
 
+	//------------------------------------------------------------------------------------//
+	//------------------------IMAGE-------------------------------------------------------//
+	//------------------------------------------------------------------------------------//
 	router.HandleFunc("/upload/", page.Upload).Methods("POST")
 	router.HandleFunc("/upload/", page.Download).Methods("GET")
 
+	//------------------------------------------------------------------------------------//
+	//------------------------REQUEST-----------------------------------------------------//
+	//------------------------------------------------------------------------------------//
 	allowedHeaders := handlers.AllowedHeaders([]string{"X-Requested-With", "Content-Type"})
 	allowedOrigins := handlers.AllowedOrigins([]string{"*"})
 	allowedMethods := handlers.AllowedMethods([]string{"GET", "HEAD", "POST", "PUT", "DELETE", "OPTIONS"})
 
-	log.Print("Escuchando en http://25.71.37.25:3000")
-	log.Fatal(http.ListenAndServe("25.71.37.25:3000", handlers.CORS(allowedHeaders, allowedOrigins, allowedMethods)(router)))
+	//------------------------------------------------------------------------------------//
+	//------------------------SERVER------------------------------------------------------//
+	//------------------------------------------------------------------------------------//
+	log.Print("Escuchando en http://localhost:3000")
+	log.Fatal(http.ListenAndServe("localhost:3000", handlers.CORS(allowedHeaders, allowedOrigins, allowedMethods)(router)))
 }
