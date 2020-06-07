@@ -10,7 +10,10 @@ type ProductoImpl struct{}
 //INSERT
 func (dao ProductoImpl) Create(producto *models.Producto) error {
 
-	query := "INSERT INTO producto (id_categoria, nombre, precio, imagen) VALUES ($1, $2, $3, $4) RETURNING id_producto"
+	query := "INSERT INTO producto (id_categoria, nombre, precio, imagen) " +
+		"VALUES ($1, $2, $3, $4) " +
+		"RETURNING id_producto"
+
 	db := getConnection()
 	defer db.Close()
 
@@ -108,7 +111,10 @@ func (dao ProductoImpl) Delete(id int) error {
 //UPDATE
 func (dao ProductoImpl) Update(producto *models.Producto) error {
 
-	query := "UPDATE producto SET id_categoria = $1, nombre = $2, precio = $3, imagen = $4 WHERE id_producto = $5"
+	query := "UPDATE producto " +
+		"SET id_categoria = $1, nombre = $2, precio = $3, imagen = $4 " +
+		"WHERE id_producto = $5"
+
 	db := getConnection()
 	defer db.Close()
 

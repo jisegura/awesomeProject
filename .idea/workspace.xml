@@ -2,12 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="82b569fb-848c-4ea9-bcaa-b4562bd687bf" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/dao/postgrsql/tableimpl.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/configuration.json" beforeDir="false" afterPath="$PROJECT_DIR$/configuration.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dao/postgrsql/connection.go" beforeDir="false" afterPath="$PROJECT_DIR$/dao/postgrsql/connection.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dao/postgrsql/empleadoimpl.go" beforeDir="false" afterPath="$PROJECT_DIR$/dao/postgrsql/empleadoimpl.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dao/postgrsql/facturaimpl.go" beforeDir="false" afterPath="$PROJECT_DIR$/dao/postgrsql/facturaimpl.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dao/postgrsql/productoimpl.go" beforeDir="false" afterPath="$PROJECT_DIR$/dao/postgrsql/productoimpl.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dao/postgrsql/renglonimpl.go" beforeDir="false" afterPath="$PROJECT_DIR$/dao/postgrsql/renglonimpl.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dao/postgrsql/tableimpl.go" beforeDir="false" afterPath="$PROJECT_DIR$/dao/postgrsql/tableimpl.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/utilities/utilities.go" beforeDir="false" afterPath="$PROJECT_DIR$/utilities/utilities.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -95,20 +95,22 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="go" value="3004" />
+          <entry key="go" value="3363" />
           <entry key="json" value="19" />
+          <entry key="txt" value="19" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Go" value="3004" />
+          <entry key="Go" value="3363" />
           <entry key="JSON" value="19" />
+          <entry key="PLAIN_TEXT" value="19" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="Backup" value="1" />
-          <entry key="go" value="34" />
+          <entry key="go" value="44" />
           <entry key="json" value="5" />
           <entry key="psql_configuration" value="1" />
           <entry key="s" value="1" />
@@ -117,7 +119,7 @@
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="Go" value="34" />
+          <entry key="Go" value="44" />
           <entry key="JSON" value="5" />
           <entry key="PLAIN_TEXT" value="1" />
           <entry key="TypeScript" value="1" />
@@ -139,11 +141,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.go">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="345">
-              <caret line="32" column="2" selection-start-line="32" selection-start-column="2" selection-end-line="32" selection-end-column="2" />
+              <caret line="32" selection-start-line="32" selection-end-line="32" />
             </state>
           </provider>
         </entry>
@@ -151,17 +153,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/dao/postgrsql/connection.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="319">
-              <caret line="54" column="5" lean-forward="true" selection-start-line="54" selection-start-column="5" selection-end-line="54" selection-end-column="5" />
+            <state relative-caret-position="30">
+              <caret line="35" lean-forward="true" selection-start-line="35" selection-end-line="35" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/dao/postgrsql/tableimpl.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="17" lean-forward="true" selection-start-column="17" selection-end-column="17" />
+            <state relative-caret-position="555">
+              <caret line="37" column="2" selection-start-line="37" selection-start-column="2" selection-end-line="37" selection-end-column="2" />
             </state>
           </provider>
         </entry>
@@ -216,10 +218,6 @@
         <option value="$PROJECT_DIR$/models/renglon.go" />
         <option value="$PROJECT_DIR$/models/factura.go" />
         <option value="$PROJECT_DIR$/dao/postgrsql/cajaimpl.go" />
-        <option value="$PROJECT_DIR$/dao/postgrsql/categoriaimpl.go" />
-        <option value="$PROJECT_DIR$/dao/postgrsql/empleadoimpl.go" />
-        <option value="$PROJECT_DIR$/dao/postgrsql/facturaimpl.go" />
-        <option value="$PROJECT_DIR$/dao/postgrsql/productoimpl.go" />
         <option value="$PROJECT_DIR$/page/categoria.go" />
         <option value="$PROJECT_DIR$/page/factura.go" />
         <option value="$PROJECT_DIR$/page/producto.go" />
@@ -233,8 +231,12 @@
         <option value="$PROJECT_DIR$/utilities/utilities.go" />
         <option value="$PROJECT_DIR$/main.go" />
         <option value="$PROJECT_DIR$/dao/postgrsql/connection.go" />
-        <option value="$PROJECT_DIR$/dao/postgrsql/tableimpl.go" />
+        <option value="$PROJECT_DIR$/dao/postgrsql/facturaimpl.go" />
+        <option value="$PROJECT_DIR$/dao/postgrsql/productoimpl.go" />
         <option value="$PROJECT_DIR$/dao/postgrsql/renglonimpl.go" />
+        <option value="$PROJECT_DIR$/dao/postgrsql/categoriaimpl.go" />
+        <option value="$PROJECT_DIR$/dao/postgrsql/empleadoimpl.go" />
+        <option value="$PROJECT_DIR$/dao/postgrsql/tableimpl.go" />
       </list>
     </option>
   </component>
@@ -444,7 +446,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="vcs" />
     <MESSAGE value="update del backend" />
-    <option name="LAST_COMMIT_MESSAGE" value="update del backend" />
+    <MESSAGE value="backup and restore" />
+    <option name="LAST_COMMIT_MESSAGE" value="backup and restore" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/page/goapp.go" />
@@ -515,13 +518,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/files/tiger.jpg">
       <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dao/postgrsql/productoimpl.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="7" lean-forward="true" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/page/categoria.go">
       <provider selected="true" editor-type-id="text-editor">
@@ -603,20 +599,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="32" column="2" selection-start-line="32" selection-start-column="2" selection-end-line="32" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dao/postgrsql/connection.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="319">
-          <caret line="54" column="5" lean-forward="true" selection-start-line="54" selection-start-column="5" selection-end-line="54" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/dao/factory/factory.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="360">
@@ -652,30 +634,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dao/postgrsql/categoriaimpl.go">
+    <entry file="file://$PROJECT_DIR$/dao/postgrsql/productoimpl.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1860">
-          <caret line="127" column="18" lean-forward="true" selection-start-line="127" selection-start-column="18" selection-end-line="127" selection-end-column="18" />
+        <state relative-caret-position="1755">
+          <caret line="120" column="34" lean-forward="true" selection-start-line="120" selection-start-column="34" selection-end-line="120" selection-end-column="34" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dao/postgrsql/empleadoimpl.go">
+    <entry file="file://$PROJECT_DIR$/dao/postgrsql/renglonimpl.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1785">
-          <caret line="122" column="18" lean-forward="true" selection-start-line="122" selection-start-column="18" selection-end-line="122" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dao/postgrsql/facturaimpl.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1050">
-          <caret line="2" column="7" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
+        <state relative-caret-position="94">
+          <caret line="31" column="13" selection-start-line="31" selection-start-column="13" selection-end-line="31" selection-end-column="13" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/dao/postgrsql/cajaimpl.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="780">
+        <state relative-caret-position="-1076">
           <caret line="64" column="19" selection-start-line="64" selection-start-column="19" selection-end-line="64" selection-end-column="19" />
           <folding>
             <element signature="e#19#88#0" expanded="true" />
@@ -683,17 +658,48 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dao/postgrsql/renglonimpl.go">
+    <entry file="file://$PROJECT_DIR$/dao/postgrsql/categoriaimpl.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="29" column="90" selection-start-line="29" selection-start-column="90" selection-end-line="29" selection-end-column="90" />
+        <state relative-caret-position="-1526">
+          <caret line="12" column="45" lean-forward="true" selection-start-line="12" selection-start-column="45" selection-end-line="12" selection-end-column="45" />
+          <folding>
+            <element signature="e#19#64#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dao/postgrsql/empleadoimpl.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="19">
+          <caret line="118" column="4" selection-start-line="118" selection-start-column="4" selection-end-line="118" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dao/postgrsql/facturaimpl.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="65">
+          <caret line="574" lean-forward="true" selection-start-line="574" selection-end-line="574" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/dao/postgrsql/tableimpl.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="17" lean-forward="true" selection-start-column="17" selection-end-column="17" />
+        <state relative-caret-position="555">
+          <caret line="37" column="2" selection-start-line="37" selection-start-column="2" selection-end-line="37" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dao/postgrsql/connection.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="35" lean-forward="true" selection-start-line="35" selection-end-line="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="32" selection-start-line="32" selection-end-line="32" />
         </state>
       </provider>
     </entry>

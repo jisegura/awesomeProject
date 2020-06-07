@@ -1,11 +1,12 @@
 package postgrsql
 
+/*
 func InitializeAll() error {
 
 	query := "SELECT table_name" +
-		"FROM information_schema.tables" +
-		"WHERE table_schema not in ('information_schema', 'pg_catalog')" +
-		"AND table_type = 'BASE TABLE'"
+			 "FROM information_schema.tables" +
+			 "WHERE table_schema not in ('information_schema', 'pg_catalog')" +
+			 "AND table_type = 'BASE TABLE'"
 
 	db := getConnection()
 	defer db.Close()
@@ -35,3 +36,4 @@ func InitilizeTable(table string) error {
 
 	return nil
 }
+*/

@@ -8,7 +8,9 @@ import (
 type EmpleadoImpl struct{}
 
 func (dao EmpleadoImpl) Create(empleado *models.Empleado) error {
+
 	query := "INSERT INTO empleado (firstname, lastname) VALUES ($1, $2) RETURNING id_empleado"
+
 	db := getConnection()
 	defer db.Close()
 
@@ -28,8 +30,11 @@ func (dao EmpleadoImpl) Create(empleado *models.Empleado) error {
 }
 
 func (dao EmpleadoImpl) GetAll() ([]models.Empleado, error) {
+
 	empleados := make([]models.Empleado, 0)
+
 	query := "SELECT * FROM empleado"
+
 	db := getConnection()
 	defer db.Close()
 
@@ -61,6 +66,7 @@ func (dao EmpleadoImpl) GetById(id int) (models.Empleado, error) {
 	var p models.Empleado
 
 	query := "SELECT * FROM empleado WHERE id_empleado = $1"
+
 	db := getConnection()
 	defer db.Close()
 
@@ -83,6 +89,7 @@ func (dao EmpleadoImpl) GetById(id int) (models.Empleado, error) {
 func (dao EmpleadoImpl) Delete(id int) error {
 
 	query := "DELETE FROM empleado WHERE id_empleado = $1"
+
 	db := getConnection()
 	defer db.Close()
 
@@ -109,6 +116,7 @@ func (dao EmpleadoImpl) Delete(id int) error {
 func (dao EmpleadoImpl) Update(empleado *models.Empleado) error {
 
 	query := "UPDATE empleado SET firstname = $1, lastname = $2 WHERE id_empleado= $3"
+
 	db := getConnection()
 	defer db.Close()
 

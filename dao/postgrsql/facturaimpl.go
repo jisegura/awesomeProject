@@ -107,9 +107,16 @@ func (dao FacturaImpl) GetFacturasById(id int) ([]int, error) {
 
 func (dao FacturaImpl) GetAllFacturasById(id int) ([]models.Factura, error) {
 
-	query := "SELECT g.id_factura, id_caja, id_empleado, fecha, precio, comentarioBaja, descuento, formaDePago, comentario FROM otros o RIGHT JOIN" +
-		"(SELECT f.id_factura, id_caja, id_empleado, fecha, precio, comentarioBaja, descuento, formaDePago FROM cliente c RIGHT JOIN " +
-		"(SELECT * FROM factura WHERE id_caja = $1 ORDER BY fecha DESC) f ON c.id_factura = f.id_factura) g " +
+	query := "SELECT g.id_factura, id_caja, id_empleado, fecha, precio, comentarioBaja, descuento, formaDePago, comentario " +
+		"FROM otros o " +
+		"RIGHT JOIN" +
+		"(SELECT f.id_factura, id_caja, id_empleado, fecha, precio, comentarioBaja, descuento, formaDePago " +
+		"FROM cliente c " +
+		"RIGHT JOIN " +
+		"(SELECT * " +
+		"FROM factura WHERE id_caja = $1 " +
+		"ORDER BY fecha DESC) f " +
+		"ON c.id_factura = f.id_factura) g " +
 		"ON o.id_factura = g.id_factura"
 
 	db := getConnection()
@@ -153,7 +160,10 @@ func (dao FacturaImpl) GetAllFacturasById(id int) ([]models.Factura, error) {
 //INSERT RETIRO
 func InsertFactura(factura *models.Factura) error {
 
-	query := "INSERT INTO factura (id_caja, id_empleado, fecha, precio, comentarioBaja) VALUES ($1, $2, $3, $4, $5) RETURNING id_factura"
+	query := "INSERT INTO factura (id_caja, id_empleado, fecha, precio, comentarioBaja) " +
+		"VALUES ($1, $2, $3, $4, $5) " +
+		"RETURNING id_factura"
+
 	db := getConnection()
 	defer db.Close()
 
@@ -177,8 +187,14 @@ func InsertFactura(factura *models.Factura) error {
 func InsertCliente(factura *models.Factura) (models.Factura, error) {
 
 	query := "WITH X AS" +
-		"(INSERT INTO factura (id_caja, id_empleado, fecha, precio, comentarioBaja) VALUES ($1, $2, $3, $4, $5) RETURNING id_factura)" +
-		"INSERT INTO cliente (id_factura, descuento, formaDePago) VALUES ((SELECT id_factura FROM X), $6, $7) RETURNING id_factura"
+
+		"(INSERT INTO factura (id_caja, id_empleado, fecha, precio, comentarioBaja) " +
+		"VALUES ($1, $2, $3, $4, $5) " +
+		"RETURNING id_factura)" +
+
+		"INSERT INTO cliente (id_factura, descuento, formaDePago) " +
+		"VALUES ((SELECT id_factura FROM X), $6, $7) " +
+		"RETURNING id_factura"
 
 	db := getConnection()
 	defer db.Close()
@@ -215,8 +231,14 @@ func InsertCliente(factura *models.Factura) (models.Factura, error) {
 func InsertOtros(factura *models.Factura) (models.Factura, error) {
 
 	query := "WITH X AS" +
-		"(INSERT INTO factura (id_caja, id_empleado, fecha, precio, comentarioBaja) VALUES ($1, $2, $3, $4, $5) RETURNING id_factura)" +
-		"INSERT INTO otros (id_factura, comentario) VALUES ((SELECT id_factura FROM X), $6) RETURNING id_factura"
+
+		"(INSERT INTO factura (id_caja, id_empleado, fecha, precio, comentarioBaja) " +
+		"VALUES ($1, $2, $3, $4, $5) " +
+		"RETURNING id_factura)" +
+
+		"INSERT INTO otros (id_factura, comentario) " +
+		"VALUES ((SELECT id_factura FROM X), $6) " +
+		"RETURNING id_factura"
 
 	db := getConnection()
 	defer db.Close()
@@ -284,7 +306,13 @@ func GetAllFacturas(id int) ([]models.Factura, error) {
 func GetAllClientes(id int) ([]models.Factura, error) {
 
 	facturas := make([]models.Factura, 0)
-	query := "SELECT c.id_factura, id_caja, id_empleado, fecha, precio, comentarioBaja, descuento, formaDePago FROM factura f INNER JOIN Cliente c ON f.id_factura = c.id_factura WHERE id_caja = $1"
+
+	query := "SELECT c.id_factura, id_caja, id_empleado, fecha, precio, comentarioBaja, descuento, formaDePago " +
+		"FROM factura f " +
+		"INNER JOIN Cliente c " +
+		"ON f.id_factura = c.id_factura " +
+		"WHERE id_caja = $1"
+
 	db := getConnection()
 	defer db.Close()
 
@@ -319,7 +347,13 @@ func GetAllClientes(id int) ([]models.Factura, error) {
 func GetAllOtros(id int) ([]models.Factura, error) {
 
 	facturas := make([]models.Factura, 0)
-	query := "SELECT o.id_factura, id_caja, id_empleado, fecha, precio, comentarioBaja, comentario FROM factura f INNER JOIN otros o ON f.id_factura = o.id_factura WHERE id_caja =$1"
+
+	query := "SELECT o.id_factura, id_caja, id_empleado, fecha, precio, comentarioBaja, comentario " +
+		"FROM factura f " +
+		"INNER JOIN otros o " +
+		"ON f.id_factura = o.id_factura " +
+		"WHERE id_caja =$1"
+
 	db := getConnection()
 	defer db.Close()
 
@@ -376,7 +410,12 @@ func GetClienteById(id int) (models.Factura, error) {
 
 	var factura models.Factura
 
-	query := "SELECT c.id_factura, id_caja, id_empleado, fecha, precio, comentarioBaja, descuento, formaDePago FROM Factura f INNER JOIN Cliente c ON f.id_factura = c.id_factura WHERE c.id_factura = $1"
+	query := "SELECT c.id_factura, id_caja, id_empleado, fecha, precio, comentarioBaja, descuento, formaDePago " +
+		"FROM Factura f " +
+		"INNER JOIN Cliente c " +
+		"ON f.id_factura = c.id_factura " +
+		"WHERE c.id_factura = $1"
+
 	db := getConnection()
 	defer db.Close()
 
@@ -405,7 +444,12 @@ func GetOtrosById(id int) (models.Factura, error) {
 
 	var factura models.Factura
 
-	query := "SELECT o.id_factura, id_caja, id_empleado, fecha, precio, comentarioBaja, comentario FROM factura f INNER JOIN otros o ON f.id_factura = o.id_factura WHERE o.id_factura = $1"
+	query := "SELECT o.id_factura, id_caja, id_empleado, fecha, precio, comentarioBaja, comentario " +
+		"FROM factura f " +
+		"INNER JOIN otros o " +
+		"ON f.id_factura = o.id_factura " +
+		"WHERE o.id_factura = $1"
+
 	db := getConnection()
 	defer db.Close()
 
@@ -453,9 +497,17 @@ func UpdateComentario(factura *models.Factura) error {
 func GetFacturasEliminadas() ([]models.Factura, error) {
 
 	var facturas []models.Factura
-	query := "SELECT g.id_factura, id_caja, id_empleado, fecha, precio, comentarioBaja, descuento, formaDePago, comentario FROM otros o RIGHT JOIN" +
-		"(SELECT f.id_factura, id_caja, id_empleado, fecha, precio, comentarioBaja, descuento, formaDePago FROM cliente c RIGHT JOIN " +
-		"(SELECT * FROM factura WHERE comentarioBaja  NOT LIKE '') f ON c.id_factura = f.id_factura) g " +
+	query := "SELECT g.id_factura, id_caja, id_empleado, fecha, precio, comentarioBaja, descuento, formaDePago, comentario " +
+		"FROM otros o " +
+		"RIGHT JOIN" +
+		"(SELECT f.id_factura, id_caja, id_empleado, fecha, precio, comentarioBaja, descuento, formaDePago " +
+		"FROM cliente c " +
+		"RIGHT JOIN " +
+		"(SELECT * " +
+		"FROM factura " +
+		"WHERE comentarioBaja  " +
+		"NOT LIKE '') f " +
+		"ON c.id_factura = f.id_factura) g " +
 		"ON o.id_factura = g.id_factura"
 
 	db := getConnection()
@@ -493,9 +545,17 @@ func GetFacturasEliminadas() ([]models.Factura, error) {
 
 func (dao FacturaImpl) GetLastFacturas(id int) ([]models.Factura, error) {
 
-	query := "SELECT g.id_factura, id_caja, id_empleado, fecha, precio, comentarioBaja, descuento, formaDePago, comentario FROM otros o RIGHT JOIN" +
-		"(SELECT f.id_factura, id_caja, id_empleado, fecha, precio, comentarioBaja, descuento, formaDePago FROM cliente c RIGHT JOIN " +
-		"(SELECT * FROM factura WHERE id_caja = $1  AND comentarioBaja LIKE '' ORDER BY fecha DESC LIMIT 5) f ON c.id_factura = f.id_factura) g " +
+	query := "SELECT g.id_factura, id_caja, id_empleado, fecha, precio, comentarioBaja, descuento, formaDePago, comentario " +
+		"FROM otros o " +
+		"RIGHT JOIN" +
+		"(SELECT f.id_factura, id_caja, id_empleado, fecha, precio, comentarioBaja, descuento, formaDePago " +
+		"FROM cliente c " +
+		"RIGHT JOIN " +
+		"(SELECT * " +
+		"FROM factura " +
+		"WHERE id_caja = $1  AND comentarioBaja LIKE '' " +
+		"ORDER BY fecha DESC LIMIT 5) f " +
+		"ON c.id_factura = f.id_factura) g " +
 		"ON o.id_factura = g.id_factura"
 
 	db := getConnection()
