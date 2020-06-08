@@ -103,3 +103,36 @@
 2019/04/12 23:12:06 Version 1.2
 2019/04/12 23:12:06 Escuchando en localhost:3000
 2019/04/12 23:12:06 listen tcp 127.0.0.1:3000: bind: address already in use
+2020/06/08 17:49:49 This is a test log entry
+2020/06/08 17:49:49 Version 1.2
+2020/06/08 17:49:49 Escuchando en localhost:3000
+2020/06/08 18:12:10 This is a test log entry
+2020/06/08 18:12:10 Version 1.2
+2020/06/08 18:12:10 Escuchando en localhost:3000
+2020/06/08 18:13:24 This is a test log entry
+2020/06/08 18:13:24 Version 1.2
+2020/06/08 18:13:24 Escuchando en localhost:3000
+2020/06/08 18:14:31 This is a test log entry
+2020/06/08 18:14:31 Version 1.2
+2020/06/08 18:14:31 Escuchando en localhost:3000
+2020/06/08 18:17:04 This is a test log entry
+2020/06/08 18:17:04 Version 1.2
+2020/06/08 18:17:04 Escuchando en localhost:3000
+2020/06/08 18:18:03 This is a test log entry
+2020/06/08 18:18:03 Version 1.2
+2020/06/08 18:18:03 Escuchando en localhost:3000
+2020/06/08 18:20:41 This is a test log entry
+2020/06/08 18:20:41 Version 1.2
+2020/06/08 18:20:41 Escuchando en localhost:3000
+2020/06/08 18:21:20 This is a test log entry
+2020/06/08 18:21:20 Version 1.2
+2020/06/08 18:21:20 Escuchando en localhost:3000
+2020/06/08 18:21:23 pq: la autentificación password falló para el usuario «postgres»
+2020/06/08 18:22:04 This is a test log entry
+2020/06/08 18:22:04 Version 1.2
+2020/06/08 18:22:04 Escuchando en localhost:3000
+2020/06/08 18:22:16 pq: la autentificación password falló para el usuario «postgres»
+2020/06/08 18:22:35 This is a test log entry
+2020/06/08 18:22:35 Version 1.2
+2020/06/08 18:22:35 Escuchando en localhost:3000
+2020/06/08 18:23:54 pq: la autentificación password falló para el usuario «postgres»

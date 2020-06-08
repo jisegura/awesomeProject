@@ -23,7 +23,23 @@ func main() {
 	log.SetOutput(io.MultiWriter(os.Stderr, f))
 	log.Println("This is a test log entry")
 
-	//EMPLEADO/////
+	//------------------------------------------------------------------------------------//
+	//------------------------DATA BASE INIT ---------------------------------------------//
+	//------------------------------------------------------------------------------------//
+	router.HandleFunc("/init/", page.Initilize).Methods("POST")
+	//------------------------------------------------------------------------------------//
+	//------------------------BACKUP------------------------------------------------------//
+	//------------------------------------------------------------------------------------//
+	router.HandleFunc("/backup/{pass}", page.Backup).Methods("GET")
+
+	//------------------------------------------------------------------------------------//
+	//------------------------RESTORE-----------------------------------------------------//
+	//------------------------------------------------------------------------------------//
+	router.HandleFunc("/restore/{pass}", page.Restore).Methods("GET")
+
+	//------------------------------------------------------------------------------------//
+	//------------------------EMPLEADO----------------------------------------------------//
+	//------------------------------------------------------------------------------------//
 	router.HandleFunc("/empleado/", page.InsertEmpleado).Methods("POST")
 	router.HandleFunc("/empleado/login/{id}", page.AddLogin).Methods("POST")
 	router.HandleFunc("/empleado/", page.UpdateEmpleado).Methods("PUT")
@@ -32,21 +48,27 @@ func main() {
 	router.HandleFunc("/empleado/", page.GetEmpleados).Methods("GET")
 	router.HandleFunc("/empleado/login/", page.Login).Methods("POST")
 
-	//CATEGORIA/////
+	//------------------------------------------------------------------------------------//
+	//------------------------CATEGORIA---------------------------------------------------//
+	//------------------------------------------------------------------------------------//
 	router.HandleFunc("/categoria/", page.GetCategorias).Methods("GET")
 	router.HandleFunc("/categoria/{id}", page.GetCategoriaById).Methods("GET")
 	router.HandleFunc("/categoria/", page.InsertCategoria).Methods("POST")
 	router.HandleFunc("/categoria/{id}", page.DeleteCategoria).Methods("DELETE")
 	router.HandleFunc("/categoria/", page.UpdateCategoria).Methods("PUT")
 
-	//PRODUCTO/////
+	//------------------------------------------------------------------------------------//
+	//------------------------PRODUCTO----------------------------------------------------//
+	//------------------------------------------------------------------------------------//
 	router.HandleFunc("/producto/", page.GetProductos).Methods("GET")
 	router.HandleFunc("/producto/{id}", page.GetProductoById).Methods("GET")
 	router.HandleFunc("/producto/", page.InsertProducto).Methods("POST")
 	router.HandleFunc("/producto/{id}", page.DeleteProducto).Methods("DELETE")
 	router.HandleFunc("/producto/", page.UpdateProducto).Methods("PUT")
 
-	//CAJA/////
+	//------------------------------------------------------------------------------------//
+	//------------------------CAJA--------------------------------------------------------//
+	//------------------------------------------------------------------------------------//
 	router.HandleFunc("/caja/", page.InsertCaja).Methods("POST")
 	router.HandleFunc("/caja/", page.CerrarCaja).Methods("PUT")
 	router.HandleFunc("/caja/", page.GetCajas).Methods("GET")
@@ -56,7 +78,9 @@ func main() {
 	router.HandleFunc("/caja/debito/{id}", page.GetIngresosDebito).Methods("GET")
 	router.HandleFunc("/caja/credito/{id}", page.GetIngresosCredito).Methods("GET")
 
-	//FACTURA/////
+	//------------------------------------------------------------------------------------//
+	//------------------------FACTURA-----------------------------------------------------//
+	//------------------------------------------------------------------------------------//
 	router.HandleFunc("/factura/retiros/", page.InsertFactura).Methods("POST")
 	router.HandleFunc("/factura/clientes/", page.InsertCliente).Methods("POST")
 	router.HandleFunc("/factura/otros/", page.InsertOtro).Methods("POST")
@@ -71,13 +95,22 @@ func main() {
 
 	router.HandleFunc("/factura/", page.UpdateFactura).Methods("PUT")
 
+	//------------------------------------------------------------------------------------//
+	//------------------------IMAGE-------------------------------------------------------//
+	//------------------------------------------------------------------------------------//
 	router.HandleFunc("/upload/", page.Upload).Methods("POST")
 	router.HandleFunc("/upload/", page.Download).Methods("GET")
 
+	//------------------------------------------------------------------------------------//
+	//------------------------REQUEST-----------------------------------------------------//
+	//------------------------------------------------------------------------------------//
 	allowedHeaders := handlers.AllowedHeaders([]string{"X-Requested-With", "Content-Type"})
 	allowedOrigins := handlers.AllowedOrigins([]string{"*"})
 	allowedMethods := handlers.AllowedMethods([]string{"GET", "HEAD", "POST", "PUT", "DELETE", "OPTIONS"})
 
+	//------------------------------------------------------------------------------------//
+	//------------------------SERVER------------------------------------------------------//
+	//------------------------------------------------------------------------------------//
 	log.Print("Version 1.2")
 	log.Print("Escuchando en localhost:3000")
 	log.Fatal(http.ListenAndServe("localhost:3000", handlers.CORS(allowedHeaders, allowedOrigins, allowedMethods)(router)))
