@@ -50,7 +50,9 @@ func create(renglon *models.Renglon) error {
 func GetAll(id int) ([]models.Renglon, error) {
 
 	renglones := make([]models.Renglon, 0)
+
 	query := "SELECT * FROM renglon WHERE id_factura = $1"
+
 	db := getConnection()
 	defer db.Close()
 
