@@ -170,63 +170,67 @@ func GetNombre(id int64) (string, error) {
 	return nombre, nil
 }
 
-func InsertActivo(id int) (bool, error) {
+//Returns if an employee is active, this is, does not have a discharge date
+func Is_Valid (id int) (bool, error) {
 
 	query := "SELECT fechaBaja FROM empleado WHERE id_empleado = $1"
 	db := getConnection()
 	defer db.Close()
 
-	var activo = false
 	var fechaBaja pq.NullTime
 
 	stmt, err := db.Prepare(query); if err != nil {
-		return activo, err
+		return false, err
 	}
 	defer stmt.Close()
 
 	row := stmt.QueryRow(id)
 	err = row.Scan(&fechaBaja); if err != nil {
-		return activo, err
+		return false, err
 	}
 
 	return !fechaBaja.Valid, nil
 }
 
-func Activo(id int) (bool, error) {
+//Returns if an employee already has a user
+func Has_User (id int) (bool, error) {
 
-	query := "SELECT fechaBaja FROM Login l INNER JOIN Empleado e ON l.id_login = e.id_login " +
-		"WHERE l.id_login = $1"
+	var id_login sql.NullInt64
+
+	query := "SELECT id_login from Empleado WHERE id_empleado = $1"
 	db := getConnection()
 	defer db.Close()
 
-	var activo = false
-	var fechaBaja pq.NullTime
-
 	stmt, err := db.Prepare(query); if err != nil {
-		return activo, err
+		return false, err
 	}
 	defer stmt.Close()
 
 	row := stmt.QueryRow(id)
-	err = row.Scan(&fechaBaja); if err != nil {
-		return activo, err
+	err = row.Scan(&id_login); if err != nil {
+		if err == sql.ErrNoRows {
+			return false, nil
+		}
+		return false, err
 	}
 
-	return !fechaBaja.Valid, nil
+	return true, nil
 }
 
-func UpdateLogin(id_empleado int, id_login int) error {
+func Set_Id_Login(id_empleado int, id_login int) error {
 
 	query := "UPDATE empleado SET id_login = $1 WHERE id_empleado = $2"
 	db := getConnection()
 	defer db.Close()
 
-	stmt, err := db.Prepare(query); if err != nil {
+	stmt, err := db.Prepare(query);
+	if err != nil {
 		return err
 	}
 	defer stmt.Close()
 
-	row, err := stmt.Exec(id_login, id_empleado); if err != nil {
+	row, err := stmt.Exec(id_login, id_empleado);
+	if err != nil {
 		return err
 	}
 
@@ -236,36 +240,4 @@ func UpdateLogin(id_empleado int, id_login int) error {
 	}
 
 	return nil
-}
-
-func existeUsuario(nombre string) (bool, error) {
-
-	query := "SELECT id_login FROM Login WHERE usuario SIMILAR TO $1"
-	db := getConnection()
-	defer db.Close()
-
-	var existe = false
-	var id_login sql.NullInt64
-
-	stmt, err := db.Prepare(query); if err != nil {
-		return existe, err
-	}
-	defer stmt.Close()
-
-	row := stmt.QueryRow(nombre)
-	err = row.Scan(&id_login); if err != nil {
-		return existe, errors.New("Error, usuario incorrecto")
-	}
-
-	return id_login.Valid, nil
-}
-
-func (dao EmpleadoImpl) AddLogin(login models.Login, id int) error {
-
-	return AddLogin(login, id)
-}
-
-func (dao EmpleadoImpl) Login(login models.Login) (bool, error) {
-
-	return Login(login)
 }

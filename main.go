@@ -41,12 +41,17 @@ func main() {
 	//------------------------EMPLEADO----------------------------------------------------//
 	//------------------------------------------------------------------------------------//
 	router.HandleFunc("/empleado/", page.InsertEmpleado).Methods("POST")
-	router.HandleFunc("/empleado/login/{id}", page.AddLogin).Methods("POST")
 	router.HandleFunc("/empleado/", page.UpdateEmpleado).Methods("PUT")
-	router.HandleFunc("/empleado/baja/", page.UpdateBaja).Methods("PUT")
+	router.HandleFunc("/empleado/baja/{id}", page.UpdateBaja).Methods("PUT")
 	router.HandleFunc("/empleado/{id}", page.UpdateBaja).Methods("DELETE")
 	router.HandleFunc("/empleado/", page.GetEmpleados).Methods("GET")
-	router.HandleFunc("/empleado/login/", page.Login).Methods("POST")
+
+	//------------------------------------------------------------------------------------//
+	//------------------------USER--------------------------------------------------------//
+	//------------------------------------------------------------------------------------//
+	router.HandleFunc("/user/{id}", page.AddUser).Methods("POST")
+	router.HandleFunc("/user/login/", page.Login).Methods("POST")
+	router.HandleFunc("/user/logout/{id}", page.Logout).Methods("PUT")
 
 	//------------------------------------------------------------------------------------//
 	//------------------------CATEGORIA---------------------------------------------------//

@@ -27,7 +27,7 @@ func InitializeAll() error {
 
 func InitilizeTable(table string) error {
 
-	query := "TRUNCATE TABLE Empleado"
+	query := "TRUNCATE TABLE Empleado RESTART IDENTITY CASCADE"
 	db := getConnection()
 	defer db.Close()
 

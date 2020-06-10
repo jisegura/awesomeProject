@@ -136,3 +136,134 @@
 2020/06/08 18:22:35 Version 1.2
 2020/06/08 18:22:35 Escuchando en localhost:3000
 2020/06/08 18:23:54 pq: la autentificación password falló para el usuario «postgres»
+2020/06/08 19:01:00 This is a test log entry
+2020/06/08 19:01:00 Version 1.2
+2020/06/08 19:01:00 Escuchando en localhost:3000
+2020/06/08 19:02:05 pq: la autentificación password falló para el usuario «postgres»
+2020/06/08 19:02:23 This is a test log entry
+2020/06/08 19:02:23 Version 1.2
+2020/06/08 19:02:23 Escuchando en localhost:3000
+2020/06/08 19:07:00 pq: la autentificación password falló para el usuario «postgres»
+2020/06/08 19:07:05 This is a test log entry
+2020/06/08 19:07:05 Version 1.2
+2020/06/08 19:07:05 Escuchando en localhost:3000
+2020/06/08 19:07:42 pq: la autentificación password falló para el usuario «postgres»
+2020/06/08 19:09:04 This is a test log entry
+2020/06/08 19:09:04 Version 1.2
+2020/06/08 19:09:04 Escuchando en localhost:3000
+2020/06/08 19:09:10 Error: pq: no existe la columna «fechabaja»
+2020/06/08 19:28:11 Error: sql: no rows in result set
+2020/06/08 19:28:27 Error: sql: no rows in result set
+2020/06/08 20:02:02 This is a test log entry
+2020/06/08 20:02:02 Version 1.2
+2020/06/08 20:02:02 Escuchando en localhost:3000
+2020/06/09 18:28:58 This is a test log entry
+2020/06/09 18:28:59 Version 1.2
+2020/06/09 18:28:59 Escuchando en localhost:3000
+2020/06/09 18:29:53 This is a test log entry
+2020/06/09 18:29:53 Version 1.2
+2020/06/09 18:29:53 Escuchando en localhost:3000
+2020/06/09 19:02:04 Error: Error, se esperaba una fila afectada
+2020/06/09 19:03:01 This is a test log entry
+2020/06/09 19:03:01 Version 1.2
+2020/06/09 19:03:01 Escuchando en localhost:3000
+2020/06/09 19:04:12 Error: exit status 1
+2020/06/09 19:04:38 Error: exit status 1
+2020/06/09 19:07:36 This is a test log entry
+2020/06/09 19:07:36 Version 1.2
+2020/06/09 19:07:36 Escuchando en localhost:3000
+2020/06/09 19:46:17 This is a test log entry
+2020/06/09 19:46:17 Version 1.2
+2020/06/09 19:46:17 Escuchando en localhost:3000
+2020/06/09 19:50:43 This is a test log entry
+2020/06/09 19:50:43 Version 1.2
+2020/06/09 19:50:43 Escuchando en localhost:3000
+2020/06/10 14:27:45 This is a test log entry
+2020/06/10 14:27:45 Version 1.2
+2020/06/10 14:27:45 Escuchando en localhost:3000
+2020/06/10 14:27:51 Error: Error, el usuario pertenece a un empleado dado de baja
+2020/06/10 14:29:07 Error: pq: no existe la columna «empleado»
+2020/06/10 14:45:36 Error: pq: no existe la columna «empleado»
+2020/06/10 14:58:17 This is a test log entry
+2020/06/10 14:58:17 Version 1.2
+2020/06/10 14:58:17 Escuchando en localhost:3000
+2020/06/10 14:58:25 Error: sql: no rows in result set
+2020/06/10 15:01:48 This is a test log entry
+2020/06/10 15:01:48 Version 1.2
+2020/06/10 15:01:48 Escuchando en localhost:3000
+2020/06/10 15:01:51 Error: Error, el empleado ya tiene usuario registrado
+2020/06/10 15:04:33 This is a test log entry
+2020/06/10 15:04:33 Version 1.2
+2020/06/10 15:04:33 Escuchando en localhost:3000
+2020/06/10 15:07:45 This is a test log entry
+2020/06/10 15:07:45 Version 1.2
+2020/06/10 15:07:45 Escuchando en localhost:3000
+2020/06/10 15:07:52 Error: Error, usario inválido
+2020/06/10 15:44:30 This is a test log entry
+2020/06/10 15:44:30 Version 1.2
+2020/06/10 15:44:30 Escuchando en localhost:3000
+2020/06/10 15:44:34 Error: Error, el empleado ya tiene usuario registrado
+2020/06/10 15:46:14 Error: Error, el empleado ya tiene usuario registrado
+2020/06/10 15:54:09 This is a test log entry
+2020/06/10 15:54:09 Version 1.2
+2020/06/10 15:54:09 Escuchando en localhost:3000
+2020/06/10 15:54:15 Error: sql: Scan error on column index 0: converting driver.Value type <nil> ("<nil>") to a int: invalid syntax
+2020/06/10 15:59:55 This is a test log entry
+2020/06/10 15:59:55 Version 1.2
+2020/06/10 15:59:55 Escuchando en localhost:3000
+2020/06/10 16:00:26 Error: Error, el empleado ya tiene usuario registrado
+2020/06/10 16:02:17 Error: Error, el usuario pertenece a un empleado dado de baja
+2020/06/10 16:33:04 This is a test log entry
+2020/06/10 16:33:04 Version 1.2
+2020/06/10 16:33:04 Escuchando en localhost:3000
+2020/06/10 16:33:25 Error: pq: no existe la columna «usuario»
+2020/06/10 16:37:19 Error: pq: no existe la columna «usuario»
+2020/06/10 16:50:40 This is a test log entry
+2020/06/10 16:50:40 Version 1.2
+2020/06/10 16:50:40 Escuchando en localhost:3000
+2020/06/10 16:50:45 Error: sql: no rows in result set
+2020/06/10 17:00:50 This is a test log entry
+2020/06/10 17:00:50 Version 1.2
+2020/06/10 17:00:50 Escuchando en localhost:3000
+2020/06/10 17:00:59 Error: Error, el usuario no existe
+2020/06/10 17:02:21 This is a test log entry
+2020/06/10 17:02:21 Version 1.2
+2020/06/10 17:02:21 Escuchando en localhost:3000
+2020/06/10 17:02:23 Error: Error, el usuario no existe
+2020/06/10 17:09:25 This is a test log entry
+2020/06/10 17:09:25 Version 1.2
+2020/06/10 17:09:25 Escuchando en localhost:3000
+2020/06/10 17:09:29 Error: Error, el usuario no existe
+2020/06/10 17:16:14 Error: Error, el empleado ya tiene usuario registrado
+2020/06/10 17:16:32 Error: Error, el usuario no existe
+2020/06/10 17:16:57 Error: Error, el usuario no existe
+2020/06/10 17:17:12 Error: sql: no rows in result set
+2020/06/10 17:35:29 This is a test log entry
+2020/06/10 17:35:29 Version 1.2
+2020/06/10 17:35:29 Escuchando en localhost:3000
+2020/06/10 17:35:32 Error: sql: expected 0 arguments, got 1
+2020/06/10 17:36:32 This is a test log entry
+2020/06/10 17:36:32 Version 1.2
+2020/06/10 17:36:32 Escuchando en localhost:3000
+2020/06/10 17:36:35 Error: sql: no rows in result set
+2020/06/10 17:37:31 This is a test log entry
+2020/06/10 17:37:31 Version 1.2
+2020/06/10 17:37:31 Escuchando en localhost:3000
+2020/06/10 17:37:33 Error: aca
+2020/06/10 17:41:25 This is a test log entry
+2020/06/10 17:41:25 Version 1.2
+2020/06/10 17:41:25 Escuchando en localhost:3000
+2020/06/10 17:41:27 Id_login: 0Active:false
+2020/06/10 17:41:27 Error: sql: no rows in result set
+2020/06/10 17:42:23 This is a test log entry
+2020/06/10 17:42:23 Version 1.2
+2020/06/10 17:42:23 Escuchando en localhost:3000
+2020/06/10 17:42:26 Error: pq: no existe la columna «password»
+2020/06/10 17:44:12 This is a test log entry
+2020/06/10 17:44:12 Version 1.2
+2020/06/10 17:44:12 Escuchando en localhost:3000
+2020/06/10 17:44:17 Error: Error, contraseña incorrecta
+2020/06/10 17:50:12 This is a test log entry
+2020/06/10 17:50:12 Version 1.2
+2020/06/10 17:50:12 Escuchando en localhost:3000
+2020/06/10 17:50:39 Error: Error, se esperaba una fila afectada
