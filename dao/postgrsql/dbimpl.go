@@ -25,46 +25,41 @@ func InitializeAll() error {
 	return nil
 }*/
 
+// Initialize a table
 func InitilizeTable(table string) error {
 
 	query := "TRUNCATE TABLE Empleado RESTART IDENTITY CASCADE"
 	db := getConnection()
 	defer db.Close()
 
-	stmt, err := db.Prepare(query)
-	if err != nil {
-		return err
-	}
+	stmt, err := db.Prepare(query); if err != nil {return err}
 	defer stmt.Close()
 
-	_, err = stmt.Exec()
-	if err != nil {
-		return err
-	}
+	_, err = stmt.Exec(); if err != nil {return err}
 
 	return nil
 }
 
+//Backup
 func Backup(pass string) error {
 
 	cmd := exec.Command("pg_dump", "-h", "localhost", "-p", "5432", "-U", "postgres", "-W", "-F", "c", "-f", "/home/michelle/Backup.sql", "Iglu")
 	cmd.Stdin = strings.NewReader(pass)
-	err := cmd.Run()
-	if err != nil {
-		return err
-	}
+
+	err := cmd.Run(); if err != nil {return err}
+
 	return nil
 }
 
+//Restore
 func Restore(pass string) error {
 
 	InitilizeTable("empleado")
 
 	cmd := exec.Command("pg_restore", "-h", "localhost", "-p", "5432", "-a", "-U", "postgres", "-W", "-d", "Iglu", "-F", "c", "--no-data-for-failed-tables", "/home/michelle/Backup.sql")
 	cmd.Stdin = strings.NewReader(pass)
-	err := cmd.Run()
-	if err != nil {
-		return err
-	}
+
+	err := cmd.Run(); if err != nil {return err}
+
 	return nil
 }

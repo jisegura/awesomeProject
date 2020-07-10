@@ -267,3 +267,517 @@
 2020/06/10 17:50:12 Version 1.2
 2020/06/10 17:50:12 Escuchando en localhost:3000
 2020/06/10 17:50:39 Error: Error, se esperaba una fila afectada
+2020/06/12 19:47:28 This is a test log entry
+2020/06/12 19:47:28 Version 1.2
+2020/06/12 19:47:28 Escuchando en localhost:3000
+2020/06/12 20:02:05 This is a test log entry
+2020/06/12 20:02:05 Version 1.2
+2020/06/12 20:02:05 Escuchando en localhost:3000
+2020/06/12 20:02:05 listen tcp 127.0.0.1:3000: bind: address already in use
+2020/06/12 20:02:15 This is a test log entry
+2020/06/12 20:02:15 Version 1.2
+2020/06/12 20:02:15 Escuchando en localhost:3000
+2020/06/12 20:06:31 Error: pq: no existe la columna «contraseña» en la relación «persona»
+2020/06/12 20:06:57 This is a test log entry
+2020/06/12 20:06:57 Version 1.2
+2020/06/12 20:06:57 Escuchando en localhost:3000
+2020/06/12 20:07:08 Error: pq: INSERT tiene más columnas de destino que expresiones
+2020/06/12 21:35:39 This is a test log entry
+2020/06/12 21:35:39 Version 1.2
+2020/06/12 21:35:39 Escuchando en localhost:3000
+2020/06/12 21:47:41 This is a test log entry
+2020/06/12 21:47:41 Version 1.2
+2020/06/12 21:47:41 Escuchando en localhost:3000
+2020/06/12 21:51:10 This is a test log entry
+2020/06/12 21:51:10 Version 1.2
+2020/06/12 21:51:10 Escuchando en localhost:3000
+2020/06/12 21:51:12 Error: sql: expected 3 destination arguments in Scan, not 2
+2020/06/12 21:53:04 Error: sql: expected 3 destination arguments in Scan, not 2
+2020/06/12 21:53:58 This is a test log entry
+2020/06/12 21:53:58 Version 1.2
+2020/06/12 21:53:58 Escuchando en localhost:3000
+2020/06/12 21:54:01 Error: sql: no rows in result set
+2020/06/12 22:05:20 This is a test log entry
+2020/06/12 22:05:20 Version 1.2
+2020/06/12 22:05:20 Escuchando en localhost:3000
+2020/06/12 22:05:26 Error: sql: expected 3 destination arguments in Scan, not 2
+2020/06/12 22:10:32 This is a test log entry
+2020/06/12 22:10:32 Version 1.2
+2020/06/12 22:10:32 Escuchando en localhost:3000
+2020/06/12 22:10:35 Error: sql: expected 3 destination arguments in Scan, not 2
+2020/06/12 22:11:26 This is a test log entry
+2020/06/12 22:11:26 Version 1.2
+2020/06/12 22:11:26 Escuchando en localhost:3000
+2020/06/12 22:11:28 Error: sql: expected 3 destination arguments in Scan, not 2
+2020/06/12 22:11:51 This is a test log entry
+2020/06/12 22:11:51 Version 1.2
+2020/06/12 22:11:51 Escuchando en localhost:3000
+2020/06/12 22:11:53 Error: aca
+2020/06/12 22:14:47 This is a test log entry
+2020/06/12 22:14:47 Version 1.2
+2020/06/12 22:14:47 Escuchando en localhost:3000
+2020/06/12 22:14:51 Error: sql: expected 3 destination arguments in Scan, not 2
+2020/06/12 22:15:23 This is a test log entry
+2020/06/12 22:15:23 Version 1.2
+2020/06/12 22:15:23 Escuchando en localhost:3000
+2020/06/12 22:15:29 rol 6new 0
+2020/06/12 22:15:29 Error: sql: expected 3 destination arguments in Scan, not 2
+2020/06/12 22:17:00 This is a test log entry
+2020/06/12 22:17:00 Version 1.2
+2020/06/12 22:17:00 Escuchando en localhost:3000
+2020/06/12 22:17:03 Error: sql: expected 3 destination arguments in Scan, not 2
+2020/06/12 22:23:35 This is a test log entry
+2020/06/12 22:23:35 Version 1.2
+2020/06/12 22:23:35 Escuchando en localhost:3000
+2020/06/12 22:32:24 This is a test log entry
+2020/06/12 22:32:24 Version 1.2
+2020/06/12 22:32:24 Escuchando en localhost:3000
+2020/06/12 22:35:24 This is a test log entry
+2020/06/12 22:35:24 Version 1.2
+2020/06/12 22:35:24 Escuchando en localhost:3000
+2020/06/12 22:38:08 This is a test log entry
+2020/06/12 22:38:08 Version 1.2
+2020/06/12 22:38:08 Escuchando en localhost:3000
+2020/06/12 22:38:12 rol1 2
+2020/06/12 22:38:12 rol 2 2
+2020/06/12 22:38:48 This is a test log entry
+2020/06/12 22:38:48 Version 1.2
+2020/06/12 22:38:48 Escuchando en localhost:3000
+2020/06/12 22:38:53 rol 2 {3 empleado }
+2020/06/12 22:40:30 This is a test log entry
+2020/06/12 22:40:30 Version 1.2
+2020/06/12 22:40:30 Escuchando en localhost:3000
+2020/06/12 22:45:31 This is a test log entry
+2020/06/12 22:45:31 Version 1.2
+2020/06/12 22:45:31 Escuchando en localhost:3000
+2020/06/12 22:49:55 Error: pq: INSERT tiene más columnas de destino que expresiones
+2020/06/12 22:56:15 This is a test log entry
+2020/06/12 22:56:15 Version 1.2
+2020/06/12 22:56:15 Escuchando en localhost:3000
+2020/06/12 22:56:33 Error: pq: el valor null para la columna «id_rol» viola la restricción not null
+2020/06/12 22:58:32 Error: pq: el valor null para la columna «id_rol» viola la restricción not null
+2020/06/12 23:00:04 This is a test log entry
+2020/06/12 23:00:04 Version 1.2
+2020/06/12 23:00:04 Escuchando en localhost:3000
+2020/06/12 23:00:22 &{0 {0 false}      0001-01-01 00:00:00 +0000 UTC {0001-01-01 00:00:00 +0000 UTC false}  }
+2020/06/12 23:00:22 Error: pq: el valor null para la columna «id_rol» viola la restricción not null
+2020/06/12 23:10:46 This is a test log entry
+2020/06/12 23:10:46 Version 1.2
+2020/06/12 23:10:46 Escuchando en localhost:3000
+2020/06/12 23:10:51 {0 {0 false}      0001-01-01 00:00:00 +0000 UTC {0001-01-01 00:00:00 +0000 UTC false}  }
+2020/06/12 23:10:51 Error: pq: el valor null para la columna «id_rol» viola la restricción not null
+2020/06/12 23:11:26 This is a test log entry
+2020/06/12 23:11:26 Version 1.2
+2020/06/12 23:11:26 Escuchando en localhost:3000
+2020/06/12 23:11:31 {0 {0 false}      0001-01-01 00:00:00 +0000 UTC {0001-01-01 00:00:00 +0000 UTC false}  }
+2020/06/12 23:11:31 Error: pq: el valor null para la columna «id_rol» viola la restricción not null
+2020/06/12 23:13:39 This is a test log entry
+2020/06/12 23:13:39 Version 1.2
+2020/06/12 23:13:39 Escuchando en localhost:3000
+2020/06/12 23:13:43 {0 {0 false}      0001-01-01 00:00:00 +0000 UTC {0001-01-01 00:00:00 +0000 UTC false}  }
+2020/06/12 23:13:43 {0 {0 false}      0001-01-01 00:00:00 +0000 UTC {0001-01-01 00:00:00 +0000 UTC false}  }
+2020/06/12 23:13:43 Error: pq: el valor null para la columna «id_rol» viola la restricción not null
+2020/06/12 23:14:59 This is a test log entry
+2020/06/12 23:14:59 Version 1.2
+2020/06/12 23:14:59 Escuchando en localhost:3000
+2020/06/12 23:15:03 {0 false}
+2020/06/12 23:15:03 {0 {0 false}      0001-01-01 00:00:00 +0000 UTC {0001-01-01 00:00:00 +0000 UTC false}  }
+2020/06/12 23:15:03 Error: pq: el valor null para la columna «id_rol» viola la restricción not null
+2020/06/12 23:26:33 {0 false}
+2020/06/12 23:26:33 {0 {0 false}      0001-01-01 00:00:00 +0000 UTC {0001-01-01 00:00:00 +0000 UTC false}  }
+2020/06/12 23:26:33 Error: pq: el valor null para la columna «id_rol» viola la restricción not null
+2020/06/12 23:29:12 This is a test log entry
+2020/06/12 23:29:12 Version 1.2
+2020/06/12 23:29:12 Escuchando en localhost:3000
+2020/06/12 23:29:42 {0 false}
+2020/06/12 23:29:42 {0 {0 false}      0001-01-01 00:00:00 +0000 UTC {0001-01-01 00:00:00 +0000 UTC false}  }
+2020/06/12 23:29:42 Error: pq: el valor null para la columna «id_rol» viola la restricción not null
+2020/06/12 23:31:06 {0 false}
+2020/06/12 23:31:06 {0 {0 false}      0001-01-01 00:00:00 +0000 UTC {0001-01-01 00:00:00 +0000 UTC false}  }
+2020/06/12 23:31:06 Error: pq: el valor null para la columna «id_rol» viola la restricción not null
+2020/06/12 23:36:12 {0 false}
+2020/06/12 23:36:12 {0 {0 false}      0001-01-01 00:00:00 +0000 UTC {0001-01-01 00:00:00 +0000 UTC false}  }
+2020/06/12 23:36:12 Error: pq: el valor null para la columna «id_rol» viola la restricción not null
+2020/06/12 23:36:27 {0 false}
+2020/06/12 23:36:27 {0 {0 false}      0001-01-01 00:00:00 +0000 UTC {0001-01-01 00:00:00 +0000 UTC false}  }
+2020/06/12 23:36:27 Error: pq: el valor null para la columna «id_rol» viola la restricción not null
+2020/06/12 23:36:37 {0 false}
+2020/06/12 23:36:37 {0 {0 false}      0001-01-01 00:00:00 +0000 UTC {0001-01-01 00:00:00 +0000 UTC false}  }
+2020/06/12 23:36:37 Error: pq: el valor null para la columna «id_rol» viola la restricción not null
+2020/06/12 23:37:11 {0 false}
+2020/06/12 23:37:11 {0 {0 false} Michelle Regert 2983-569302 michelleregert@hotmail.com Alsina 541 0001-01-01 00:00:00 +0000 UTC {0001-01-01 00:00:00 +0000 UTC false}  }
+2020/06/12 23:37:11 Error: pq: el valor null para la columna «id_rol» viola la restricción not null
+2020/06/12 23:37:29 {0 false}
+2020/06/12 23:37:29 {0 {0 false}      0001-01-01 00:00:00 +0000 UTC {0001-01-01 00:00:00 +0000 UTC false}  }
+2020/06/12 23:37:29 Error: pq: el valor null para la columna «id_rol» viola la restricción not null
+2020/06/12 23:38:31 {0 false}
+2020/06/12 23:38:31 {0 {0 false}      0001-01-01 00:00:00 +0000 UTC {0001-01-01 00:00:00 +0000 UTC false}  }
+2020/06/12 23:38:31 Error: pq: el valor null para la columna «id_rol» viola la restricción not null
+2020/06/12 23:38:59 {0 false}
+2020/06/12 23:38:59 {0 {0 false}      0001-01-01 00:00:00 +0000 UTC {0001-01-01 00:00:00 +0000 UTC false}  }
+2020/06/12 23:38:59 Error: pq: el valor null para la columna «id_rol» viola la restricción not null
+2020/06/12 23:44:58 This is a test log entry
+2020/06/12 23:44:58 Version 1.2
+2020/06/12 23:44:58 Escuchando en localhost:3000
+2020/06/12 23:45:10 {0 false}
+2020/06/12 23:45:10 {0 {0 false}      0001-01-01 00:00:00 +0000 UTC {0001-01-01 00:00:00 +0000 UTC false}  }
+2020/06/12 23:45:11 Error: pq: el valor null para la columna «id_rol» viola la restricción not null
+2020/06/12 23:45:36 {0 false}
+2020/06/12 23:45:36 {0 {0 false}      0001-01-01 00:00:00 +0000 UTC {0001-01-01 00:00:00 +0000 UTC false}  }
+2020/06/12 23:45:36 Error: pq: el valor null para la columna «id_rol» viola la restricción not null
+2020/06/12 23:47:28 {0 false}
+2020/06/12 23:47:28 {0 {0 false}      0001-01-01 00:00:00 +0000 UTC {0001-01-01 00:00:00 +0000 UTC false}  }
+2020/06/12 23:47:28 Error: pq: el valor null para la columna «id_rol» viola la restricción not null
+2020/06/12 23:47:37 This is a test log entry
+2020/06/12 23:47:37 Version 1.2
+2020/06/12 23:47:37 Escuchando en localhost:3000
+2020/06/12 23:47:40 1
+2020/06/12 23:47:40 {0 1 Michelle Regert 2983-569302 michelleregert@hotmail.com Alsina 541 0001-01-01 00:00:00 +0000 UTC {0001-01-01 00:00:00 +0000 UTC false}  }
+2020/06/12 23:47:40 Error: sql: no rows in result set
+2020/06/13 00:01:39 This is a test log entry
+2020/06/13 00:01:39 Version 1.2
+2020/06/13 00:01:39 Escuchando en localhost:3000
+2020/06/13 00:01:44 Error: sql: no rows in result set
+2020/06/13 00:04:07 This is a test log entry
+2020/06/13 00:04:07 Version 1.2
+2020/06/13 00:04:07 Escuchando en localhost:3000
+2020/06/13 00:04:11 {0 1 Michelle Regert 2983-569302 michelleregert@hotmail.com Alsina 541 0001-01-01 00:00:00 +0000 UTC {0001-01-01 00:00:00 +0000 UTC false}  }
+2020/06/13 00:04:11 Error: sql: no rows in result set
+2020/06/13 00:06:08 This is a test log entry
+2020/06/13 00:06:08 Version 1.2
+2020/06/13 00:06:08 Escuchando en localhost:3000
+2020/06/13 00:06:10 {0 1 Michelle Regert 2983-569302 michelleregert@hotmail.com Alsina 541 0001-01-01 00:00:00 +0000 UTC {0001-01-01 00:00:00 +0000 UTC false}  }
+2020/06/13 00:06:10 Error: sql: no rows in result set
+2020/06/13 00:09:19 This is a test log entry
+2020/06/13 00:09:19 Version 1.2
+2020/06/13 00:09:19 Escuchando en localhost:3000
+2020/06/13 00:09:22 {1 1 Michelle Regert 2983-569302 michelleregert@hotmail.com Alsina 541 0001-01-01 00:00:00 +0000 UTC {0001-01-01 00:00:00 +0000 UTC false}  }
+2020/06/13 00:09:22 Error: sql: no rows in result set
+2020/06/13 00:11:34 This is a test log entry
+2020/06/13 00:11:34 Version 1.2
+2020/06/13 00:11:34 Escuchando en localhost:3000
+2020/06/13 00:15:06 Error: pq: inserción o actualización en la tabla «persona» viola la llave foránea «fk_rol»
+2020/06/13 00:20:28 This is a test log entry
+2020/06/13 00:20:28 Version 1.2
+2020/06/13 00:20:28 Escuchando en localhost:3000
+2020/06/13 00:25:46 This is a test log entry
+2020/06/13 00:25:46 Version 1.2
+2020/06/13 00:25:46 Escuchando en localhost:3000
+2020/06/13 00:28:00 This is a test log entry
+2020/06/13 00:28:00 Version 1.2
+2020/06/13 00:28:00 Escuchando en localhost:3000
+2020/06/13 00:28:06 This is a test log entry
+2020/06/13 00:28:06 Version 1.2
+2020/06/13 00:28:06 Escuchando en localhost:3000
+2020/06/13 00:34:21 Error: pq: no existe la columna «rol»
+2020/06/13 00:36:08 This is a test log entry
+2020/06/13 00:36:08 Version 1.2
+2020/06/13 00:36:08 Escuchando en localhost:3000
+2020/06/13 00:36:14 Error: pq: no existe la columna «id_role»
+2020/06/13 00:36:28 This is a test log entry
+2020/06/13 00:36:28 Version 1.2
+2020/06/13 00:36:28 Escuchando en localhost:3000
+2020/06/13 00:45:07 This is a test log entry
+2020/06/13 00:45:07 Version 1.2
+2020/06/13 00:45:07 Escuchando en localhost:3000
+2020/06/13 00:46:53 Error: sql: Scan error on column index 0: unsupported Scan, storing driver.Value type <nil> into type *string
+2020/06/13 00:48:57 This is a test log entry
+2020/06/13 00:48:57 Version 1.2
+2020/06/13 00:48:57 Escuchando en localhost:3000
+2020/06/13 00:49:03 This is a test log entry
+2020/06/13 00:49:03 Version 1.2
+2020/06/13 00:49:03 Escuchando en localhost:3000
+2020/06/13 00:56:22 This is a test log entry
+2020/06/13 00:56:22 Version 1.2
+2020/06/13 00:56:22 Escuchando en localhost:3000
+2020/06/13 20:19:54 This is a test log entry
+2020/06/13 20:19:54 Version 1.2
+2020/06/13 20:19:54 Escuchando en localhost:3000
+2020/06/13 20:22:39 This is a test log entry
+2020/06/13 20:22:39 Version 1.2
+2020/06/13 20:22:39 Escuchando en localhost:3000
+2020/06/13 20:23:45 Error: pq: el valor es demasiado largo para el tipo character varying(50)
+2020/06/13 20:24:24 This is a test log entry
+2020/06/13 20:24:24 Version 1.2
+2020/06/13 20:24:24 Escuchando en localhost:3000
+2020/06/13 20:24:49 Error: pq: el valor es demasiado largo para el tipo character varying(50)
+2020/06/13 20:26:32 This is a test log entry
+2020/06/13 20:26:32 Version 1.2
+2020/06/13 20:26:32 Escuchando en localhost:3000
+2020/06/13 20:26:35 aca
+2020/06/13 20:26:35 Error: pq: el valor es demasiado largo para el tipo character varying(50)
+2020/06/13 20:26:55 This is a test log entry
+2020/06/13 20:26:55 Version 1.2
+2020/06/13 20:26:55 Escuchando en localhost:3000
+2020/06/13 20:26:57 aca
+2020/06/13 20:26:57 Error: pq: el valor es demasiado largo para el tipo character varying(50)
+2020/06/13 20:29:14 This is a test log entry
+2020/06/13 20:29:14 Version 1.2
+2020/06/13 20:29:14 Escuchando en localhost:3000
+2020/06/13 20:29:19 aca5
+2020/06/13 20:29:19 Error: pq: el valor es demasiado largo para el tipo character varying(50)
+2020/06/13 20:30:09 This is a test log entry
+2020/06/13 20:30:09 Version 1.2
+2020/06/13 20:30:09 Escuchando en localhost:3000
+2020/06/13 20:30:11 acaI3Y8g
+2020/06/13 20:30:11 Error: pq: el valor es demasiado largo para el tipo character varying(50)
+2020/06/13 20:31:35 This is a test log entry
+2020/06/13 20:31:35 Version 1.2
+2020/06/13 20:31:35 Escuchando en localhost:3000
+2020/06/13 20:31:36 pass n32Qfl-BvUhash: JDJhJDEwJDZ4cWsxRnI3enFZeEMuMHREeFpiYXVlcHVaa2psTDlsOHMyeUw1eEFOVEtaZzlpa1VxQ0dl
+2020/06/13 20:31:36 Error: pq: el valor es demasiado largo para el tipo character varying(50)
+2020/06/13 20:32:27 This is a test log entry
+2020/06/13 20:32:27 Version 1.2
+2020/06/13 20:32:27 Escuchando en localhost:3000
+2020/06/13 20:32:28 llega:5ou7MoYghr
+2020/06/13 20:32:28 pass 5ou7MoYghrhash: JDJhJDEwJHNVZUpjblFuTG9GSWhTZy40R1NKZnVaa005RThlbVIuMVlyLjVsdmRvS1F6ZUZiLlpURHNt
+2020/06/13 20:32:28 Error: pq: el valor es demasiado largo para el tipo character varying(50)
+2020/06/13 20:34:29 This is a test log entry
+2020/06/13 20:34:29 Version 1.2
+2020/06/13 20:34:29 Escuchando en localhost:3000
+2020/06/13 20:34:31 llega:xzAT9e68bn
+2020/06/13 20:34:31 pass xzAT9e68bn  hash: JDJhJDEwJDlKbjh2UTljV0l4V3RpZjJrWS5xMWVqLlZSTVRIc0pnSFgyWHdTQXduWVJSYWsvaC80TFN1
+2020/06/13 20:34:31 llega:cocacola
+2020/06/13 20:34:31 otro: JDJhJDEwJER5VWFSQTFSbnlFYVM5dVhnV0dpYU9jczcwOFZXMkxFOXhzcS96SGc4c21OS3hrYkxZM3hx
+2020/06/13 20:34:31 Error: pq: el valor es demasiado largo para el tipo character varying(50)
+2020/06/13 20:45:50 llega:KFOufPeCyp
+2020/06/13 20:45:50 pass KFOufPeCyp  hash: JDJhJDEwJFU1N05qanNvc3JVZm1FQXAzWlYwWk9lMy43cXBScWttUTRUb1E3WE0uRnR3MlRFbDBFYzFH
+2020/06/13 20:45:50 llega:cocacola
+2020/06/13 20:45:50 otro: JDJhJDEwJHJERHlOSmRFRUp0UUJVL1FNSW9sbHVFdTZwLlpsdUxPanVkeFRXZENEREp1LjhtR1JheEl1
+2020/06/14 20:24:19 This is a test log entry
+2020/06/14 20:24:19 Version 1.2
+2020/06/14 20:24:19 Escuchando en localhost:3000
+2020/06/14 22:06:12 This is a test log entry
+2020/06/14 22:06:12 Version 1.2
+2020/06/14 22:06:12 Escuchando en localhost:3000
+2020/06/14 22:06:40 Error: sql: Scan error on column index 10: converting driver.Value type string ("cocacola") to a int64: invalid syntax
+2020/06/14 22:09:50 This is a test log entry
+2020/06/14 22:09:50 Version 1.2
+2020/06/14 22:09:50 Escuchando en localhost:3000
+2020/06/14 23:12:14 This is a test log entry
+2020/06/14 23:12:14 Version 1.2
+2020/06/14 23:12:14 Escuchando en localhost:3000
+2020/06/14 23:12:55 This is a test log entry
+2020/06/14 23:12:55 Version 1.2
+2020/06/14 23:12:55 Escuchando en localhost:3000
+2020/06/14 23:15:22 Error: pq: no existe la columna «cocacola» en la relación «persona»
+2020/06/14 23:25:51 This is a test log entry
+2020/06/14 23:25:51 Version 1.2
+2020/06/14 23:25:51 Escuchando en localhost:3000
+2020/06/14 23:25:57 Error: pq: no existe la columna «cocacola» en la relación «persona»
+2020/06/14 23:27:01 This is a test log entry
+2020/06/14 23:27:01 Version 1.2
+2020/06/14 23:27:01 Escuchando en localhost:3000
+2020/06/14 23:27:04 Error: pq: no existe la columna «cocacola» en la relación «persona»
+2020/06/14 23:27:27 This is a test log entry
+2020/06/14 23:27:27 Version 1.2
+2020/06/14 23:27:27 Escuchando en localhost:3000
+2020/06/14 23:27:32 Error: pq: no existe la columna «cocacola» en la relación «persona»
+2020/06/14 23:29:47 This is a test log entry
+2020/06/14 23:29:47 Version 1.2
+2020/06/14 23:29:47 Escuchando en localhost:3000
+2020/06/14 23:29:50 Error: pq: no existe la columna «cocacola» en la relación «persona»
+2020/06/14 23:32:16 This is a test log entry
+2020/06/14 23:32:16 Version 1.2
+2020/06/14 23:32:16 Escuchando en localhost:3000
+2020/06/14 23:32:29 user:Michelle pass: cocacola newPass: cocacola123
+2020/06/14 23:32:29 aca
+2020/06/14 23:32:29 id 1
+2020/06/14 23:32:29 Error: Error, contraseña incorrecta
+2020/06/14 23:36:40 Error: pq: no existe la columna «set» en la relación «persona»
+2020/06/14 23:38:23 Error: pq: no existe la columna «reset» en la relación «persona»
+2020/06/14 23:43:40 This is a test log entry
+2020/06/14 23:43:40 Version 1.2
+2020/06/14 23:43:40 Escuchando en localhost:3000
+2020/06/14 23:44:15 This is a test log entry
+2020/06/14 23:44:15 Version 1.2
+2020/06/14 23:44:15 Escuchando en localhost:3000
+2020/06/14 23:44:21 Error: pq: no existe la columna «reset» en la relación «persona»
+2020/06/14 23:44:35 This is a test log entry
+2020/06/14 23:44:35 Version 1.2
+2020/06/14 23:44:35 Escuchando en localhost:3000
+2020/06/14 23:48:55 Errorpq: error de sintaxis en o cerca de «SIMILAR»
+2020/06/14 23:48:55 http: multiple response.WriteHeader calls
+2020/06/14 23:48:55 Error: sql: Scan error on column index 0: unsupported Scan, storing driver.Value type <nil> into type *string
+2020/06/15 14:43:12 This is a test log entry
+2020/06/15 14:43:12 Version 1.2
+2020/06/15 14:43:12 Escuchando en localhost:3000
+2020/06/15 14:46:13 Errorpq: error de sintaxis en o cerca de «SIMILAR»
+2020/06/15 14:46:13 http: multiple response.WriteHeader calls
+2020/06/15 14:46:13 Error: sql: Scan error on column index 0: unsupported Scan, storing driver.Value type <nil> into type *string
+2020/06/15 14:52:17 This is a test log entry
+2020/06/15 14:52:17 Version 1.2
+2020/06/15 14:52:17 Escuchando en localhost:3000
+2020/06/15 14:52:17 listen tcp 127.0.0.1:3000: bind: address already in use
+2020/06/15 14:52:38 This is a test log entry
+2020/06/15 14:52:38 Version 1.2
+2020/06/15 14:52:38 Escuchando en localhost:3000
+2020/06/15 14:52:42 Errorpq: error de sintaxis en o cerca de «SIMILAR»
+2020/06/15 14:52:42 http: multiple response.WriteHeader calls
+2020/06/15 14:52:42 Error: sql: Scan error on column index 0: unsupported Scan, storing driver.Value type <nil> into type *string
+2020/06/15 14:56:37 This is a test log entry
+2020/06/15 14:56:37 Version 1.2
+2020/06/15 14:56:37 Escuchando en localhost:3000
+2020/06/15 14:56:39 Error: pq: error de sintaxis en o cerca de «SIMILAR»
+2020/06/15 14:56:39 http: multiple response.WriteHeader calls
+2020/06/15 14:56:39 Error: sql: Scan error on column index 0: unsupported Scan, storing driver.Value type <nil> into type *string
+2020/06/15 15:06:16 This is a test log entry
+2020/06/15 15:06:16 Version 1.2
+2020/06/15 15:06:16 Escuchando en localhost:3000
+2020/06/15 15:06:18 Error: pq: error de sintaxis en o cerca de «SIMILAR»
+2020/06/15 15:06:18 http: multiple response.WriteHeader calls
+2020/06/15 15:06:18 Error: sql: Scan error on column index 0: unsupported Scan, storing driver.Value type <nil> into type *string
+2020/06/15 15:07:09 This is a test log entry
+2020/06/15 15:07:09 Version 1.2
+2020/06/15 15:07:09 Escuchando en localhost:3000
+2020/06/15 15:07:11 stmt
+2020/06/15 15:07:11 Error: pq: error de sintaxis en o cerca de «SIMILAR»
+2020/06/15 15:07:11 http: multiple response.WriteHeader calls
+2020/06/15 15:07:11 Error: sql: Scan error on column index 0: unsupported Scan, storing driver.Value type <nil> into type *string
+2020/06/15 15:07:32 This is a test log entry
+2020/06/15 15:07:32 Version 1.2
+2020/06/15 15:07:32 Escuchando en localhost:3000
+2020/06/15 15:07:34 Error: pq: no existe la columna «contraseña»
+2020/06/15 15:07:34 http: multiple response.WriteHeader calls
+2020/06/15 15:07:34 Error: sql: Scan error on column index 0: unsupported Scan, storing driver.Value type <nil> into type *string
+2020/06/15 15:07:45 This is a test log entry
+2020/06/15 15:07:45 Version 1.2
+2020/06/15 15:07:45 Escuchando en localhost:3000
+2020/06/15 15:07:47 Scan:{ false}
+2020/06/15 15:07:47 Error: sql: Scan error on column index 0: destination not a pointer
+2020/06/15 15:07:47 http: multiple response.WriteHeader calls
+2020/06/15 15:07:47 Error: sql: Scan error on column index 0: unsupported Scan, storing driver.Value type <nil> into type *string
+2020/06/15 15:08:04 This is a test log entry
+2020/06/15 15:08:04 Version 1.2
+2020/06/15 15:08:04 Escuchando en localhost:3000
+2020/06/15 15:08:06 Error: sql: Scan error on column index 0: unsupported Scan, storing driver.Value type <nil> into type *string
+2020/06/15 15:09:48 This is a test log entry
+2020/06/15 15:09:48 Version 1.2
+2020/06/15 15:09:48 Escuchando en localhost:3000
+2020/06/15 15:09:50 Primer login: false
+2020/06/15 15:09:50 Error: sql: Scan error on column index 0: unsupported Scan, storing driver.Value type <nil> into type *string
+2020/06/15 15:10:27 This is a test log entry
+2020/06/15 15:10:27 Version 1.2
+2020/06/15 15:10:27 Escuchando en localhost:3000
+2020/06/15 18:57:52 This is a test log entry
+2020/06/15 18:57:52 Version 1.2
+2020/06/15 18:57:52 Escuchando en localhost:3000
+2020/06/15 18:57:58 http: multiple response.WriteHeader calls
+2020/06/15 18:57:58 Error: sql: Scan error on column index 0: unsupported Scan, storing driver.Value type <nil> into type *string
+2020/06/15 18:57:58 Error: pq: no existe la columna «pass»
+2020/06/15 18:58:41 This is a test log entry
+2020/06/15 18:58:41 Version 1.2
+2020/06/15 18:58:41 Escuchando en localhost:3000
+2020/06/15 18:58:43 Error: pq: no existe la columna «pass»
+2020/06/15 19:02:11 This is a test log entry
+2020/06/15 19:02:11 Version 1.2
+2020/06/15 19:02:11 Escuchando en localhost:3000
+2020/06/15 19:02:14 user: Michellepass: coca
+2020/06/15 19:02:14 firstlogin
+2020/06/15 19:02:14 Error: pq: no existe la columna «pass»
+2020/06/15 19:12:12 This is a test log entry
+2020/06/15 19:12:12 Version 1.2
+2020/06/15 19:12:12 Escuchando en localhost:3000
+2020/06/15 19:12:14 user: Michelle pass: coca
+2020/06/15 19:12:14 firstlogin
+2020/06/15 19:45:31 This is a test log entry
+2020/06/15 19:45:31 Version 1.2
+2020/06/15 19:45:31 Escuchando en localhost:3000
+2020/06/15 19:45:33 user: Michelle pass: coca
+2020/06/15 19:46:35 user: Michelle pass: ""
+2020/06/15 20:09:16 This is a test log entry
+2020/06/15 20:09:16 Version 1.2
+2020/06/15 20:09:16 Escuchando en localhost:3000
+2020/06/15 20:09:16 listen tcp 127.0.0.1:3000: bind: address already in use
+2020/06/15 20:09:32 user: Michelle pass: ""
+2020/06/15 20:14:32 This is a test log entry
+2020/06/15 20:14:32 Version 1.2
+2020/06/15 20:14:32 Escuchando en localhost:3000
+2020/06/15 20:17:48 Error: Error, contraseña incorrecta
+2020/06/15 20:18:00 Error: Error, contraseña incorrecta
+2020/06/15 20:42:37 This is a test log entry
+2020/06/15 20:42:37 Version 1.2
+2020/06/15 20:42:37 Escuchando en localhost:3000
+2020/06/15 20:45:42 This is a test log entry
+2020/06/15 20:45:42 Version 1.2
+2020/06/15 20:45:42 Escuchando en localhost:3000
+2020/06/15 20:48:54 This is a test log entry
+2020/06/15 20:48:54 Version 1.2
+2020/06/15 20:48:54 Escuchando en localhost:3000
+2020/06/15 21:10:42 This is a test log entry
+2020/06/15 21:10:42 Version 1.2
+2020/06/15 21:10:42 Escuchando en localhost:3000
+2020/06/15 21:10:42 listen tcp 127.0.0.1:3000: bind: address already in use
+2020/06/15 21:10:49 This is a test log entry
+2020/06/15 21:10:49 Version 1.2
+2020/06/15 21:10:49 Escuchando en localhost:3000
+2020/06/15 21:37:36 This is a test log entry
+2020/06/15 21:37:36 Version 1.2
+2020/06/15 21:37:36 Escuchando en localhost:3000
+2020/06/15 21:38:02 Error: sql: no rows in result set
+2020/06/15 21:40:11 This is a test log entry
+2020/06/15 21:40:11 Version 1.2
+2020/06/15 21:40:11 Escuchando en localhost:3000
+2020/06/15 21:57:10 This is a test log entry
+2020/06/15 21:57:10 Version 1.2
+2020/06/15 21:57:10 Escuchando en localhost:3000
+2020/06/15 21:57:11 listen tcp 127.0.0.1:3000: bind: address already in use
+2020/06/17 19:06:07 This is a test log entry
+2020/06/17 19:06:07 Version 1.2
+2020/06/17 19:06:07 Escuchando en localhost:3000
+2020/06/17 19:31:09 This is a test log entry
+2020/06/17 19:31:09 Version 1.2
+2020/06/17 19:31:09 Escuchando en localhost:3000
+2020/06/17 19:31:45 Error: exit status 2
+2020/06/17 19:32:58 Error: exit status 2
+2020/06/17 19:33:48 This is a test log entry
+2020/06/17 19:33:48 Version 1.2
+2020/06/17 19:33:48 Escuchando en localhost:3000
+2020/06/17 19:33:54 Error: aca
+2020/06/17 19:34:37 This is a test log entry
+2020/06/17 19:34:37 Version 1.2
+2020/06/17 19:34:37 Escuchando en localhost:3000
+2020/06/17 19:34:43 Error: sql: Transaction has already been committed or rolled back
+2020/06/17 19:37:01 This is a test log entry
+2020/06/17 19:37:01 Version 1.2
+2020/06/17 19:37:01 Escuchando en localhost:3000
+2020/06/17 19:37:08 Error: exit status 2
+2020/06/17 19:42:03 This is a test log entry
+2020/06/17 19:42:03 Version 1.2
+2020/06/17 19:42:03 Escuchando en localhost:3000
+2020/06/17 19:43:03 This is a test log entry
+2020/06/17 19:43:03 Version 1.2
+2020/06/17 19:43:03 Escuchando en localhost:3000
+2020/06/17 19:45:17 This is a test log entry
+2020/06/17 19:45:17 Version 1.2
+2020/06/17 19:45:17 Escuchando en localhost:3000
+2020/06/17 19:46:42 This is a test log entry
+2020/06/17 19:46:42 Version 1.2
+2020/06/17 19:46:42 Escuchando en localhost:3000
+2020/06/17 19:48:35 This is a test log entry
+2020/06/17 19:48:35 Version 1.2
+2020/06/17 19:48:35 Escuchando en localhost:3000
+2020/06/17 19:54:09 This is a test log entry
+2020/06/17 19:54:09 Version 1.2
+2020/06/17 19:54:09 Escuchando en localhost:3000
+2020/06/17 20:43:25 This is a test log entry
+2020/06/17 20:43:25 Version 1.2
+2020/06/17 20:43:25 Escuchando en localhost:3000
+2020/06/17 20:43:55 This is a test log entry
+2020/06/17 20:43:55 Version 1.2
+2020/06/17 20:43:55 Escuchando en localhost:3000
+2020/06/17 20:44:34 exit status 2
+2020/06/17 20:45:29 This is a test log entry
+2020/06/17 20:45:29 Version 1.2
+2020/06/17 20:45:29 Escuchando en localhost:3000
+2020/06/17 20:47:32 This is a test log entry
+2020/06/17 20:47:32 Version 1.2
+2020/06/17 20:47:32 Escuchando en localhost:3000
+2020/06/17 20:47:38 exit status 2
+2020/06/17 21:03:42 This is a test log entry
+2020/06/17 21:03:42 Version 1.2
+2020/06/17 21:03:42 Escuchando en localhost:3000
+2020/06/17 21:03:48 This is a test log entry
+2020/06/17 21:03:48 Version 1.2
+2020/06/17 21:03:48 Escuchando en localhost:3000
+2020/06/17 21:04:20 Error: pq: no existe la columna «role»

@@ -15,9 +15,7 @@ func main() {
 	router := mux.NewRouter()
 
 	f, err := os.OpenFile("testlogfile", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
-	if err != nil {
-		log.Print("Error")
-	}
+	if err != nil {log.Print("Error")}
 	defer f.Close()
 
 	log.SetOutput(io.MultiWriter(os.Stderr, f))
@@ -38,25 +36,49 @@ func main() {
 	router.HandleFunc("/restore/{pass}", page.Restore).Methods("GET")
 
 	//------------------------------------------------------------------------------------//
-	//------------------------EMPLEADO----------------------------------------------------//
+	//------------------------LOG---------------------------------------------------------//
 	//------------------------------------------------------------------------------------//
-	router.HandleFunc("/empleado/", page.InsertEmpleado).Methods("POST")
-	router.HandleFunc("/empleado/", page.UpdateEmpleado).Methods("PUT")
-	router.HandleFunc("/empleado/baja/{id}", page.UpdateBaja).Methods("PUT")
-	router.HandleFunc("/empleado/{id}", page.UpdateBaja).Methods("DELETE")
-	router.HandleFunc("/empleado/", page.GetEmpleados).Methods("GET")
 
+	//------------------------------------------------------------------------------------//
+	//------------------------ROLE---------------------------------------------------------//
+	//------------------------------------------------------------------------------------//
+	router.HandleFunc("/role/", page.Create_Role).Methods("POST")
+
+	router.HandleFunc("/role/{id}", page.Get_Role_By_Id).Methods("GET")
+	router.HandleFunc("/role/", page.Get_All_Roles).Methods("GET")
+	router.HandleFunc("/role/{id},{attrName}", page.Get_Role_Attr).Methods("GET")
+
+	router.HandleFunc("/role/{id},{attrName},{attr}", page.Update_Rol_Attr).Methods("PUT")
+
+	//------------------------------------------------------------------------------------//
+	//------------------------PERSONA-----------------------------------------------------//
+	//------------------------------------------------------------------------------------//
+	router.HandleFunc("/person/", page.Create_Person).Methods("POST")
+
+	router.HandleFunc("/person/", page.Get_People).Methods("GET")
+	router.HandleFunc("/person/{id}", page.Get_Person_By_Id).Methods("GET")
+	router.HandleFunc("/person/{attr}/{id}", page.Get_Attr).Methods("GET")
+	router.HandleFunc("/person/role/{id}", page.Get_Role).Methods("GET")
+
+	router.HandleFunc("/person/{id}", page.Delete_Person).Methods("DELETE")
+
+	router.HandleFunc("/person/update/{id}/{attrName}/{attr}", page.Update_Attr).Methods("PUT")
+	router.HandleFunc("/person/pass/change/{user}/{pass}/{newPass}", page.Change_Password).Methods("PUT")
+	router.HandleFunc("/person/pass/set/{user}/{pass}", page.Set_Password).Methods("PUT")
+	router.HandleFunc("/person/pass/reset/{user}", page.Reset_Password).Methods("PUT")
+	router.HandleFunc("/person/{id}", page.Unsubscribe).Methods("PUT")
 	//------------------------------------------------------------------------------------//
 	//------------------------USER--------------------------------------------------------//
 	//------------------------------------------------------------------------------------//
-	router.HandleFunc("/user/{id}", page.AddUser).Methods("POST")
-	router.HandleFunc("/user/login/", page.Login).Methods("POST")
-	router.HandleFunc("/user/logout/{id}", page.Logout).Methods("PUT")
+	router.HandleFunc("/user/login/{user}/{pass}", page.Login).Methods("POST")
+
+	router.HandleFunc("/user/", page.User_Is_Logged_In).Methods("GET")
+	router.HandleFunc("/user/logout/", page.Logout).Methods("PUT")
 
 	//------------------------------------------------------------------------------------//
 	//------------------------CATEGORIA---------------------------------------------------//
 	//------------------------------------------------------------------------------------//
-	router.HandleFunc("/categoria/", page.GetCategorias).Methods("GET")
+/*	router.HandleFunc("/categoria/", page.GetCategorias).Methods("GET")
 	router.HandleFunc("/categoria/{id}", page.GetCategoriaById).Methods("GET")
 	router.HandleFunc("/categoria/", page.InsertCategoria).Methods("POST")
 	router.HandleFunc("/categoria/{id}", page.DeleteCategoria).Methods("DELETE")
@@ -105,7 +127,7 @@ func main() {
 	//------------------------------------------------------------------------------------//
 	router.HandleFunc("/upload/", page.Upload).Methods("POST")
 	router.HandleFunc("/upload/", page.Download).Methods("GET")
-
+*/
 	//------------------------------------------------------------------------------------//
 	//------------------------REQUEST-----------------------------------------------------//
 	//------------------------------------------------------------------------------------//

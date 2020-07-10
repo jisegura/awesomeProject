@@ -1,15 +1,6 @@
 package page
 
-import (
-	"awesomeProject/dao/factory"
-	"awesomeProject/models"
-	"encoding/json"
-	"github.com/gorilla/mux"
-	"log"
-	"net/http"
-	"strconv"
-)
-
+/*
 //SELECT
 func GetCategorias(w http.ResponseWriter, req *http.Request) {
 
@@ -112,3 +103,4 @@ func UpdateCategoria(w http.ResponseWriter, req *http.Request) {
 
 	json.NewEncoder(w).Encode(&cat)
 }
+*/

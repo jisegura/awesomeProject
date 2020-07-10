@@ -1,15 +1,6 @@
 package page
 
-import (
-	"awesomeProject/dao/factory"
-	"awesomeProject/models"
-	"encoding/json"
-	"github.com/gorilla/mux"
-	"log"
-	"net/http"
-	"strconv"
-)
-
+/*
 //GET ID_FACTURA POR CAJA
 func GetAllIdFactura(w http.ResponseWriter, req *http.Request) {
 
@@ -211,3 +202,4 @@ func GetLastFacturas(w http.ResponseWriter, req *http.Request) {
 
 	json.NewEncoder(w).Encode(&facturas)
 }
+*/

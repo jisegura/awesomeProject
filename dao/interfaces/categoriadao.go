@@ -6,6 +6,6 @@ type CategoriaDAO interface {
 	Create(categoria *models.Categoria) error
 	Update(categoria *models.Categoria) error
 	Delete(id int) error
-	GetAll() ([]models.Categoria, error)
-	GetById(id int) (models.Categoria, error)
+	Get_All() ([]models.Categoria, error)
+	Get_By_Id(id int) (models.Categoria, error)
 }

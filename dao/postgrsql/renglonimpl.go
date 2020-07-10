@@ -45,6 +45,8 @@ func create(renglon *models.Renglon) error {
 func GetAll(id int) ([]models.Renglon, error) {
 
 	renglones := make([]models.Renglon, 0)
+	var row models.Renglon
+
 	query := "SELECT * FROM renglon WHERE id_factura = $1"
 	db := getConnection()
 	defer db.Close()
@@ -58,13 +60,12 @@ func GetAll(id int) ([]models.Renglon, error) {
 	}
 
 	for rows.Next() {
-		var row models.Renglon
-		err := rows.Scan(&row.Id_renglon, &row.Id_producto, &row.Id_factura, &row.Cantidad, &row.Precio, &row.Descuento); if err != nil {
-			return renglones, err
-		}
 
+		err := rows.Scan(&row.Id_renglon, &row.Id_producto, &row.Id_factura, &row.Cantidad, &row.Precio, &row.Descuento); if err != nil {return renglones, err}
 		renglones = append(renglones, row)
 	}
+
 	json.Marshal(renglones)
+
 	return renglones, nil
 }

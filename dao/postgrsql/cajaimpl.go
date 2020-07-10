@@ -9,168 +9,131 @@ import (
 
 type CajaImpl struct{}
 
-//INSERT
-func (dao CajaImpl) Create(caja *models.Caja) (models.Caja, error) {
+//Allows create a new cash box
+func (dao CajaImpl) Create (cashBox *models.Caja) (models.Caja, error) {
 
-	var newCaja models.Caja
+	var newCashBox models.Caja
 
-	cAbierta, err := GetCajaAbierta()
+	open, err := dao.Get_Cash_Box()
 
-	if cAbierta.Id_caja != 0 {
-		return cAbierta, nil
-	}
+	if open.Id_caja != 0 {return open, nil}
 
-	query := "INSERT INTO caja (inicio, fin, horaInicio, horaFin, cierreReal, cierreFiscal) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id_caja"
+	query := "INSERT INTO caja (inicio, fin, horaInicio, horaFin, cierreReal, cierreFiscal) " +
+			 "VALUES ($1, $2, $3, $4, $5, $6) " +
+			 "RETURNING id_caja"
+
 	db := getConnection()
 	defer db.Close()
 
-	stmt, err := db.Prepare(query); if err != nil {
-		return newCaja, err
-	}
+	stmt, err := db.Prepare(query); if err != nil {return newCashBox, err}
 	defer stmt.Close()
 
-	row := stmt.QueryRow(caja.Inicio, 0, time.Now(), time.Time{}, 0, 0)
-	err = row.Scan(&caja.Id_caja); if err != nil {
-		return newCaja, err
-	}
+	row := stmt.QueryRow(cashBox.Inicio, 0, time.Now(), time.Time{}, 0, 0)
+	err = row.Scan(&cashBox.Id_caja); if err != nil {return newCashBox, err}
 
-	newCaja, err = GetById(caja.Id_caja); if err != nil {
-		return newCaja, err
-	}
+	newCashBox, err = dao.Get_By_Id(cashBox.Id_caja); if err != nil {return newCashBox, err}
 
-	return newCaja, nil
+	return newCashBox, nil
 }
+//Return the open cash box
+func (dao CajaImpl) Get_Cash_Box() (models.Caja, error) {
 
-func (dao CajaImpl) GetCaja() (models.Caja, error) {
+	var cashBox models.Caja
 
-	return GetCajaAbierta()
-}
-
-func GetCajaAbierta() (models.Caja, error) {
-
-	var caja models.Caja
 	query := "SELECT * FROM caja WHERE fin = 0"
 	db := getConnection()
 	defer db.Close()
 
-	stmt, err := db.Prepare(query); if err != nil {
-		return caja, err
-	}
+	stmt, err := db.Prepare(query); if err != nil {return cashBox, err}
 	defer stmt.Close()
 
 	row := stmt.QueryRow()
-	err = row.Scan(&caja.Id_caja, &caja.Inicio, &caja.Fin, &caja.HoraInicio, &caja.HoraFin, &caja.CierreReal, &caja.CierreFiscal)
-	if err != nil && err != sql.ErrNoRows {
-		return caja, err
-	}
+	err = row.Scan(&cashBox.Id_caja, &cashBox.Inicio, &cashBox.Fin, &cashBox.HoraInicio, &cashBox.HoraFin, &cashBox.CierreReal, &cashBox.CierreFiscal)
+	if err != nil && err != sql.ErrNoRows {return cashBox, err}
 
-	return caja, nil
+	return cashBox, nil
 }
 
-func GetById(id int) (models.Caja, error) {
+//Returns a cash box given an id
+func (dao CajaImpl) Get_By_Id(id int) (models.Caja, error) {
 
-	var caja models.Caja
+	var cashBox models.Caja
 
 	query := "SELECT * FROM caja WHERE id_caja = $1"
 	db := getConnection()
 	defer db.Close()
 
-	stmt, err := db.Prepare(query); if err != nil {
-		return caja, err
-	}
+	stmt, err := db.Prepare(query); if err != nil {return cashBox, err}
 	defer stmt.Close()
 
 	row := stmt.QueryRow(id)
-	err = row.Scan(&caja.Id_caja, &caja.Inicio, &caja.Fin, &caja.HoraInicio, &caja.HoraFin, &caja.CierreReal, &caja.CierreFiscal)
-	if err != nil && err != sql.ErrNoRows {
-		return caja, err
-	}
+	err = row.Scan(&cashBox.Id_caja, &cashBox.Inicio, &cashBox.Fin, &cashBox.HoraInicio, &cashBox.HoraFin, &cashBox.CierreReal, &cashBox.CierreFiscal)
+	if err != nil && err != sql.ErrNoRows {return cashBox, err}
 
-	return caja, err
+	return cashBox, err
 }
 
-//SELECT ALL
-func (dao CajaImpl) GetAll() ([]models.Caja, error) {
+//Returns all cash boxes
+func (dao CajaImpl) Get_All() ([]models.Caja, error) {
 
-	cajas := make([]models.Caja, 0)
+	cashBoxes := make([]models.Caja, 0)
 	query := "SELECT * FROM caja WHERE fin != 0"
 	db := getConnection()
 	defer db.Close()
 
-	stmt, err := db.Prepare(query); if err != nil {
-		return cajas, err
-	}
+	stmt, err := db.Prepare(query); if err != nil {return cashBoxes, err}
 	defer stmt.Close()
 
-	rows, err := stmt.Query(); if err != nil {
-		return cajas, err
-	}
-
+	rows, err := stmt.Query(); if err != nil {return cashBoxes, err}
 	for rows.Next() {
+
 		var row models.Caja
-		err := rows.Scan(&row.Id_caja, &row.Inicio, &row.Fin, &row.HoraInicio, &row.HoraFin, &row.CierreReal, &row.CierreFiscal); if err != nil {
-			return cajas, err
-		}
-		cajas = append(cajas, row)
+
+		err := rows.Scan(&row.Id_caja, &row.Inicio, &row.Fin, &row.HoraInicio, &row.HoraFin, &row.CierreReal, &row.CierreFiscal); if err != nil {return cashBoxes, err}
+		cashBoxes = append(cashBoxes, row)
 	}
 
-	return cajas, nil
+	return cashBoxes, nil
 }
 
-//UPADTE CIERRE CAJA
-func (dao CajaImpl) CierreCaja(caja *models.Caja) (models.Caja, error) {
+//Close cash box
+func (dao CajaImpl) Close_Cash_Box (cashBox *models.Caja) (models.Caja, error) {
 
 	query := "UPDATE caja SET fin = $1, horaFin = $2, cierreReal = $3, cierreFiscal = $4 WHERE id_caja = $5"
 	db := getConnection()
 	defer db.Close()
 
-	var c models.Caja
+	var cashBoxAux models.Caja
 
-	stmt, err := db.Prepare(query); if err != nil {
-		return c, err
-	}
+	stmt, err := db.Prepare(query); if err != nil {return cashBoxAux, err}
 	defer stmt.Close()
 
-	row, err := stmt.Exec(caja.Fin, time.Now(), caja.CierreReal, caja.CierreFiscal, caja.Id_caja); if err != nil {
-		return c, err
-	}
+	row, err := stmt.Exec(cashBox.Fin, time.Now(), cashBox.CierreReal, cashBox.CierreFiscal, cashBox.Id_caja); if err != nil {return cashBoxAux, err}
+	i, _ := row.RowsAffected(); if i != 1 {return cashBoxAux, errors.New("Error, se esperaba una fila afectada")}
 
-	i, _ := row.RowsAffected()
-	if i != 1 {
-		return c, errors.New("Error, se esperaba una fila afectada")
-	}
-
-	c, err = GetById(caja.Id_caja); if err != nil {
-		return c, err
-	}
-
-	return c, nil
+	return dao.Get_By_Id(cashBox.Id_caja)
 }
 
-//DEVUELVE LAS CAJAS DEL HISTORIAL MEDIANTE UN INTERVALO DE FECHAS
-func (dao CajaImpl) GetCajasByFechas(fechaIncio time.Time, fechaFin time.Time) ([]models.Caja, error) {
+//Returns cash boxes by date
+func (dao CajaImpl) Get_By_Date(startDate time.Time, finalDate time.Time) ([]models.Caja, error) {
 
 	query := "SELECT * FROM caja where horaInicio BETWEEN $1 AND $2"
 	db := getConnection()
 	defer db.Close()
 
-	var cajas []models.Caja
-	stmt, err := db.Prepare(query); if err != nil {
-		return cajas, err
-	}
+	var cashBoxes []models.Caja
+	stmt, err := db.Prepare(query); if err != nil {return cashBoxes, err}
 	defer stmt.Close()
 
-	rows, err := stmt.Query(fechaIncio, fechaFin); if err != nil {
-		return cajas, err
-	}
+	rows, err := stmt.Query(startDate, finalDate); if err != nil {return cashBoxes, err}
 
 	for rows.Next() {
+
 		var caja models.Caja
-		err := rows.Scan(&caja.Id_caja, &caja.Inicio, &caja.Fin, &caja.HoraInicio, &caja.HoraFin, &caja.CierreReal, &caja.CierreFiscal); if err != nil {
-			return cajas, err
-		}
-		cajas = append(cajas, caja)
+
+		err := rows.Scan(&caja.Id_caja, &caja.Inicio, &caja.Fin, &caja.HoraInicio, &caja.HoraFin, &caja.CierreReal, &caja.CierreFiscal); if err != nil {return cashBoxes, err}
+		cashBoxes = append(cashBoxes, caja)
 	}
 
-	return cajas, nil
+	return cashBoxes, nil
 }

@@ -7,91 +7,75 @@ import (
 
 type CategoriaImpl struct{}
 
-//INSERT
-func (dao CategoriaImpl) Create(categoria *models.Categoria) error {
+//Allows to create a new category
+func (dao CategoriaImpl) Create(category *models.Categoria) error {
 
 	query := "INSERT INTO categoria (nombre) VALUES ($1) RETURNING id_categoria"
 	db := getConnection()
 	defer db.Close()
 
-	stmt, err := db.Prepare(query); if err != nil {
-		return err
-	}
+	stmt, err := db.Prepare(query); if err != nil {return err}
 	defer stmt.Close()
 
-	row := stmt.QueryRow(categoria.Nombre)
-	err = row.Scan(&categoria.Id_categoria); if err != nil {
-		return err
-	}
+	row := stmt.QueryRow(category.Nombre)
+	err = row.Scan(&category.Id_categoria); if err != nil {return err}
 
 	return nil
 }
 
-//SELECT ALL
-func (dao CategoriaImpl) GetAll() ([]models.Categoria, error) {
+// Returns all categories
+func (dao CategoriaImpl) Get_All() ([]models.Categoria, error) {
 
-	categorias := make([]models.Categoria, 0)
+	categories := make([]models.Categoria, 0)
 	query := "SELECT * FROM categoria"
 	db := getConnection()
 	defer db.Close()
 
-	stmt, err := db.Prepare(query); if err != nil {
-		return categorias, err
-	}
+	stmt, err := db.Prepare(query); if err != nil {return categories, err}
 	defer stmt.Close()
 
-	rows, err := stmt.Query(); if err != nil {
-		return categorias, err
-	}
+	rows, err := stmt.Query(); if err != nil {return categories, err}
 
 	for rows.Next() {
+
 		var row models.Categoria
-		err := rows.Scan(&row.Id_categoria, &row.Nombre); if err != nil {
-			return categorias, err
-		}
-		categorias = append(categorias, row)
+
+		err := rows.Scan(&row.Id_categoria, &row.Nombre); if err != nil {return categories, err}
+		categories = append(categories, row)
 	}
 
-	return categorias, nil
+	return categories, nil
 }
 
-//SELECT BY ID
-func (dao CategoriaImpl) GetById(id int) (models.Categoria, error) {
+//Returns a category given an id
+func (dao CategoriaImpl) Get_By_Id(id int) (models.Categoria, error) {
 
-	var p models.Categoria
+	var category models.Categoria
 
 	query := "SELECT * FROM categoria WHERE id_categoria = $1"
 	db := getConnection()
 	defer db.Close()
 
-	stmt, err := db.Prepare(query); if err != nil {
-		return p, err
-	}
+	stmt, err := db.Prepare(query); if err != nil {return category, err}
 	defer stmt.Close()
 
 	row := stmt.QueryRow(id)
-	err = row.Scan(&p.Id_categoria, &p.Nombre); if err != nil {
-		return p, err
-	}
+	err = row.Scan(&category.Id_categoria, &category.Nombre); if err != nil {return category, err}
 
-	return p, nil
+	return category, nil
 }
 
-//DELETE
+//Delete a category given its id
 func (dao CategoriaImpl) Delete(id int) error {
 
 	query := "DELETE FROM categoria WHERE id_categoria = $1"
 	db := getConnection()
 	defer db.Close()
 
-	stmt, err := db.Prepare(query); if err != nil {
-		return err
-	}
+	stmt, err := db.Prepare(query); if err != nil {return err}
 	defer stmt.Close()
 
-	r, err := stmt.Exec(id); if err != nil {
-		return err
-	}
+	r, err := stmt.Exec(id); if err != nil {return err}
 
 	i, _ := r.RowsAffected()
 	if i != 1 {
@@ -101,23 +85,18 @@ func (dao CategoriaImpl) Delete(id int) error {
 	return nil
 }
 
-//UPDATE
+// Update a category name
 func (dao CategoriaImpl) Update(categoria *models.Categoria) error {
 
 	query := "UPDATE categoria SET nombre = $1 WHERE id_categoria = $2"
 	db := getConnection()
 	defer db.Close()
 
-	stmt, err := db.Prepare(query); if err != nil {
-		return err
-	}
+	stmt, err := db.Prepare(query); if err != nil {return err}
 	defer stmt.Close()
 
-	r, err := stmt.Exec(categoria.Nombre, categoria.Id_categoria); if err != nil {
-		return err
-	}
-
-	i, _ := r.RowsAffected()
+	row, err := stmt.Exec(categoria.Nombre, categoria.Id_categoria); if err != nil {return err}
+	i, _ := row.RowsAffected()
 	if i != 1 {
 		return errors.New("Error, se esperaba una fila afectada")
 	}

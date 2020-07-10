@@ -1,7 +1,8 @@
 package interfaces
 
-type UserDAO interface {
-
+type LoginRegDAO interface {
+/*
 	Login(user string, pass string) (error, bool)
-	Logout(id int) (error, bool)
+	Logout() error
+	User_Is_Logged_In () (int, error)*/
 }

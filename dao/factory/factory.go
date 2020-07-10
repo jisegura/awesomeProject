@@ -6,9 +6,9 @@ import (
 	"awesomeProject/dao/postgrsql"
 )
 
-func FactoryEmpleado() interfaces.EmpleadoDAO {
-	var i interfaces.EmpleadoDAO
-	i = postgrsql.EmpleadoImpl{}
+func FactoryPersona() interfaces.PersonaDAO {
+	var i interfaces.PersonaDAO
+	i = postgrsql.PersonaImpl{}
 	return i
 }
 
@@ -48,8 +48,20 @@ func FactoryExcel() interfaces.ExcelDAO {
 	return i
 }
 
-func FactoryUser() interfaces.UserDAO {
-	var i interfaces.UserDAO
-	i = postgrsql.UserImpl{}
+func FactoryLog() interfaces.LogDAO {
+	var i interfaces.LogDAO
+	i = postgrsql.LogImpl{}
+	return i
+}
+
+func FactoryLoginReg() interfaces.LoginRegDAO {
+	var i interfaces.LoginRegDAO
+	i = postgrsql.LoginReg{}
+	return i
+}
+
+func FactoryRol() interfaces.RolDAO {
+	var i interfaces.RolDAO
+	i = postgrsql.RolImpl{}
 	return i
 }

@@ -10,99 +10,102 @@ import (
 	"strconv"
 )
 
-//SELECT
-func GetEmpleados(w http.ResponseWriter, req *http.Request) {
+//Allows to add a new person
+func Create_Person (w http.ResponseWriter, req *http.Request) {
 
-	empleadoDAO := factory.FactoryEmpleado()
+	personDAO := factory.FactoryPersona()
+	person := models.Persona{}
 
-	empleados, err := empleadoDAO.GetAll()
+	_ = json.NewDecoder(req.Body).Decode(&person)
+	err := personDAO.Create(&person)
+
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		log.Print("Error: ", err)
 		return
 	}
 
-	json.NewEncoder(w).Encode(&empleados)
+	personAux, err := personDAO.Get_By_Id(person.Id_persona)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		log.Print("Error: ", err)
+		return
+	}
+
+	json.NewEncoder(w).Encode(&personAux)
 }
 
-//INSERT
-func InsertEmpleado(w http.ResponseWriter, req *http.Request) {
 
-	empleadoDAO := factory.FactoryEmpleado()
-	empleado := models.Empleado{}
+//Returns all the people
+func Get_People(w http.ResponseWriter, req *http.Request) {
 
-	_ = json.NewDecoder(req.Body).Decode(&empleado)
-	err := empleadoDAO.Create(&empleado)
+	personaDAO := factory.FactoryPersona()
 
+	people, err := personaDAO.Get_All()
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		log.Print("Error: ", err)
 		return
 	}
 
-	e, err := empleadoDAO.GetById(empleado.Id_empleado)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
-		log.Print("Error: ", err)
-		return
-	}
-
-	json.NewEncoder(w).Encode(&e)
+	json.NewEncoder(w).Encode(&people)
 }
 
-/*
-//SELECT BY ID
-func GetEmpleadoById (w http.ResponseWriter, req *http.Request) {
+//Returns a person
+func Get_Person_By_Id(w http.ResponseWriter, req *http.Request) {
 
-	empleadoDao := factory.FactoryEmpleado()
+	personDAO := factory.FactoryPersona()
 	param := mux.Vars(req)
 
-	i, _ := strconv.Atoi(param["id"])
+	id, _ := strconv.Atoi(param["id"])
+	person, err := personDAO.Get_By_Id(id)
 
-	empleado, err := empleadoDao.GetById(i)
 	if err != nil {
-		fmt.Fprint(w, "No existe el empleado")
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		log.Print("Error: ", err)
 		return
 	}
 
-	json.NewEncoder(w).Encode(empleado)
-}*/
+	json.NewEncoder(w).Encode(&person)
+}
 
-//DELETE
-func DeleteEmpleado(w http.ResponseWriter, req *http.Request) {
+//Allows to delete a person
+func Delete_Person(w http.ResponseWriter, req *http.Request) {
 
-	empleadoDao := factory.FactoryEmpleado()
+	personDAO := factory.FactoryPersona()
 	param := mux.Vars(req)
 
 	id, _ := strconv.Atoi(param["id"])
 
-	err := empleadoDao.Delete(id)
+	err := personDAO.Delete(id)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		log.Print("Error: ", err)
 		return
 	}
-	e := models.Empleado{}
+	e := models.Persona{}
 
 	json.NewEncoder(w).Encode(&e)
 }
 
-//UPDATE
-func UpdateEmpleado(w http.ResponseWriter, req *http.Request) {
+//Allows updating an attribute of a person
+func Update_Attr(w http.ResponseWriter, req *http.Request) {
 
-	empleadoDAO := factory.FactoryEmpleado()
-	empleado := models.Empleado{}
+	personDAO := factory.FactoryPersona()
+	param := mux.Vars(req)
 
-	_ = json.NewDecoder(req.Body).Decode(&empleado)
+	id, _ := strconv.Atoi(param["id"])
+	attrName, _ := param["attrName"]
+	attr, _ := param["attr"]
 
-	err := empleadoDAO.UpdateNombre(&empleado)
+	err := personDAO.Update_Attribute(id, attrName, attr)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		log.Print("Error: ", err)
 		return
 	}
 
-	e, err := empleadoDAO.GetById(empleado.Id_empleado)
+	e, err := personDAO.Get_By_Id(id)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		log.Print("Error: ", err)
@@ -112,23 +115,123 @@ func UpdateEmpleado(w http.ResponseWriter, req *http.Request) {
 	json.NewEncoder(w).Encode(&e)
 }
 
-func UpdateBaja(w http.ResponseWriter, req *http.Request) {
+//Returns an attribute of a person
+func Get_Attr (w http.ResponseWriter, req *http.Request) {
 
-	empleadoDAO := factory.FactoryEmpleado()
-	//empleado := models.Empleado{}
+	personDAO := factory.FactoryPersona()
+	param := mux.Vars(req)
+
+	id, _ := strconv.Atoi(param["id"])
+	attrName, _ := param["attr"]
+
+
+	attribute, err := personDAO.Get_Attr(id, attrName)
+
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		log.Print("Error: ", err)
+		return
+	}
+
+	json.NewEncoder(w).Encode(&attribute)
+}
+
+//Returns the rol of a person
+func Get_Role (w http.ResponseWriter, req *http.Request) {
+
+	personDAO := factory.FactoryPersona()
+	param := mux.Vars(req)
+
+	id, _ := strconv.Atoi(param["id"])
+	rol, err := personDAO.Get_Role(id)
+
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		log.Print("Error: ", err)
+		return
+	}
+
+	json.NewEncoder(w).Encode(&rol)
+}
+
+//Allows a person to change the password
+func Change_Password (w http.ResponseWriter, req *http.Request) {
+
+	personDAO := factory.FactoryPersona()
+	param := mux.Vars(req)
+
+	user := param["user"]
+	pass := param["pass"]
+	newPass := param["newPass"]
+
+	log.Print("user:", user, " pass: ", pass, " newPass: ", newPass)
+	err := personDAO.Change_Password(user, pass, newPass)
+
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		log.Print("Error: ", err)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+}
+
+//Allows a person to set the password
+func Set_Password (w http.ResponseWriter, req *http.Request) {
+
+	personDAO := factory.FactoryPersona()
+	param := mux.Vars(req)
+
+	user := param["user"]
+	pass := param["pass"]
+
+	err := personDAO.Set_Password(user, pass)
+
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		log.Print("Error: ", err)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+}
+
+//Allows a person to reset the password
+func Reset_Password (w http.ResponseWriter, req *http.Request) {
+
+	personDAO := factory.FactoryPersona()
+	param := mux.Vars(req)
+
+	user := param["user"]
+
+	err := personDAO.Reset_Password(user)
+
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		log.Print("Error: ", err)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+}
+
+//Allows a person to unsubscribe
+func Unsubscribe(w http.ResponseWriter, req *http.Request) {
+
+	personDAO := factory.FactoryPersona()
 
 	param := mux.Vars(req)
 
 	id, _ := strconv.Atoi(param["id"])
 
-	err := empleadoDAO.UpdateBaja(id)
+	err := personDAO.Unsubscribe(id)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		log.Print("Error: ", err)
 		return
 	}
 
-	e, err := empleadoDAO.GetById(id)
+	e, err := personDAO.Get_By_Id(id)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		log.Print("Error: ", err)

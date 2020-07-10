@@ -1,14 +1,7 @@
 package imports
 
-import (
-	"awesomeProject/dao/postgrsql"
-	"awesomeProject/models"
-	"github.com/tealeg/xlsx"
-	"strconv"
-)
-
 type ExcelImpl struct{}
-
+/*
 func newExcel() models.Excel {
 
 	excel := models.Excel{}
@@ -83,7 +76,7 @@ func (dao ExcelImpl) Export(movimientos []models.Movimientos) error {
 		cell = row.AddCell()
 		cell.SetStyle(dataStyle())
 		//Ingreso efectivo
-		efectivo, err := postgrsql.Get_ingresos(movimientos[i].Caja.Id_caja, 1)
+		efectivo, err := (movimientos[i].Caja.Id_caja, 1)
 		if err != nil {
 			return err
 		}
@@ -160,7 +153,7 @@ func (dao ExcelImpl) Export(movimientos []models.Movimientos) error {
 			cell = row.AddCell()
 			//Nombre empleado
 			cell.SetStyle(style)
-			nombre, err := postgrsql.GetNombre(movimientos[i].Facturas[facturas].Id_empleado.Int64)
+			nombre, err := postgrsql.Get_Nombre(movimientos[i].Facturas[facturas].Id_empleado.Int64)
 			if err != nil {
 				return err
 			}
@@ -432,3 +425,4 @@ func comentarioStyle() *xlsx.Style {
 
 	return style
 }
+*/
